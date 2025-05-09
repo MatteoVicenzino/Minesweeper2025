@@ -1,4 +1,4 @@
-# Minesweeper - Software Development Methods 2024
+# Minesweeper - Software Development Methods
 
 ## Introduction
 

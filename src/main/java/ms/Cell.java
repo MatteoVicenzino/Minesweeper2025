@@ -38,5 +38,9 @@ public class Cell {
         }
         return false;
     }
+
+    public void toggleFlag() {
+        this.isFlagged = !this.isFlagged;
+    }
 }
 

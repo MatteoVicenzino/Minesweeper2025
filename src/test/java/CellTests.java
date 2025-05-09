@@ -36,4 +36,16 @@ public class CellTests {
         assertFalse(cell.Reveal());
         assertTrue(cell.isRevealed());
     }
+
+    @Test
+    void testToggleFlagCell() {
+        Cell cell = new Cell();
+
+        cell.toggleFlag();
+        assertTrue(cell.isFlagged());
+
+        cell.toggleFlag();
+        assertFalse(cell.isFlagged());
+    }
+
 }
