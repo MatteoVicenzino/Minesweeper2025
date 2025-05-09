@@ -27,7 +27,6 @@ public class CellTests {
     }
 
     @Test
-    @Disabled("Test not implemented yet")
     void testRevealCell() {
         Cell cell = new Cell();
 

@@ -31,5 +31,12 @@ public class Cell {
         this.isBomb = value;
     }
 
+    public boolean Reveal() {
+        if (!isRevealed){
+            this.isRevealed = true;
+            return true;
+        }
+        return false;
+    }
 }
 
