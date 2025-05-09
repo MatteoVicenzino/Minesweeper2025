@@ -1,6 +1,8 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ms.Cell;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CellTests {
 
@@ -13,4 +15,14 @@ public class CellTests {
 
     }
 
+    @Test
+    void testSetBomb() {
+        Cell cell = new Cell();
+
+        cell.setBomb(true);
+        assertTrue(cell.isBomb());
+
+        cell.setBomb(false);
+        assertFalse(cell.isBomb());
+    }
 }
