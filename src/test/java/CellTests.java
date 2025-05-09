@@ -25,4 +25,16 @@ public class CellTests {
         cell.setBomb(false);
         assertFalse(cell.isBomb());
     }
+
+    @Test
+    @Disabled("Test not implemented yet")
+    void testRevealCell() {
+        Cell cell = new Cell();
+
+        assertTrue(cell.Reveal());
+        assertTrue(cell.isRevealed());
+
+        assertFalse(cell.Reveal());
+        assertTrue(cell.isRevealed());
+    }
 }
