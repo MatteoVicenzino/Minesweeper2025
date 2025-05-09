@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ms.Cell;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,31 +8,31 @@ public class CellTests {
     @Test
     void testInitialState() {
         Cell cell = new Cell();
-        assertFalse(cell.isBomb());
+        assertFalse(cell.isMined());
         assertFalse(cell.isRevealed());
         assertFalse(cell.isFlagged());
 
     }
 
     @Test
-    void testSetBomb() {
+    void testSetMine() {
         Cell cell = new Cell();
 
-        cell.setBomb(true);
-        assertTrue(cell.isBomb());
+        cell.setMined(true);
+        assertTrue(cell.isMined());
 
-        cell.setBomb(false);
-        assertFalse(cell.isBomb());
+        cell.setMined(false);
+        assertFalse(cell.isMined());
     }
 
     @Test
     void testRevealCell() {
         Cell cell = new Cell();
 
-        assertTrue(cell.Reveal());
+        assertTrue(cell.reveal());
         assertTrue(cell.isRevealed());
 
-        assertFalse(cell.Reveal());
+        assertFalse(cell.reveal());
         assertTrue(cell.isRevealed());
     }
 
@@ -47,5 +46,17 @@ public class CellTests {
         cell.toggleFlag();
         assertFalse(cell.isFlagged());
     }
+
+    @Test
+    void testToggleFlagOnRevealedCell() {
+        Cell cell = new Cell();
+        cell.reveal();
+        assertTrue(cell.isRevealed());
+        assertFalse(cell.isFlagged());
+        cell.toggleFlag();
+
+        assertFalse(cell.isFlagged());
+    }
+
 
 }

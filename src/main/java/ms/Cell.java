@@ -3,18 +3,18 @@ package ms;
 public class Cell {
     private boolean isRevealed;
     private boolean isFlagged;
-    private boolean isBomb;
+    private boolean isMined;
 
     // Constructor
     public Cell() {
         this.isRevealed = false;
         this.isFlagged = false;
-        this.isBomb = false;
+        this.isMined = false;
     }
 
-    // Return if the cell has a bomb
-    public boolean isBomb() {
-        return isBomb;
+    // Return if the cell has a mine
+    public boolean isMined() {
+        return isMined;
     }
 
     // Return if the cell is revealed
@@ -27,11 +27,11 @@ public class Cell {
         return isFlagged;
     }
 
-    public void setBomb(boolean value) {
-        this.isBomb = value;
+    public void setMined(boolean value) {
+        this.isMined = value;
     }
 
-    public boolean Reveal() {
+    public boolean reveal() {
         if (!isRevealed){
             this.isRevealed = true;
             return true;
@@ -40,7 +40,9 @@ public class Cell {
     }
 
     public void toggleFlag() {
-        this.isFlagged = !this.isFlagged;
+        if (!isRevealed) {
+            this.isFlagged = !this.isFlagged;
+        }
     }
 }
 
