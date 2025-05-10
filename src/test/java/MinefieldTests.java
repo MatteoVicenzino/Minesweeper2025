@@ -24,4 +24,22 @@ public class MinefieldTests {
         assertEquals(0, minefield.getRevealed());
         assertEquals(ROWS * COLS, minefield.getUnrevealedCount());
     }
+
+    @Test
+    void testInitializeGrid() {
+
+        minefield.initializeGrid(5, 5);
+
+        int mineCount = 0;
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                if (minefield.getCell(r, c).isMined()) {
+                    mineCount++;
+                }
+            }
+        }
+        assertEquals(MINES, mineCount);
+
+        assertFalse(minefield.getCell(5, 5).isMined());
+    }
 }
