@@ -42,4 +42,14 @@ public class MinefieldTests {
 
         assertFalse(minefield.getCell(5, 5).isMined());
     }
+
+    @Test
+    void testIsValid() {
+        assertTrue(minefield.isValid(0, 0));
+        assertTrue(minefield.isValid(ROWS-1, COLS-1));
+        assertFalse(minefield.isValid(-1, 0));
+        assertFalse(minefield.isValid(0, -1));
+        assertFalse(minefield.isValid(ROWS, 0));
+        assertFalse(minefield.isValid(0, COLS));
+    }
 }

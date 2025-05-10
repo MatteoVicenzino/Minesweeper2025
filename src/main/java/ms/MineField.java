@@ -48,7 +48,15 @@ public class MineField {
     }
 
     public Cell getCell(int row, int col) {
-        return field[row][col];
+        if (isValid(row, col)) {
+            return field[row][col];
+        } else {
+            throw new IndexOutOfBoundsException("Invalid cell coordinates");
+        }
+    }
+
+    public boolean isValid(int row, int col) {
+        return row >= 0 && row < rows && col >= 0 && col < cols;
     }
 
     public void initializeGrid(int firstRow, int firstCol) {
