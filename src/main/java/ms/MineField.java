@@ -79,7 +79,9 @@ public class MineField {
     }
 
     public int countAdjacentMines(int row, int col) {
-
+        if (!isValid(row, col)) {
+            throw new IndexOutOfBoundsException("Invalid cell coordinates");
+        }
         int mineCount = 0;
 
         // Check all adjacent cells
@@ -94,4 +96,5 @@ public class MineField {
 
         return mineCount;
     };
+
 }
