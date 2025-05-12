@@ -79,6 +79,19 @@ public class MineField {
     }
 
     public int countAdjacentMines(int row, int col) {
-        return 0;
-    }
+
+        int mineCount = 0;
+
+        // Check all adjacent cells
+        for (int r = row - 1; r <= row + 1; r++) {
+            for (int c = col - 1; c <= col + 1; c++) {
+                if (r == row && c == col) continue; // Skip the current cell
+                if (isValid(r, c) && field[r][c].isMined()) {
+                    mineCount++;
+                }
+            }
+        }
+
+        return mineCount;
+    };
 }

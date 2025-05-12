@@ -53,7 +53,6 @@ public class MinefieldTests {
         assertFalse(minefield.isValid(0, COLS));
     }
 
-    @Disabled("Disabled until CountAdjacentMines is up!")
     @Test
     void testCountAdjacentMines() {
         boolean[][] minePattern = new boolean[][] {
