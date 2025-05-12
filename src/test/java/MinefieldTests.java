@@ -85,4 +85,24 @@ public class MinefieldTests {
         assertEquals(2, minefield.countAdjacentMines(2, 2));
     }
 
+    @Disabled("Disabled until CountAdjacentMines is updated")
+    @Test
+    void testCountAdjacentMinesOutOfBounds() {
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            minefield.countAdjacentMines(-1, 0);
+        });
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            minefield.countAdjacentMines(0, -1);
+        });
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            minefield.countAdjacentMines(ROWS, 0);
+        });
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            minefield.countAdjacentMines(0, COLS);
+        });
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            minefield.countAdjacentMines(ROWS, COLS);
+        });
+    }
+
 }
