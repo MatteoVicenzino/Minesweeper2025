@@ -77,4 +77,8 @@ public class MineField {
             placedMines++;
         }
     }
+
+    public int countAdjacentMines(int row, int col) {
+        return 0;
+    }
 }

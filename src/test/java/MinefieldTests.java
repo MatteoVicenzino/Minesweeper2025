@@ -52,4 +52,38 @@ public class MinefieldTests {
         assertFalse(minefield.isValid(ROWS, 0));
         assertFalse(minefield.isValid(0, COLS));
     }
+
+    @Disabled("Disabled until CountAdjacentMines is up!")
+    @Test
+    void testCountAdjacentMines() {
+        boolean[][] minePattern = new boolean[][] {
+                {true, true, false, false},
+                {false, false, false, false},
+                {false, false, true, false},
+                {false, false, true, true}
+        };
+        minefield = new MineField(4, 4, 0);
+        // Set mines according to our pattern
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                if (minePattern[row][col]) {
+                    minefield.getCell(row, col).setMined(true);
+                }
+            }
+        }
+        assertEquals(0, minefield.countAdjacentMines(3, 0));
+
+        // Test cell with different adjacent mines
+        assertEquals(1, minefield.countAdjacentMines(0, 2));
+        assertEquals(2, minefield.countAdjacentMines(1, 0));
+        assertEquals(2, minefield.countAdjacentMines(2, 1));
+        assertEquals(3, minefield.countAdjacentMines(1, 1));
+
+        // Test a corner cell
+        assertEquals(1, minefield.countAdjacentMines(0, 0));
+
+        // Test a cell that contains a mine itself - should still count adjacent mines but not itself
+        assertEquals(2, minefield.countAdjacentMines(2, 2));
+    }
+
 }
