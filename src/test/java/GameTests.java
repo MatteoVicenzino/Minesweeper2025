@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ms.Game;
@@ -15,15 +14,16 @@ public class GameTests {
 
     @Test
     void testGameInitialization() {
-        assertNull(game.getMinefield()); // Ensure minefield is null before generation
-        assertNotNull(game.initMinefield()); // Ensure minefield is initialized
+        assertNotNull(game.getMinefield()); // Ensure minefield is null before generation
         assertEquals(10, game.getMinesLeft()); // Default mines left
-        assertFalse(game.getGameOver()); // Ensure game is not over on start
+        assertFalse(game.getGameOver());
     }
 
     @Test
     void testMinefieldInitializationOnGameCreation() {
-        assertNotNull(game.getMinefield());
+        assertEquals(10, game.getMinefield().getHeight());
+        assertEquals(10, game.getMinefield().getWidth());
+        assertEquals(10, game.getMinefield().getMines());
     }
 }
 

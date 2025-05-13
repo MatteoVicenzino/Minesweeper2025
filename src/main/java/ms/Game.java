@@ -25,7 +25,7 @@ public class Game {
     }
 
     public int getMinesLeft() {
-        return minesLeft;
+        return minefield.getMines();
     }
 
     public boolean getGameOver() {
