@@ -21,9 +21,17 @@ For now these are the tests that we are implementing, more to come...
 - Cells are revealed correctly when the coordinates is given
 
 ### Game Tests
-- When game is started the minefield is created and mines are placed
-- When revealing a mined cell the game is over
-- ...
+- When the game starts, a minefield grid of correct size is created and the correct number of mines is randomly placed.
+- Calling game.revealCell(x, y) should mark the specified cell as revealed and update the internal state (e.g. cell.isRevealed = true, game over if mine, etc.)
+- Calling game.flagCell(x, y) should toggle the flagged state of the specified cell, and increase or decrease game.flagsPlaced accordingly.
+- game.getMinesLeft() should return the correct result: totalMines - flagsPlaced, and should reflect changes when flags are added or removed.
+- When a cell is revealed all adjacent cells should be revealed correctly:
+  - multiple tests tbd...
+- If a revealed cell contains a mine, the game should immediately end and set gameOver = true.
+- If all non-mine cells are revealed, game.isWon() should return true and gameOver should be set appropriately.
+- When the first cell is revealed, the timer should start; when the game ends (win or lose), the timer should stop.
+- game.getElapsedTime() should return a positive and increasing number while the game is running, and stop increasing when the game ends.
+- Calling game.reset() should reinitialize the minefield, clear all revealed/flagged cells, reset timers, and return the game to its initial state.
 
 ### Cli and Graphics
 to be implemented yet
