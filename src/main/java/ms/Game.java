@@ -35,4 +35,8 @@ public class Game {
     public void revealCell(int row, int col){
         getMinefield().revealCell(row, col);
     }
+
+    public void flagCell(int row, int col){
+        getMinefield().flagCell(row, col);
+    }
 }

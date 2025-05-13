@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class MineField {
 
-    private int height;
-    private int width;
-    private int mines;
+    private final int height;
+    private final int width;
+    private final int mines;
     private int revealed;
-    private Cell[][] field;
+    private final Cell[][] field;
 
     // Constructor
     public MineField(int height, int width, int mines) {
@@ -103,6 +103,13 @@ public class MineField {
             if (cell.reveal()) {
                 this.revealed++;
             }
+        }
+    }
+
+    public void flagCell(int row, int col) {
+        if (this.isValid(row, col)) {
+            Cell cell = this.getCell(row, col);
+            cell.toggleFlag();
         }
     }
 }

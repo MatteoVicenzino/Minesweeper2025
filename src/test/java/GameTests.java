@@ -45,6 +45,18 @@ public class GameTests {
         assertTrue(game.getMinefield().getCell(0, 0).isRevealed());
         assertEquals(initialRevealedCount, game.getMinefield().getRevealed());
     }
+
+    @Test
+    void testFlagCell() {
+        game.flagCell(0, 0);
+        assertTrue(game.getMinefield().getCell(0,0).isFlagged());
+
+        game.flagCell(0, 0); // Unflagging should work
+        assertFalse(game.getMinefield().getCell(0,0).isFlagged());
+        game.revealCell(0, 0);
+        game.flagCell(0, 0); // Should not flag a revealed cell
+        assertFalse(game.getMinefield().getCell(0,0).isFlagged());
+    }
 }
 
 
