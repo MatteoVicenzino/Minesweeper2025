@@ -11,6 +11,8 @@ public class Game {
         this.minefield = null;
         this.minesLeft = 10;
         this.gameOver = false;
+
+        this.initMinefield();
     }
 
     public MineField initMinefield() {

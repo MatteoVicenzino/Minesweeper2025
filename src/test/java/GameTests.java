@@ -21,7 +21,6 @@ public class GameTests {
         assertFalse(game.getGameOver()); // Ensure game is not over on start
     }
 
-    @Disabled ("disabled until class Game is updated")
     @Test
     void testMinefieldInitializationOnGameCreation() {
         assertNotNull(game.getMinefield());
