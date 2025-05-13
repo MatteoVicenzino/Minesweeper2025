@@ -13,10 +13,11 @@ For now these are the tests that we are implementing, more to come...
 - ~~Minefield dimensions are set correctly~~
 - ~~Mines are placed correctly on the minefield~~
 - ~~input have to be valid cell on the minefield~~
-- Adjacent cells are calculated correctly
-    - Count is 0 when there are no adjacent mines
-    - Count is equal to the number of adjacent mines (regardless of the position)
-    -  ...
+- ~~Adjacent cells are calculated correctly~~
+    - ~~Count is 0 when there are no adjacent mines~~
+    - ~~Count is equal to the number of adjacent mines (regardless of the position)~~
+    -  ~~Count adj cells on corner cells~~
+    - ~~Count adj cells on bombed cells~~
 - Cells are revealed correctly when the coordinates is given
 
 ### Game Tests
@@ -26,3 +27,20 @@ For now these are the tests that we are implementing, more to come...
 
 ### Cli and Graphics
 to be implemented yet
+
+# Refactoring
+
+Note file to keep track of refactoring and improvements that need to be done at some point of the development.
+
+### Cell 
+
+### Minefield
+- ~~rows and cols --> height and width~~
+- possible refactor of field matrix into a separate class
+- possible refactor of testCountAdjacentMinesOutOfBounds() into a more generic test in MinefieldTests.java
+
+### Game
+
+### Cli and Graphics
+
+
