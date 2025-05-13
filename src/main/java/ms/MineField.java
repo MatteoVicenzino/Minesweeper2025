@@ -4,35 +4,35 @@ import java.util.Random;
 
 public class MineField {
 
-    private int rows;
-    private int cols;
+    private int height;
+    private int width;
     private int mines;
     private int revealed;
     private Cell[][] field;
 
     // Constructor
-    public MineField(int rows, int cols, int mines) {
-        this.rows = rows;
-        this.cols = cols;
+    public MineField(int height, int width, int mines) {
+        this.height = height;
+        this.width = width;
         this.mines = mines;
         this.revealed = 0;
-        this.field = new Cell[rows][cols];
+        this.field = new Cell[height][width];
 
         // Initialize the field with cells
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 field[i][j] = new Cell();
             }
         }
     }
 
     // Getters
-    public int getRows() {
-        return rows;
+    public int getHeight() {
+        return height;
     }
 
-    public int getCols() {
-        return cols;
+    public int getWidth() {
+        return width;
     }
 
     public int getMines() {
@@ -44,7 +44,7 @@ public class MineField {
     }
 
     public int getUnrevealedCount() {
-        return (rows * cols) - revealed;
+        return (height * width) - revealed;
     }
 
     public Cell getCell(int row, int col) {
@@ -56,7 +56,7 @@ public class MineField {
     }
 
     public boolean isValid(int row, int col) {
-        return row >= 0 && row < rows && col >= 0 && col < cols;
+        return row >= 0 && row < height && col >= 0 && col < width;
     }
 
     public void initializeGrid(int firstRow, int firstCol) {
@@ -65,8 +65,8 @@ public class MineField {
 
         // Place mines randomly, avoiding the safe cell
         while (placedMines < mines) {
-            int row = random.nextInt(rows);
-            int col = random.nextInt(cols);
+            int row = random.nextInt(height);
+            int col = random.nextInt(width);
 
             // Skip if this is the first cell or already has a mine
             if ((row == firstRow && col == firstCol) || field[row][col].isMined()) {
@@ -95,6 +95,6 @@ public class MineField {
         }
 
         return mineCount;
-    };
+    }
 
 }

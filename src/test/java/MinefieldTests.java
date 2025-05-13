@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ms.MineField;
@@ -18,8 +17,8 @@ public class MinefieldTests {
 
     @Test
     void testInitialState() {
-        assertEquals(ROWS, minefield.getRows());
-        assertEquals(COLS, minefield.getCols());
+        assertEquals(ROWS, minefield.getHeight());
+        assertEquals(COLS, minefield.getWidth());
         assertEquals(MINES, minefield.getMines());
         assertEquals(0, minefield.getRevealed());
         assertEquals(ROWS * COLS, minefield.getUnrevealedCount());
