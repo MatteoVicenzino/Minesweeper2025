@@ -25,6 +25,14 @@ public class GameTests {
         assertEquals(10, game.getMinefield().getWidth());
         assertEquals(10, game.getMinefield().getMines());
     }
+
+    @Test
+    void testRevealFreeCell() {
+        game.revealCell(0, 0);
+
+        assertTrue(game.getMinefield().getCell(0,0).isRevealed());
+        assertEquals(1, game.getMinefield().getRevealed());
+    }
 }
 
 

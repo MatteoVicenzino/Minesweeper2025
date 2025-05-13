@@ -31,4 +31,8 @@ public class Game {
     public boolean getGameOver() {
         return gameOver;
     }
+
+    public void revealCell(int row, int col){
+        getMinefield().revealCell(row, col);
+    }
 }

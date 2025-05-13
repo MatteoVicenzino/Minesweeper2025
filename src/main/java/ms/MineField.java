@@ -96,4 +96,12 @@ public class MineField {
 
         return mineCount;
     }
+
+    public void revealCell(int row, int col) {
+        if (this.isValid(row, col)) {
+            Cell cell = this.getCell(row, col);
+            cell.reveal();
+            this.revealed++;
+        }
+    }
 }
