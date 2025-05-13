@@ -27,11 +27,23 @@ public class GameTests {
     }
 
     @Test
-    void testRevealFreeCell() {
+    void testRevealCell() {
         game.revealCell(0, 0);
 
         assertTrue(game.getMinefield().getCell(0,0).isRevealed());
         assertEquals(1, game.getMinefield().getRevealed());
+    }
+
+    @Test
+    void testRevealAlreadyRevealedCell() {
+        // First reveal
+        game.revealCell(0, 0);
+        int initialRevealedCount = game.getMinefield().getRevealed();
+
+        // Try to reveal the same cell again
+        game.revealCell(0, 0);
+        assertTrue(game.getMinefield().getCell(0, 0).isRevealed());
+        assertEquals(initialRevealedCount, game.getMinefield().getRevealed());
     }
 }
 
