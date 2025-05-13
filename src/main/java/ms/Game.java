@@ -31,5 +31,4 @@ public class Game {
     public boolean getGameOver() {
         return gameOver;
     }
-
 }
