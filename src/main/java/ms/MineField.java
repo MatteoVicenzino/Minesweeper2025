@@ -96,5 +96,4 @@ public class MineField {
 
         return mineCount;
     }
-
 }
