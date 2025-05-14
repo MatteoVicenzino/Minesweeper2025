@@ -61,6 +61,7 @@ public class Game {
             endTime = Instant.now();
         } else if (minefield.getUnrevealedCount() == totalMines) {
             gameOver = true;
+            endTime = Instant.now();
         }
     }
 
@@ -83,5 +84,14 @@ public class Game {
             return (endTime == null ? Instant.now() : endTime).toEpochMilli() - startTime.toEpochMilli();
         }
         return 0;
+    }
+
+    public void resetGame() {
+        this.minefield = new MineField(10, 10, totalMines);
+        this.gameOver = false;
+        this.flagsPlaced = 0;
+        this.startTime = null;
+        this.endTime = null;
+        this.firstReveal = true;
     }
 }

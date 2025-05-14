@@ -131,6 +131,53 @@ public class GameTests {
         Thread.sleep(10);
         assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (lose)");
     }
+
+    @Test
+    void testTimerStopsOnGameWin() throws InterruptedException {
+        // Reveal all non-mine cells
+        for (int row = 0; row < game.getMinefield().getHeight(); row++) {
+            for (int col = 0; col < game.getMinefield().getWidth(); col++) {
+                if (!game.getMinefield().getCell(row, col).isMined()) {
+                    game.revealCell(row, col);
+                }
+            }
+        }
+        assertTrue(game.getGameOver(), "Game should be over after revealing all non-mine cells");
+        long endTime = game.getElapsedTime();
+        Thread.sleep(10);
+        assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (win)");
+    }
+
+    @Test
+    void testResetGame() throws InterruptedException {
+        game.revealCell(0, 0);
+        game.flagCell(1, 1);
+        Thread.sleep(50);
+
+        game.getMinefield().getCell(0, 1).setMined(true);
+        game.revealCell(0, 1);
+
+        assertTrue(game.getGameOver(), "Game should be over before reset");
+        assertTrue(game.getElapsedTime() > 0, "Timer should have started");
+        assertEquals(1, game.getFlagsPlaced(), "Flags should have been placed");
+        assertTrue(game.getMinefield().getCell(0, 0).isRevealed(), "A cell should be revealed");
+
+        game.resetGame();
+
+        assertFalse(game.getGameOver(), "Game should not be over after reset");
+        assertEquals(0, game.getElapsedTime(), "Timer should be reset");
+        assertEquals(0, game.getFlagsPlaced(), "Flags placed should be reset");
+        assertEquals(10, game.getMinesLeft(), "Mines left should be reset");
+        assertFalse(game.getMinefield().getCell(0, 1).isMined(), "Cells should not be mined after reset");
+
+
+        for (int row = 0; row < game.getMinefield().getHeight(); row++) {
+            for (int col = 0; col < game.getMinefield().getWidth(); col++) {
+                assertFalse(game.getMinefield().getCell(row, col).isRevealed(), "All cells should be covered after reset");
+                assertFalse(game.getMinefield().getCell(row, col).isFlagged(), "All cells should be unflagged after reset");
+            }
+        }
+    }
 }
 
 

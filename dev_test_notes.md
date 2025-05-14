@@ -28,10 +28,9 @@ For now these are the tests that we are implementing, more to come...
 - When a cell is revealed all adjacent cells should be revealed correctly:
   - multiple tests tbd...
 - ~~If a revealed cell contains a mine, the game should immediately end and set gameOver = true.~~
-- If all non-mine cells are revealed, game.getGameOver() should return true, aka gameOver should be set appropriately.
-- When the first cell is revealed, the timer should start; when the game ends (win or lose), the timer should stop.
-- game.getElapsedTime() should return a positive and increasing number while the game is running, and stop increasing when the game ends.
-- Calling game.reset() should reinitialize the minefield, clear all revealed/flagged cells, reset timers, and return the game to its initial state.
+- ~~If all non-mine cells are revealed, game.getGameOver() should return true, aka gameOver should be set appropriately.~~
+- ~~When the first cell is revealed, the timer should start; when the game ends (win or lose), the timer should stop.~~
+- ~~Calling game.reset() should reinitialize the minefield, clear all revealed/flagged cells, reset timers, and return the game to its initial state.~~
 
 ### Cli and Graphics
 to be implemented yet
