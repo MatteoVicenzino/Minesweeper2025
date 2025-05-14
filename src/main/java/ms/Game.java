@@ -1,17 +1,22 @@
 package ms;
 
+import java.time.Instant;
+
 public class Game {
 
     private MineField minefield;
     private int flagsPlaced = 0;
     private boolean gameOver;
     private int totalMines;
+    private Instant startTime;
+    private boolean firstReveal = true;
 
     // Constructor
     public Game() {
         this.minefield = null;
         this.totalMines = 10;
         this.gameOver = false;
+        this.startTime = null;
 
         this.initMinefield();
     }
@@ -37,9 +42,19 @@ public class Game {
         return gameOver;
     }
 
-    public void revealCell(int row, int col){
-        getMinefield().revealCell(row, col);
-        if (getMinefield().getCell(row, col).isMined()) {
+    public void revealCell(int row, int col) {
+        if (gameOver || !minefield.isValid(row, col) || minefield.getCell(row, col).isRevealed()) {
+            return;
+        }
+
+        if (firstReveal && !minefield.getCell(row, col).isMined()) {
+            startTime = Instant.now();
+            firstReveal = false;
+        }
+
+        minefield.revealCell(row, col);
+
+        if (minefield.getCell(row, col).isMined()) {
             gameOver = true;
         } else {
             if (getMinefield().getUnrevealedCount() == getMinefield().getMines()) {
@@ -60,5 +75,12 @@ public class Game {
             }
         }
         // when flagging a revealed cell nothing should happen
+    }
+
+    public long getElapsedTime() {
+        if (startTime != null) {
+            return Instant.now().toEpochMilli() - startTime.toEpochMilli();
+        }
+        return 0;
     }
 }
