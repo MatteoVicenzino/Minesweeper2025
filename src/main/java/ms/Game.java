@@ -9,6 +9,7 @@ public class Game {
     private boolean gameOver;
     private int totalMines;
     private Instant startTime;
+    private Instant endTime;
     private boolean firstReveal = true;
 
     // Constructor
@@ -17,6 +18,7 @@ public class Game {
         this.totalMines = 10;
         this.gameOver = false;
         this.startTime = null;
+        this.endTime = null;
 
         this.initMinefield();
     }
@@ -56,10 +58,9 @@ public class Game {
 
         if (minefield.getCell(row, col).isMined()) {
             gameOver = true;
-        } else {
-            if (getMinefield().getUnrevealedCount() == getMinefield().getMines()) {
-                gameOver = true;
-            }
+            endTime = Instant.now();
+        } else if (minefield.getUnrevealedCount() == totalMines) {
+            gameOver = true;
         }
     }
 
@@ -79,7 +80,7 @@ public class Game {
 
     public long getElapsedTime() {
         if (startTime != null) {
-            return Instant.now().toEpochMilli() - startTime.toEpochMilli();
+            return (endTime == null ? Instant.now() : endTime).toEpochMilli() - startTime.toEpochMilli();
         }
         return 0;
     }

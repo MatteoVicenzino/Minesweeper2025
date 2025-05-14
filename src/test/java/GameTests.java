@@ -114,6 +114,23 @@ public class GameTests {
         }
         fail("Could not find a non-mine cell to reveal for the test.");
     }
+
+    @Test
+    void testTimerStopsOnGameLose() throws InterruptedException {
+        game.getMinefield().getCell(0, 0).setMined(true);
+        game.getMinefield().getCell(0, 1).setMined(false);
+
+        //to trigger the time start before revealing a mine
+        game.revealCell(0, 1);
+
+
+        game.revealCell(0, 0);
+
+        assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
+        long endTime = game.getElapsedTime();
+        Thread.sleep(10);
+        assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (lose)");
+    }
 }
 
 
