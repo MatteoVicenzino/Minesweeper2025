@@ -49,7 +49,8 @@ Note file to keep track of refactoring and improvements that need to be done at 
 
 ### Game
 - Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)
-- In the FlagCell method, check for any redundancies in the if conditions that check the validity of the input
+- ~~In the flagCell method, check for any redundancies in the if conditions that check the validity of the input~~
+- Further refactor flagCell to remove nested if statements
 
 ### Cli and Graphics
 

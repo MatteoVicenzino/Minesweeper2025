@@ -44,17 +44,17 @@ public class Game {
         }
     }
 
-    public void flagCell(int row, int col){
-        if (getMinefield().isValid(row, col) && !getMinefield().getCell(row, col).isRevealed()) {
-            boolean wasFlagged = getMinefield().getCell(row, col).isFlagged();
-            getMinefield().flagCell(row, col);
-            boolean isNowFlagged = getMinefield().getCell(row, col).isFlagged();
+    public void flagCell(int row, int col) {
 
-            if (!wasFlagged && isNowFlagged) {
-                flagsPlaced++;
-            } else if (wasFlagged && !isNowFlagged) {
+        if (!getMinefield().getCell(row, col).isRevealed()) {
+            if (getMinefield().getCell(row, col).isFlagged()) {
+                getMinefield().getCell(row, col).toggleFlag();
                 flagsPlaced--;
+            } else {
+                getMinefield().getCell(row, col).toggleFlag();
+                flagsPlaced++;
             }
         }
+        // when flagging a revealed cell nothing should happen
     }
 }
