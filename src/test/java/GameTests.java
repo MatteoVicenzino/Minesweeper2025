@@ -6,6 +6,7 @@ import ms.Game;
 public class GameTests {
 
     private Game game;
+    private final int mines = 10;
 
     @BeforeEach
     void setup() {
@@ -48,15 +49,22 @@ public class GameTests {
 
     @Test
     void testFlagCell() {
-        game.flagCell(0, 0);
-        assertTrue(game.getMinefield().getCell(0,0).isFlagged());
+        assertEquals(0, game.getFlagsPlaced());
 
-        game.flagCell(0, 0); // Unflagging should work
-        assertFalse(game.getMinefield().getCell(0,0).isFlagged());
+        game.flagCell(0, 0);
+        assertTrue(game.getMinefield().getCell(0, 0).isFlagged());
+        assertEquals(1, game.getFlagsPlaced());
+
+        game.flagCell(0, 0);
+        assertFalse(game.getMinefield().getCell(0, 0).isFlagged());
+        assertEquals(0, game.getFlagsPlaced());
+
         game.revealCell(0, 0);
-        game.flagCell(0, 0); // Should not flag a revealed cell
-        assertFalse(game.getMinefield().getCell(0,0).isFlagged());
+        game.flagCell(0, 0);
+        assertFalse(game.getMinefield().getCell(0, 0).isFlagged());
+        assertEquals(0, game.getFlagsPlaced());
     }
+
 }
 
 
