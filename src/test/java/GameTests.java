@@ -84,6 +84,18 @@ public class GameTests {
         game.revealCell(0, 0);
         assertTrue(game.getGameOver(), "Game should end when a mine is revealed");
     }
+
+    @Test
+    void testGameOverWhenAllCellsRevealed() {
+        for (int row = 0; row < game.getMinefield().getHeight(); row++) {
+            for (int col = 0; col < game.getMinefield().getWidth(); col++) {
+                if (!game.getMinefield().getCell(row, col).isMined()) {
+                    game.revealCell(row, col);
+                }
+            }
+        }
+        assertTrue(game.getGameOver(), "Game should end when all non-mine cells are revealed");
+    }
 }
 
 

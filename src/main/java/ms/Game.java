@@ -41,6 +41,10 @@ public class Game {
         getMinefield().revealCell(row, col);
         if (getMinefield().getCell(row, col).isMined()) {
             gameOver = true;
+        } else {
+            if (getMinefield().getUnrevealedCount() == getMinefield().getMines()) {
+                gameOver = true;
+            }
         }
     }
 
