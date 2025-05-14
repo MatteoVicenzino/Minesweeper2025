@@ -27,8 +27,8 @@ For now these are the tests that we are implementing, more to come...
 - ~~game.getMinesLeft() should return the correct result, and should reflect changes when flags are added or removed.~~
 - When a cell is revealed all adjacent cells should be revealed correctly:
   - multiple tests tbd...
-- If a revealed cell contains a mine, the game should immediately end and set gameOver = true.
-- If all non-mine cells are revealed, game.isWon() should return true and gameOver should be set appropriately.
+- ~~If a revealed cell contains a mine, the game should immediately end and set gameOver = true.~~
+- If all non-mine cells are revealed, game.getGameOver() should return true, aka gameOver should be set appropriately.
 - When the first cell is revealed, the timer should start; when the game ends (win or lose), the timer should stop.
 - game.getElapsedTime() should return a positive and increasing number while the game is running, and stop increasing when the game ends.
 - Calling game.reset() should reinitialize the minefield, clear all revealed/flagged cells, reset timers, and return the game to its initial state.
@@ -48,6 +48,8 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - possible refactor of testCountAdjacentMinesOutOfBounds() into a more generic test in MinefieldTests.java
 
 ### Game
+- Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)
+- In the FlagCell method, check for any redundancies in the if conditions that check the validity of the input
 
 ### Cli and Graphics
 

@@ -39,6 +39,9 @@ public class Game {
 
     public void revealCell(int row, int col){
         getMinefield().revealCell(row, col);
+        if (getMinefield().getCell(row, col).isMined()) {
+            gameOver = true;
+        }
     }
 
     public void flagCell(int row, int col){

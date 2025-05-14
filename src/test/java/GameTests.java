@@ -15,7 +15,7 @@ public class GameTests {
 
     @Test
     void testGameInitialization() {
-        assertNotNull(game.getMinefield()); // Ensure minefield is null before generation
+        assertNotNull(game.getMinefield()); // Ensure minefield is not null on creation
         assertEquals(10, game.getMinesLeft()); // Default mines left
         assertFalse(game.getGameOver());
     }
@@ -77,6 +77,12 @@ public class GameTests {
 
         game.flagCell(0, 0); // Unflag the first cell
         assertEquals(mines - 1, game.getMinesLeft());
+    }
+    @Test
+    void testRevealMineEndsGame() {
+        game.getMinefield().getCell(0, 0).setMined(true);
+        game.revealCell(0, 0);
+        assertTrue(game.getGameOver(), "Game should end when a mine is revealed");
     }
 }
 
