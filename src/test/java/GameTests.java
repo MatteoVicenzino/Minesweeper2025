@@ -65,6 +65,19 @@ public class GameTests {
         assertEquals(0, game.getFlagsPlaced());
     }
 
+    @Test
+    void testGetMinesLeft() {
+        assertEquals(mines, game.getMinesLeft()); // Initially, mines left should equal total mines
+
+        game.flagCell(0, 0); // Flag a cell
+        assertEquals(mines - 1, game.getMinesLeft());
+
+        game.flagCell(0, 1); // Flag another cell
+        assertEquals(mines - 2, game.getMinesLeft());
+
+        game.flagCell(0, 0); // Unflag the first cell
+        assertEquals(mines - 1, game.getMinesLeft());
+    }
 }
 
 

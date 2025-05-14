@@ -23,8 +23,8 @@ For now these are the tests that we are implementing, more to come...
 ### Game Tests
 - ~~When the game starts, a minefield grid of correct size is created and the correct number of mines is randomly placed.~~
 - ~~Calling game.revealCell(x, y) should mark the specified cell as revealed and update the internal state~~
-- Calling game.flagCell(x, y) should toggle the flagged state of the specified cell
-- game.getMinesLeft() should return the correct result, and should reflect changes when flags are added or removed.
+- ~~Calling game.flagCell(x, y) should toggle the flagged state of the specified cell~~
+- ~~game.getMinesLeft() should return the correct result, and should reflect changes when flags are added or removed.~~
 - When a cell is revealed all adjacent cells should be revealed correctly:
   - multiple tests tbd...
 - If a revealed cell contains a mine, the game should immediately end and set gameOver = true.

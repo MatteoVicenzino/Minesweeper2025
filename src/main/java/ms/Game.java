@@ -30,7 +30,7 @@ public class Game {
     }
 
     public int getMinesLeft() {
-        return totalMines;
+        return totalMines-flagsPlaced;
     }
 
     public boolean getGameOver() {
