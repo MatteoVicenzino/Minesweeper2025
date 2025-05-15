@@ -20,8 +20,8 @@ public class MinefieldTests {
         assertEquals(ROWS, minefield.getHeight());
         assertEquals(COLS, minefield.getWidth());
         assertEquals(MINES, minefield.getMines());
-        assertEquals(0, minefield.getRevealed());
-        assertEquals(ROWS * COLS, minefield.getUnrevealedCount());
+        // assertEquals(0, minefield.getRevealed());    // moved to game
+        // assertEquals(ROWS * COLS, minefield.getUnrevealedCount()); // moved to game
     }
 
     @Test

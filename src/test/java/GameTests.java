@@ -18,6 +18,8 @@ public class GameTests {
         assertNotNull(game.getMinefield()); // Ensure minefield is not null on creation
         assertEquals(10, game.getMinesLeft()); // Default mines left
         assertFalse(game.getGameOver());
+        assertEquals(0, game.getRevealed());
+        assertEquals(10 * 10, game.getUnrevealedCount());
     }
 
     @Test
@@ -32,19 +34,19 @@ public class GameTests {
         game.revealCell(0, 0);
 
         assertTrue(game.getMinefield().getCell(0,0).isRevealed());
-        assertEquals(1, game.getMinefield().getRevealed());
+        assertEquals(1, game.getRevealed());
     }
 
     @Test
     void testRevealAlreadyRevealedCell() {
         // First reveal
         game.revealCell(0, 0);
-        int initialRevealedCount = game.getMinefield().getRevealed();
+        int initialRevealedCount = game.getRevealed();
 
         // Try to reveal the same cell again
         game.revealCell(0, 0);
         assertTrue(game.getMinefield().getCell(0, 0).isRevealed());
-        assertEquals(initialRevealedCount, game.getMinefield().getRevealed());
+        assertEquals(initialRevealedCount, game.getRevealed());
     }
 
     @Test

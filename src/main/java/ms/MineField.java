@@ -7,7 +7,6 @@ public class MineField {
     private final int height;
     private final int width;
     private final int mines;
-    private int revealed;
     private final Cell[][] field;
 
     // Constructor
@@ -15,7 +14,6 @@ public class MineField {
         this.height = height;
         this.width = width;
         this.mines = mines;
-        this.revealed = 0;
         this.field = new Cell[height][width];
 
         // Initialize the field with cells
@@ -39,13 +37,6 @@ public class MineField {
         return mines;
     }
 
-    public int getRevealed() {
-        return revealed;
-    }
-
-    public int getUnrevealedCount() {
-        return (height * width) - revealed;
-    }
 
     public Cell getCell(int row, int col) {
         if (isValid(row, col)) {
@@ -97,19 +88,18 @@ public class MineField {
         return mineCount;
     }
 
-    public void revealCell(int row, int col) {
+
+    public boolean revealCell(int row, int col) {
         if (this.isValid(row, col)) {
-            Cell cell = this.getCell(row, col);
-            if (cell.reveal()) {
-                this.revealed++;
-            }
+            return this.getCell(row, col).reveal();
+        } else {
+            return false; // Invalid cell - to implement further to catch error
         }
     }
 
     public void flagCell(int row, int col) {
         if (this.isValid(row, col)) {
-            Cell cell = this.getCell(row, col);
-            cell.toggleFlag();
-        }
+            this.getCell(row, col).toggleFlag();
+        } // eventually complete with else statement to catch error
     }
 }

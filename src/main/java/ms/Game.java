@@ -5,7 +5,8 @@ import java.time.Instant;
 public class Game {
 
     private MineField minefield;
-    private int flagsPlaced = 0;
+    private int revealedCells;
+    private int flagsPlaced;
     private boolean gameOver;
     private int totalMines;
     private Instant startTime;
@@ -15,6 +16,8 @@ public class Game {
     // Constructor
     public Game() {
         this.minefield = null;
+        this.revealedCells = 0;
+        this.flagsPlaced = 0;
         this.totalMines = 10;
         this.gameOver = false;
         this.startTime = null;
@@ -32,6 +35,10 @@ public class Game {
         return minefield;
     }
 
+    public int getRevealed() {
+        return revealedCells;
+    }
+
     public int getFlagsPlaced() {
         return flagsPlaced;
     }
@@ -44,6 +51,11 @@ public class Game {
         return gameOver;
     }
 
+    public int getUnrevealedCount() {
+        return (10 * 10) - this.revealedCells;
+    }
+
+
     public void revealCell(int row, int col) {
         if (gameOver || !minefield.isValid(row, col) || minefield.getCell(row, col).isRevealed()) {
             return;
@@ -54,19 +66,20 @@ public class Game {
             firstReveal = false;
         }
 
-        minefield.revealCell(row, col);
+        if (minefield.revealCell(row, col)) {
+            this.revealedCells++;
+        }
 
         if (minefield.getCell(row, col).isMined()) {
             gameOver = true;
             endTime = Instant.now();
-        } else if (minefield.getUnrevealedCount() == totalMines) {
+        } else if (this.getUnrevealedCount() == totalMines) {
             gameOver = true;
             endTime = Instant.now();
         }
     }
 
     public void flagCell(int row, int col) {
-
         if (!getMinefield().getCell(row, col).isRevealed()) {
             if (getMinefield().getCell(row, col).isFlagged()) {
                 getMinefield().getCell(row, col).toggleFlag();
