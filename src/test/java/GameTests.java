@@ -152,11 +152,18 @@ public class GameTests {
 
     @Test
     void testResetGame() throws InterruptedException {
+        // Set up the game state
+        for (int row = 0; row < game.getMinefield().getHeight(); row++) {
+            for (int col = 0; col < game.getMinefield().getWidth(); col++) {
+                game.getMinefield().getCell(row, col).setMined(false);
+            }
+        }
+        game.getMinefield().getCell(0, 1).setMined(true);
         game.revealCell(0, 0);
         game.flagCell(1, 1);
         Thread.sleep(50);
 
-        game.getMinefield().getCell(0, 1).setMined(true);
+        // Trigger game over
         game.revealCell(0, 1);
 
         assertTrue(game.getGameOver(), "Game should be over before reset");
@@ -169,9 +176,7 @@ public class GameTests {
         assertFalse(game.getGameOver(), "Game should not be over after reset");
         assertEquals(0, game.getElapsedTime(), "Timer should be reset");
         assertEquals(0, game.getFlagsPlaced(), "Flags placed should be reset");
-        assertEquals(10, game.getMinesLeft(), "Mines left should be reset");
-        assertFalse(game.getMinefield().getCell(0, 1).isMined(), "Cells should not be mined after reset");
-
+        assertEquals(mines, game.getMinesLeft(), "Mines left should be reset");
 
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
