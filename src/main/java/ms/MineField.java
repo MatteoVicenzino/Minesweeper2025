@@ -10,7 +10,7 @@ public class MineField {
     private final Cell[][] field;
 
     // Constructor
-    public MineField(int height, int width, int mines) {
+    public MineField(int height, int width, int mines, boolean randomInit, int firstRow, int firstCol) {
         this.height = height;
         this.width = width;
         this.mines = mines;
@@ -22,6 +22,11 @@ public class MineField {
                 field[i][j] = new Cell();
             }
         }
+
+        if (randomInit) {
+            initializeGrid(firstRow, firstCol);
+        }
+
     }
 
     // Getters

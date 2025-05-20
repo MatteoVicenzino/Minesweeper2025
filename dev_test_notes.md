@@ -18,7 +18,7 @@ For now these are the tests that we are implementing, more to come...
     - ~~Count is equal to the number of adjacent mines (regardless of the position)~~
     -  ~~Count adj cells on corner cells~~
     - ~~Count adj cells on bombed cells~~
-- Cells are revealed correctly when the coordinates is given
+- ~~Cells are revealed correctly when the coordinates is given~~
 
 ### Game Tests
 - ~~When the game starts, a minefield grid of correct size is created and the correct number of mines is randomly placed.~~
@@ -50,6 +50,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)
 - ~~In the flagCell method, check for any redundancies in the if conditions that check the validity of the input~~
 - Further refactor flagCell to remove nested if statements
+- Initialization of minefield when resetting the game
 
 ### Cli and Graphics
 

@@ -15,7 +15,7 @@ public class GameTests {
 
     @Test
     void testGameInitialization() {
-        assertNotNull(game.getMinefield()); // Ensure minefield is not null on creation
+        assertNull(game.getMinefield()); // Ensure minefield is null on creation
         assertEquals(10, game.getMinesLeft()); // Default mines left
         assertFalse(game.getGameOver());
         assertEquals(0, game.getRevealed());
@@ -23,7 +23,8 @@ public class GameTests {
     }
 
     @Test
-    void testMinefieldInitializationOnGameCreation() {
+    void testMinefieldInitializationOnFirstClick() {
+        game.revealCell(0,0);
         assertEquals(10, game.getMinefield().getHeight());
         assertEquals(10, game.getMinefield().getWidth());
         assertEquals(10, game.getMinefield().getMines());
@@ -31,9 +32,10 @@ public class GameTests {
 
     @Test
     void testRevealCell() {
-        game.revealCell(0, 0);
+        game.revealCell(3, 3);
 
-        assertTrue(game.getMinefield().getCell(0,0).isRevealed());
+        assertTrue(game.getMinefield().getCell(3,3).isRevealed());
+        assertFalse(game.getMinefield().getCell(0,0).isRevealed());
         assertEquals(1, game.getRevealed());
     }
 
@@ -51,44 +53,52 @@ public class GameTests {
 
     @Test
     void testFlagCell() {
+        game.revealCell(0,0);
+
         assertEquals(0, game.getFlagsPlaced());
 
-        game.flagCell(0, 0);
-        assertTrue(game.getMinefield().getCell(0, 0).isFlagged());
+        game.flagCell(1, 1);
+        assertTrue(game.getMinefield().getCell(1, 1).isFlagged());
         assertEquals(1, game.getFlagsPlaced());
 
-        game.flagCell(0, 0);
-        assertFalse(game.getMinefield().getCell(0, 0).isFlagged());
+        game.flagCell(1, 1);
+        assertFalse(game.getMinefield().getCell(1, 1).isFlagged());
         assertEquals(0, game.getFlagsPlaced());
 
-        game.revealCell(0, 0);
-        game.flagCell(0, 0);
-        assertFalse(game.getMinefield().getCell(0, 0).isFlagged());
+        game.revealCell(3, 4);
+        game.flagCell(3, 4);
+        assertFalse(game.getMinefield().getCell(3, 4).isFlagged());
         assertEquals(0, game.getFlagsPlaced());
     }
 
     @Test
     void testGetMinesLeft() {
+        game.revealCell(0, 0);
+
         assertEquals(mines, game.getMinesLeft()); // Initially, mines left should equal total mines
 
-        game.flagCell(0, 0); // Flag a cell
+        game.flagCell(1, 1); // Flag a cell
         assertEquals(mines - 1, game.getMinesLeft());
 
         game.flagCell(0, 1); // Flag another cell
         assertEquals(mines - 2, game.getMinesLeft());
 
-        game.flagCell(0, 0); // Unflag the first cell
+        game.flagCell(1, 1); // Unflag the first cell
         assertEquals(mines - 1, game.getMinesLeft());
     }
     @Test
     void testRevealMineEndsGame() {
-        game.getMinefield().getCell(0, 0).setMined(true);
         game.revealCell(0, 0);
+
+        game.getMinefield().getCell(1, 1).setMined(true);
+        game.revealCell(1, 1);
         assertTrue(game.getGameOver(), "Game should end when a mine is revealed");
     }
 
     @Test
     void testGameOverWhenAllCellsRevealed() {
+        game.revealCell(0, 0);
+
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
                 if (!game.getMinefield().getCell(row, col).isMined()) {
@@ -104,6 +114,7 @@ public class GameTests {
         assertEquals(0, game.getElapsedTime(), "Initial elapsed time should be 0");
 
         // Reveal a non-mine cell
+        game.revealCell(0, 0);
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
                 if (!game.getMinefield().getCell(row, col).isMined()) {
@@ -119,14 +130,15 @@ public class GameTests {
 
     @Test
     void testTimerStopsOnGameLose() throws InterruptedException {
-        game.getMinefield().getCell(0, 0).setMined(true);
-        game.getMinefield().getCell(0, 1).setMined(false);
+        game.revealCell(0, 0);
+        game.getMinefield().getCell(0, 1).setMined(true);
+        game.getMinefield().getCell(1, 1).setMined(false);
 
         //to trigger the time start before revealing a mine
+        game.revealCell(1, 1);
+
+
         game.revealCell(0, 1);
-
-
-        game.revealCell(0, 0);
 
         assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
         long endTime = game.getElapsedTime();
@@ -136,6 +148,8 @@ public class GameTests {
 
     @Test
     void testTimerStopsOnGameWin() throws InterruptedException {
+        game.revealCell(0, 0);
+
         // Reveal all non-mine cells
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
@@ -152,6 +166,7 @@ public class GameTests {
 
     @Test
     void testResetGame() throws InterruptedException {
+        game.revealCell(0, 0);
         // Set up the game state
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
