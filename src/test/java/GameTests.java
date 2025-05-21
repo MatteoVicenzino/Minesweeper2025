@@ -10,16 +10,43 @@ public class GameTests {
 
     @BeforeEach
     void setup() {
-        game = new Game();
+        game = new Game(10,10, mines);
     }
 
     @Test
     void testGameInitialization() {
         assertNull(game.getMinefield()); // Ensure minefield is null on creation
-        assertEquals(10, game.getMinesLeft()); // Default mines left
+        assertEquals(mines, game.getMinesLeft()); // Default mines left
         assertFalse(game.getGameOver());
         assertEquals(0, game.getRevealed());
         assertEquals(10 * 10, game.getUnrevealedCount());
+    }
+
+    @Test
+    void testGameInitializationWithEasyParameters() {
+        game = new Game(9, 9, mines);
+        game.revealCell(0,0);
+        assertEquals(9, game.getMinefield().getHeight());
+        assertEquals(9, game.getMinefield().getWidth());
+        assertEquals(mines, game.getMinefield().getMines());
+    }
+
+    @Test
+    void testGameInitializationWithMediumParameters() {
+        game = new Game(16, 16, 40);
+        game.revealCell(0,0);
+        assertEquals(16, game.getMinefield().getHeight());
+        assertEquals(16, game.getMinefield().getWidth());
+        assertEquals(40, game.getMinefield().getMines());
+    }
+
+    @Test
+    void testGameInitializationWithHardParameters() {
+        game = new Game(16, 30, 99);
+        game.revealCell(0,0);
+        assertEquals(16, game.getMinefield().getHeight());
+        assertEquals(30, game.getMinefield().getWidth());
+        assertEquals(99, game.getMinefield().getMines());
     }
 
     @Test
@@ -27,7 +54,7 @@ public class GameTests {
         game.revealCell(0,0);
         assertEquals(10, game.getMinefield().getHeight());
         assertEquals(10, game.getMinefield().getWidth());
-        assertEquals(10, game.getMinefield().getMines());
+        assertEquals(mines, game.getMinefield().getMines());
     }
 
     @Test

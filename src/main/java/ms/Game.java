@@ -8,25 +8,31 @@ public class Game {
     private int revealedCells;
     private int flagsPlaced;
     private boolean gameOver;
-    private final int totalMines;
     private Instant startTime;
     private Instant endTime;
     private boolean firstReveal;
+    private final int height;
+    private final int width;
+    private final int totalMines;
+
 
     // Constructor
-    public Game() {
+    public Game(int height, int width, int totalMines) {
         this.minefield = null;
         this.revealedCells = 0;
         this.flagsPlaced = 0;
-        this.totalMines = 10;
         this.gameOver = false;
         this.startTime = null;
         this.endTime = null;
         this.firstReveal = true;
+        this.height = height;
+        this.width = width;
+        this.totalMines = totalMines;
+
     }
 
-    public void initMinefield(int firstRow, int firstCol) {
-        this.minefield = new MineField(10, 10, totalMines, true, firstRow, firstCol);
+    public void initMinefield(boolean randomInit, int firstRow, int firstCol) {
+        this.minefield = new MineField(this.height, this.width, this.totalMines, randomInit, firstRow, firstCol);
     }
 
     public MineField getMinefield() {
@@ -57,7 +63,7 @@ public class Game {
     public void revealCell(int row, int col) {
 
         if (firstReveal) {
-            this.initMinefield(row, col);
+            this.initMinefield(true, row, col);
             startTime = Instant.now();
             firstReveal = false;
         }
