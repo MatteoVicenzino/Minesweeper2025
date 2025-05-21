@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ms.Cell;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -5,9 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CellTests {
 
+    private Cell cell;
+
+    @BeforeEach
+    void setup() {
+        cell = new Cell();
+    }
+
     @Test
     void testInitialState() {
-        Cell cell = new Cell();
         assertFalse(cell.isMined());
         assertFalse(cell.isRevealed());
         assertFalse(cell.isFlagged());
@@ -16,8 +23,6 @@ public class CellTests {
 
     @Test
     void testSetMine() {
-        Cell cell = new Cell();
-
         cell.setMined(true);
         assertTrue(cell.isMined());
 
@@ -27,8 +32,6 @@ public class CellTests {
 
     @Test
     void testRevealCell() {
-        Cell cell = new Cell();
-
         assertTrue(cell.reveal());
         assertTrue(cell.isRevealed());
 
@@ -38,8 +41,6 @@ public class CellTests {
 
     @Test
     void testToggleFlagCell() {
-        Cell cell = new Cell();
-
         cell.toggleFlag();
         assertTrue(cell.isFlagged());
 
@@ -49,7 +50,6 @@ public class CellTests {
 
     @Test
     void testToggleFlagOnRevealedCell() {
-        Cell cell = new Cell();
         cell.reveal();
         assertTrue(cell.isRevealed());
         assertFalse(cell.isFlagged());
@@ -57,6 +57,4 @@ public class CellTests {
 
         assertFalse(cell.isFlagged());
     }
-
-
 }

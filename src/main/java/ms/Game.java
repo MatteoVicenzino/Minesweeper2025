@@ -11,7 +11,7 @@ public class Game {
     private final int totalMines;
     private Instant startTime;
     private Instant endTime;
-    private boolean firstReveal = true;
+    private boolean firstReveal;
 
     // Constructor
     public Game() {
@@ -22,6 +22,7 @@ public class Game {
         this.gameOver = false;
         this.startTime = null;
         this.endTime = null;
+        this.firstReveal = true;
     }
 
     public void initMinefield(int firstRow, int firstCol) {

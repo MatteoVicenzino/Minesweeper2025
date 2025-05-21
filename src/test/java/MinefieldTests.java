@@ -15,7 +15,6 @@ public class MinefieldTests {
 
     @Test
     void testInitialState() {
-        //random mines
         minefield = new MineField(ROWS, COLS, MINES, true, FIRST_ROW, FIRST_COL);
 
         assertEquals(ROWS, minefield.getHeight());

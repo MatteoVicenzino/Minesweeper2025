@@ -39,7 +39,7 @@ to be implemented yet
 
 Note file to keep track of refactoring and improvements that need to be done at some point of the development.
 
-### Cell 
+### Cell
 
 ### Minefield
 - ~~rows and cols --> height and width~~
@@ -53,5 +53,8 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - Initialization of minefield when resetting the game
 
 ### Cli and Graphics
+
+### Tests
+- Refactor the tests to improve readability and structure
 
 
