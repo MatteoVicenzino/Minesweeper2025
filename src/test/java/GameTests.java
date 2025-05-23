@@ -1,17 +1,56 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.*;
 import ms.Game;
 import ms.MineField;
+import ms.MineFieldFactory;
 
 public class GameTests {
 
     private Game game;
     private final int mines = 10;
 
+    @Mock
+    private MineFieldFactory mockMineFieldFactory;
+
     @BeforeEach
     void setup() {
+        MockitoAnnotations.openMocks(this);
         game = new Game(10,10, mines);
+    }
+
+    // Helpers for creating mocks
+    private Game createGameWithMockFactory(int height, int width, int mines) {
+        return new Game(height, width, mines, mockMineFieldFactory);
+    }
+
+    private MineField createMineFieldWithPattern(boolean[][] minePattern) {
+        int height = minePattern.length;
+        int width = minePattern[0].length;
+        int mineCount = 0;
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                if (minePattern[row][col]) {
+                    mineCount++;
+                }
+            }
+        }
+
+        MineField realMineField = new MineField(height, width, mineCount);
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                if (minePattern[row][col]) {
+                    realMineField.getCell(row, col).setMined(true);
+                }
+            }
+        }
+
+        return realMineField;
     }
 
     @Test
@@ -61,6 +100,16 @@ public class GameTests {
 
     @Test
     void testRevealCell() {
+        boolean[][] minePattern = {
+                {false, false, false, false},
+                {false, false, false, false},
+                {false, false, true, false},
+                {false, false, false, false}
+        };
+        MineField testMineField = createMineFieldWithPattern(minePattern);
+        game = createGameWithMockFactory(4, 4, 1);
+        when(mockMineFieldFactory.createMineField(4, 4, 1)).thenReturn(testMineField);
+
         game.revealCell(3, 3);
 
         assertTrue(game.getMinefield().getCell(3,3).isRevealed());
@@ -82,7 +131,18 @@ public class GameTests {
 
     @Test
     void testFlagCell() {
-        game.revealCell(0,0);
+        boolean[][] minePattern = {
+                {false, true, false, false, false},
+                {true, false, false, false, false},
+                {false, false, true, false, false},
+                {false, false, false, true, false},
+                {false, false, false, false, false}
+        };
+        MineField testMineField = createMineFieldWithPattern(minePattern);
+        game = createGameWithMockFactory(5, 5, 4);
+        when(mockMineFieldFactory.createMineField(5, 5, 4)).thenReturn(testMineField);
+
+        game.revealCell(4, 4);
 
         assertEquals(0, game.getFlagsPlaced());
 
@@ -102,24 +162,41 @@ public class GameTests {
 
     @Test
     void testGetMinesLeft() {
+        boolean[][] minePattern = {
+                {false, false, false, false},
+                {false, true, false, false},
+                {false, false, true, false},
+                {false, false, false, false}
+        };
+        MineField testMineField = createMineFieldWithPattern(minePattern);
+        game = createGameWithMockFactory(4, 4, 2);
+        when(mockMineFieldFactory.createMineField(4, 4, 2)).thenReturn(testMineField);
+
         game.revealCell(0, 0);
 
-        assertEquals(mines, game.getMinesLeft()); // Initially, mines left should equal total mines
+        assertEquals(2, game.getMinesLeft()); // Initially, mines left should equal total mines
 
         game.flagCell(1, 1); // Flag a cell
-        assertEquals(mines - 1, game.getMinesLeft());
+        assertEquals(1, game.getMinesLeft());
 
         game.flagCell(0, 1); // Flag another cell
-        assertEquals(mines - 2, game.getMinesLeft());
+        assertEquals(0, game.getMinesLeft());
 
         game.flagCell(1, 1); // Unflag the first cell
-        assertEquals(mines - 1, game.getMinesLeft());
+        assertEquals(1, game.getMinesLeft());
     }
+
     @Test
     void testRevealMineEndsGame() {
-        game.revealCell(0, 0);
+        boolean[][] minePattern = {
+                {false, false, false},
+                {false, true, false},
+                {false, false, false}
+        };
+        MineField testMineField = createMineFieldWithPattern(minePattern);
+        game = createGameWithMockFactory(3, 3, 1);
+        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
-        game.getMinefield().getCell(1, 1).setMined(true);
         game.revealCell(1, 1);
         assertTrue(game.getGameOver(), "Game should end when a mine is revealed");
     }
@@ -159,12 +236,15 @@ public class GameTests {
 
     @Test
     void testTimerStopsOnGameLose() throws InterruptedException {
-        game.revealCell(0, 0);
-        game.getMinefield().getCell(0, 1).setMined(true);
-        game.getMinefield().getCell(1, 1).setMined(false);
+        boolean[][] minePattern = {
+                {false, true, false},
+                {false, false, false},
+                {false, false, false}
+        };
+        MineField testMineField = createMineFieldWithPattern(minePattern);
+        game = createGameWithMockFactory(3, 3, 1);
+        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
-        //to trigger the time start before revealing a mine
-        game.revealCell(1, 1);
 
 
         game.revealCell(0, 1);
@@ -195,6 +275,15 @@ public class GameTests {
 
     @Test
     void testResetGame() throws InterruptedException {
+        boolean[][] minePattern = {
+                {false, true, false},
+                {false, false, false},
+                {false, false, false}
+        };
+        game = createGameWithMockFactory(3, 3, 1);
+        when(mockMineFieldFactory.createMineField(3, 3, 0)).thenAnswer(invocation -> new MineField(3, 3, 0));
+        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenAnswer(invocation -> createMineFieldWithPattern(minePattern));
+
         game.revealCell(0, 0);
         // Set up the game state
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
@@ -220,7 +309,7 @@ public class GameTests {
         assertFalse(game.getGameOver(), "Game should not be over after reset");
         assertEquals(0, game.getElapsedTime(), "Timer should be reset");
         assertEquals(0, game.getFlagsPlaced(), "Flags placed should be reset");
-        assertEquals(mines, game.getMinesLeft(), "Mines left should be reset");
+        assertEquals(1, game.getMinesLeft(), "Mines left should be reset");
 
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {

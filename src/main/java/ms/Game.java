@@ -21,7 +21,7 @@ public class Game {
         this.width = width;
         this.totalMines = totalMines;
         this.mineFieldFactory = mineFieldFactory;
-        this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
+        this.minefield = mineFieldFactory.createMineField(height, width, 0);
         this.revealedCells = 0;
         this.flagsPlaced = 0;
         this.gameOver = false;
@@ -35,6 +35,7 @@ public class Game {
     }
 
     public void placeMines(int firstRow, int firstCol) {
+        this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
         this.minefield.initializeGrid(firstRow, firstCol);
     }
 
@@ -76,7 +77,7 @@ public class Game {
 
     public void revealCell(int row, int col) {
         if (firstReveal) {
-            placeMines(row, col);
+            this.placeMines(row, col);
             startTime = Instant.now();
             firstReveal = false;
         }

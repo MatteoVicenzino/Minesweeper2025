@@ -14,10 +14,13 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.mockito:mockito-core:5.1.1'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.1.1'
+    testImplementation 'org.mockito:mockito-inline:5.1.1'
 }
 
 test {
     useJUnitPlatform()
+    jvmArgs += '-Dnet.bytebuddy.experimental=true'
+    jvmArgs += '-XX:+EnableDynamicAgentLoading'
 }
 
 jar {
