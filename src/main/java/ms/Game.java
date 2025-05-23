@@ -56,7 +56,7 @@ public class Game {
     }
 
     public int getUnrevealedCount() {
-        return (10 * 10) - this.revealedCells;
+        return (height * width) - this.revealedCells;
     }
 
 
