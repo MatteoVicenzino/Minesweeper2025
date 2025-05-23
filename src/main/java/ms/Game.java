@@ -88,10 +88,10 @@ public class Game {
     public void flagCell(int row, int col) {
         if (!getMinefield().getCell(row, col).isRevealed()) {
             if (getMinefield().getCell(row, col).isFlagged()) {
-                getMinefield().getCell(row, col).toggleFlag();
+                getMinefield().flagCell(row, col);
                 flagsPlaced--;
             } else {
-                getMinefield().getCell(row, col).toggleFlag();
+                getMinefield().flagCell(row, col);
                 flagsPlaced++;
             }
         }
