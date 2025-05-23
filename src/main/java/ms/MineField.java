@@ -10,7 +10,7 @@ public class MineField {
     private final Cell[][] field;
 
     // Constructor
-    public MineField(int height, int width, int mines, boolean randomInit, int firstRow, int firstCol) {
+    public MineField(int height, int width, int mines) {
         this.height = height;
         this.width = width;
         this.mines = mines;
@@ -22,11 +22,6 @@ public class MineField {
                 field[i][j] = new Cell();
             }
         }
-
-        if (randomInit) {
-            initializeGrid(firstRow, firstCol);
-        }
-
     }
 
     // Getters
@@ -107,4 +102,46 @@ public class MineField {
             this.getCell(row, col).toggleFlag();
         } // eventually complete with else statement to catch error
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        MineField other = (MineField) obj;
+
+        if (this.height != other.height || this.width != other.width) {
+            return false;
+        }
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (this.field[i][j].isMined() != other.field[i][j].isMined()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + height;
+        result = 31 * result + width;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result = 31 * result + (field[i][j].isMined() ? 1 : 0);
+            }
+        }
+        return result;
+    }
+
+
 }

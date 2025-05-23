@@ -18,7 +18,7 @@ public class Game {
 
     // Constructor
     public Game(int height, int width, int totalMines) {
-        this.minefield = null;
+        this.minefield = new MineField(height, width, totalMines);
         this.revealedCells = 0;
         this.flagsPlaced = 0;
         this.gameOver = false;
@@ -31,8 +31,8 @@ public class Game {
 
     }
 
-    public void initMinefield(boolean randomInit, int firstRow, int firstCol) {
-        this.minefield = new MineField(this.height, this.width, this.totalMines, randomInit, firstRow, firstCol);
+    public void placeMines(int firstRow, int firstCol) {
+        this.minefield.initializeGrid(firstRow, firstCol);
     }
 
     public MineField getMinefield() {
@@ -63,7 +63,7 @@ public class Game {
     public void revealCell(int row, int col) {
 
         if (firstReveal) {
-            this.initMinefield(true, row, col);
+            this.placeMines(row, col);
             startTime = Instant.now();
             firstReveal = false;
         }
@@ -106,7 +106,7 @@ public class Game {
     }
 
     public void resetGame() {
-        this.minefield = new MineField(10, 10, totalMines, false, -1, -1);
+        this.minefield = new MineField(height, width, 0);
         this.gameOver = false;
         this.flagsPlaced = 0;
         this.startTime = null;

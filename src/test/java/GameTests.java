@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ms.Game;
+import ms.MineField;
 
 public class GameTests {
 
@@ -15,7 +16,8 @@ public class GameTests {
 
     @Test
     void testGameInitialization() {
-        assertNull(game.getMinefield()); // Ensure minefield is null on creation
+        MineField voidMinefield = new MineField(10, 10, 0);
+        assertEquals(voidMinefield, game.getMinefield()); // Ensure minefield empty
         assertEquals(mines, game.getMinesLeft()); // Default mines left
         assertFalse(game.getGameOver());
         assertEquals(0, game.getRevealed());

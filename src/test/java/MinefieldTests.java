@@ -15,7 +15,7 @@ public class MinefieldTests {
 
     @Test
     void testInitialState() {
-        minefield = new MineField(ROWS, COLS, MINES, true, FIRST_ROW, FIRST_COL);
+        minefield = new MineField(ROWS, COLS, MINES);
 
         assertEquals(ROWS, minefield.getHeight());
         assertEquals(COLS, minefield.getWidth());
@@ -25,7 +25,8 @@ public class MinefieldTests {
     @Test
     void testInitializeGrid() {
         // random, but initial cell have to be empty
-        minefield = new MineField(ROWS, COLS, MINES, true, 5, 5);
+        minefield = new MineField(ROWS, COLS, MINES);
+        minefield.initializeGrid(5,5);
 
         int mineCount = 0;
         for (int r = 0; r < ROWS; r++) {
@@ -42,7 +43,8 @@ public class MinefieldTests {
 
     @Test
     void testIsValid() {
-        minefield = new MineField(ROWS, COLS, MINES, true, 5, 5);
+        minefield = new MineField(ROWS, COLS, MINES);
+        minefield.initializeGrid(5,5);
 
         assertTrue(minefield.isValid(0, 0));
         assertTrue(minefield.isValid(ROWS-1, COLS-1));
@@ -62,7 +64,8 @@ public class MinefieldTests {
                 {false, false, true, false},
                 {false, false, true, true}
         };
-        minefield = new MineField(4, 4, 0, false, -1, -1);
+        minefield = new MineField(4, 4, 0);
+        minefield.initializeGrid(-1,-1);
         // Set mines manually according to our pattern
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
@@ -89,7 +92,8 @@ public class MinefieldTests {
 
     @Test
     void testCountAdjacentMinesOutOfBounds() {
-        minefield = new MineField(ROWS, COLS, MINES, true, 5, 5);
+        minefield = new MineField(ROWS, COLS, MINES);
+        minefield.initializeGrid(5,5);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             minefield.countAdjacentMines(-1, 0);
