@@ -78,7 +78,7 @@ public class MineField {
         // Check all adjacent cells
         for (int r = row - 1; r <= row + 1; r++) {
             for (int c = col - 1; c <= col + 1; c++) {
-                if (r == row && c == col) continue; // Skip the current cell
+                if (r == row && c == col) continue;
                 if (isValid(r, c) && field[r][c].isMined()) {
                     mineCount++;
                 }

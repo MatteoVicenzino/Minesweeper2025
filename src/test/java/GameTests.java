@@ -246,7 +246,6 @@ public class GameTests {
         when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
 
-
         game.revealCell(0, 1);
 
         assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
@@ -285,7 +284,7 @@ public class GameTests {
         when(mockMineFieldFactory.createMineField(3, 3, 1)).thenAnswer(invocation -> createMineFieldWithPattern(minePattern));
 
         game.revealCell(0, 0);
-        // Set up the game state
+
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
                 game.getMinefield().getCell(row, col).setMined(false);
@@ -296,7 +295,6 @@ public class GameTests {
         game.flagCell(1, 1);
         Thread.sleep(50);
 
-        // Trigger game over
         game.revealCell(0, 1);
 
         assertTrue(game.getGameOver(), "Game should be over before reset");
@@ -317,6 +315,70 @@ public class GameTests {
                 assertFalse(game.getMinefield().getCell(row, col).isFlagged(), "All cells should be unflagged after reset");
             }
         }
+    }
+
+    @Test
+    void testRevealEmptyCellsCascade() throws InterruptedException {
+        boolean[][] minePattern = new boolean[][]{
+                {false, false, true, false, false},
+                {false, true, true, false, false},
+                {false, false, true, true, true},
+                {false, false, false, false, true},
+                {false, false, false, true, false}
+        };
+
+        // Crea un minefield reale con il pattern
+        MineField realMineField = createMineFieldWithPattern(minePattern);
+
+        // Crea uno SPY del minefield reale
+        MineField spyMineField = spy(realMineField);
+
+        // Override solo initializeGrid per non fare nulla
+        doNothing().when(spyMineField).initializeGrid(anyInt(), anyInt());
+
+        // Configura il factory mock
+        when(mockMineFieldFactory.createMineField(5, 5, 0)).thenReturn(new MineField(5, 5, 0));
+        when(mockMineFieldFactory.createMineField(5, 5, 8)).thenReturn(spyMineField);
+
+        // Crea il game
+        game = createGameWithMockFactory(5, 5, 8);
+
+        // Ora il test dovrebbe funzionare perfettamente
+        game.revealCell(0, 0);
+
+        // Debug per verificare
+        System.out.println("Adjacent mines at (0,0): " + game.getMinefield().countAdjacentMines(0, 0));
+
+        // Verifica che le celle adiacenti siano state rivelate o meno come atteso
+        assertFalse(game.getMinefield().getCell(1, 0).isRevealed(), "Cell (1, 0) should not be revealed");
+        assertFalse(game.getMinefield().getCell(0, 1).isRevealed(), "Cell (0, 1) should not be revealed");
+        assertFalse(game.getMinefield().getCell(1, 1).isRevealed(), "Cell (1, 1) should not be revealed");
+
+        game.revealCell(0, 4);
+        assertTrue(game.getMinefield().getCell(0, 3).isRevealed(), "Cell (0, 3) should be revealed");
+        assertTrue(game.getMinefield().getCell(1, 3).isRevealed(), "Cell (1, 3) should be revealed");
+        assertTrue(game.getMinefield().getCell(1, 4).isRevealed(), "Cell (1, 4) should be revealed");
+
+        game.revealCell(4, 4);
+        assertFalse(game.getMinefield().getCell(3, 4).isRevealed(), "Cell (3, 4) should not be revealed");
+        assertFalse(game.getMinefield().getCell(3, 3).isRevealed(), "Cell (3, 3) should not be revealed");
+        assertFalse(game.getMinefield().getCell(4, 3).isRevealed(), "Cell (4, 3) should not be revealed");
+
+        game.revealCell(4, 0);
+        assertTrue(game.getMinefield().getCell(4, 1).isRevealed(), "Cell (4, 1) should be revealed");
+        assertTrue(game.getMinefield().getCell(4, 2).isRevealed(), "Cell (4, 2) should be revealed");
+        assertFalse(game.getMinefield().getCell(4, 3).isRevealed(), "Cell (4, 3) should not be revealed");
+
+        assertTrue(game.getMinefield().getCell(3, 0).isRevealed(), "Cell (3, 0) should be revealed");
+        assertTrue(game.getMinefield().getCell(3, 1).isRevealed(), "Cell (3, 1) should be revealed");
+        assertTrue(game.getMinefield().getCell(3, 2).isRevealed(), "Cell (3, 2) should be revealed");
+        assertFalse(game.getMinefield().getCell(3, 3).isRevealed(), "Cell (3, 3) should not be revealed");
+
+        assertTrue(game.getMinefield().getCell(2, 0).isRevealed(), "Cell (2, 0) should be revealed");
+        assertTrue(game.getMinefield().getCell(2, 1).isRevealed(), "Cell (2, 1) should be revealed");
+        assertFalse(game.getMinefield().getCell(2, 2).isRevealed(), "Cell (2, 2) should not be revealed");
+
+        assertFalse(game.getMinefield().getCell(1, 0).isRevealed(), "Cell (1, 0) should not be revealed");
     }
 }
 

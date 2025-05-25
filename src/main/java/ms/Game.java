@@ -86,16 +86,42 @@ public class Game {
             return;
         }
 
-        if (minefield.revealCell(row, col)) {
+
+        if (minefield.getCell(row, col).isMined()) {
+            minefield.getCell(row, col).reveal();
             this.revealedCells++;
+            gameOver = true;
+            endTime = Instant.now();
+            return;
+        }
+
+        revealCellCascade(row, col);
+
+        if (this.getUnrevealedCount() == totalMines) {
+            gameOver = true;
+            endTime = Instant.now();
+        }
+    }
+
+    private void revealCellCascade(int row, int col) {
+        if (gameOver || !minefield.isValid(row, col) || minefield.getCell(row, col).isRevealed()) {
+            return;
         }
 
         if (minefield.getCell(row, col).isMined()) {
-            gameOver = true;
-            endTime = Instant.now();
-        } else if (this.getUnrevealedCount() == totalMines) {
-            gameOver = true;
-            endTime = Instant.now();
+            return;
+        }
+
+        minefield.getCell(row, col).reveal();
+        this.revealedCells++;
+
+        if (minefield.countAdjacentMines(row, col) == 0) {
+            for (int r = row - 1; r <= row + 1; r++) {
+                for (int c = col - 1; c <= col + 1; c++) {
+                    if (r == row && c == col) continue; // Skip the current cell
+                    revealCellCascade(r, c);
+                }
+            }
         }
     }
 
