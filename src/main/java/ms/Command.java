@@ -27,4 +27,12 @@ public class Command {
         return col;
     }
 
+    @Override
+    public String toString() {
+        return "Command{" +
+                "type=" + type +
+                ", row=" + row +
+                ", col=" + col +
+                '}';
+    }
 }
