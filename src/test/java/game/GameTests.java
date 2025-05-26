@@ -174,25 +174,6 @@ public class GameTests {
     }
 
     @Test
-    void testTimerStopsOnGameLose() throws InterruptedException {
-        boolean[][] minePattern = {
-                {false, true, false},
-                {false, false, false},
-                {false, false, false}
-        };
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
-
-        game.revealCell(0, 1);
-
-        assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
-        long endTime = game.getElapsedTime();
-        Thread.sleep(10);
-        assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (lose)");
-    }
-
-    @Test
     void testTimerStopsOnGameWin() throws InterruptedException {
         game.revealCell(0, 0);
         GameTestsHelper.revealAllNonMineCells(game);

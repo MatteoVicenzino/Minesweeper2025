@@ -3,13 +3,20 @@ package game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.*;
 import ms.Game;
+import ms.MineField;
+import ms.MineFieldFactory;
 
 public class TimerTests {
 
     private Game game;
     private final int mines = 10;
+
+    @Mock
+    private MineFieldFactory mockMineFieldFactory;
 
     @BeforeEach
     void setup() {
@@ -34,4 +41,24 @@ public class TimerTests {
         }
         fail("Could not find a non-mine cell to reveal for the test.");
     }
+
+    @Test
+    void testTimerStopsOnGameLose() throws InterruptedException {
+        boolean[][] minePattern = {
+                {false, true, false},
+                {false, false, false},
+                {false, false, false}
+        };
+        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
+        game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
+
+        game.revealCell(0, 1);
+
+        assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
+        long endTime = game.getElapsedTime();
+        Thread.sleep(10);
+        assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (lose)");
+    }
+
 }
