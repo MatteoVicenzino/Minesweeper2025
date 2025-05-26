@@ -5,24 +5,20 @@ public class Cell {
     private boolean isFlagged;
     private boolean isMined;
 
-    // Constructor
     public Cell() {
         this.isRevealed = false;
         this.isFlagged = false;
         this.isMined = false;
     }
 
-    // Return if the cell has a mine
     public boolean isMined() {
         return isMined;
     }
 
-    // Return if the cell is revealed
     public boolean isRevealed() {
         return isRevealed;
     }
 
-    // Return if the cell is flagged
     public boolean isFlagged() {
         return isFlagged;
     }

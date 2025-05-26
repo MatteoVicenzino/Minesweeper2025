@@ -9,14 +9,12 @@ public class MineField {
     private final int mines;
     private final Cell[][] field;
 
-    // Constructor
     public MineField(int height, int width, int mines) {
         this.height = height;
         this.width = width;
         this.mines = mines;
         this.field = new Cell[height][width];
 
-        // Initialize the field with cells
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 field[i][j] = new Cell();
@@ -24,7 +22,6 @@ public class MineField {
         }
     }
 
-    // Getters
     public int getHeight() {
         return height;
     }
@@ -54,12 +51,10 @@ public class MineField {
         Random random = new Random();
         int placedMines = 0;
 
-        // Place mines randomly, avoiding the safe cell
         while (placedMines < mines) {
             int row = random.nextInt(height);
             int col = random.nextInt(width);
 
-            // Skip if this is the first cell or already has a mine
             if ((row == firstRow && col == firstCol) || field[row][col].isMined()) {
                 continue;
             }
@@ -75,7 +70,6 @@ public class MineField {
         }
         int mineCount = 0;
 
-        // Check all adjacent cells
         for (int r = row - 1; r <= row + 1; r++) {
             for (int c = col - 1; c <= col + 1; c++) {
                 if (r == row && c == col) continue;
@@ -88,12 +82,12 @@ public class MineField {
         return mineCount;
     }
 
-
+    @Deprecated
     public boolean revealCell(int row, int col) {
         if (this.isValid(row, col)) {
             return this.getCell(row, col).reveal();
         } else {
-            return false; // Invalid cell - to implement further to catch error
+            return false;
         }
     }
 

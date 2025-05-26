@@ -19,10 +19,9 @@ public class GameTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        game = new Game(10,10, mines);
+        game = new Game(10, 10, mines);
     }
 
-    // Helpers for creating mocks
     private Game createGameWithMockFactory(int height, int width, int mines) {
         return new Game(height, width, mines, mockMineFieldFactory);
     }
@@ -56,8 +55,8 @@ public class GameTests {
     @Test
     void testGameInitialization() {
         MineField voidMinefield = new MineField(10, 10, 0);
-        assertEquals(voidMinefield, game.getMinefield()); // Ensure minefield empty
-        assertEquals(mines, game.getMinesLeft()); // Default mines left
+        assertEquals(voidMinefield, game.getMinefield());
+        assertEquals(mines, game.getMinesLeft());
         assertFalse(game.getGameOver());
         assertEquals(0, game.getRevealed());
         assertEquals(10 * 10, game.getUnrevealedCount());
@@ -66,7 +65,7 @@ public class GameTests {
     @Test
     void testGameInitializationWithEasyParameters() {
         game = new Game(9, 9, mines);
-        game.revealCell(0,0);
+        game.revealCell(0, 0);
         assertEquals(9, game.getMinefield().getHeight());
         assertEquals(9, game.getMinefield().getWidth());
         assertEquals(mines, game.getMinefield().getMines());
@@ -75,7 +74,7 @@ public class GameTests {
     @Test
     void testGameInitializationWithMediumParameters() {
         game = new Game(16, 16, 40);
-        game.revealCell(0,0);
+        game.revealCell(0, 0);
         assertEquals(16, game.getMinefield().getHeight());
         assertEquals(16, game.getMinefield().getWidth());
         assertEquals(40, game.getMinefield().getMines());
@@ -84,7 +83,7 @@ public class GameTests {
     @Test
     void testGameInitializationWithHardParameters() {
         game = new Game(16, 30, 99);
-        game.revealCell(0,0);
+        game.revealCell(0, 0);
         assertEquals(16, game.getMinefield().getHeight());
         assertEquals(30, game.getMinefield().getWidth());
         assertEquals(99, game.getMinefield().getMines());
@@ -92,7 +91,7 @@ public class GameTests {
 
     @Test
     void testMinefieldInitializationOnFirstClick() {
-        game.revealCell(0,0);
+        game.revealCell(0, 0);
         assertEquals(10, game.getMinefield().getHeight());
         assertEquals(10, game.getMinefield().getWidth());
         assertEquals(mines, game.getMinefield().getMines());
@@ -119,11 +118,9 @@ public class GameTests {
 
     @Test
     void testRevealAlreadyRevealedCell() {
-        // First reveal
         game.revealCell(0, 0);
         int initialRevealedCount = game.getRevealed();
 
-        // Try to reveal the same cell again
         game.revealCell(0, 0);
         assertTrue(game.getMinefield().getCell(0, 0).isRevealed());
         assertEquals(initialRevealedCount, game.getRevealed());
@@ -219,7 +216,6 @@ public class GameTests {
     void testTimerStartsOnFirstReveal() throws InterruptedException {
         assertEquals(0, game.getElapsedTime(), "Initial elapsed time should be 0");
 
-        // Reveal a non-mine cell
         game.revealCell(0, 0);
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
@@ -227,7 +223,7 @@ public class GameTests {
                     game.revealCell(row, col);
                     Thread.sleep(10); // Give some time to elapse
                     assertTrue(game.getElapsedTime() > 0, "Timer should start after first reveal");
-                    return; // Exit after the first reveal
+                    return;
                 }
             }
         }
@@ -258,7 +254,6 @@ public class GameTests {
     void testTimerStopsOnGameWin() throws InterruptedException {
         game.revealCell(0, 0);
 
-        // Reveal all non-mine cells
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
                 if (!game.getMinefield().getCell(row, col).isMined()) {
@@ -327,29 +322,19 @@ public class GameTests {
                 {false, false, false, true, false}
         };
 
-        // Crea un minefield reale con il pattern
         MineField realMineField = createMineFieldWithPattern(minePattern);
 
-        // Crea uno SPY del minefield reale
         MineField spyMineField = spy(realMineField);
 
-        // Override solo initializeGrid per non fare nulla
         doNothing().when(spyMineField).initializeGrid(anyInt(), anyInt());
 
-        // Configura il factory mock
         when(mockMineFieldFactory.createMineField(5, 5, 0)).thenReturn(new MineField(5, 5, 0));
         when(mockMineFieldFactory.createMineField(5, 5, 8)).thenReturn(spyMineField);
 
-        // Crea il game
         game = createGameWithMockFactory(5, 5, 8);
 
-        // Ora il test dovrebbe funzionare perfettamente
         game.revealCell(0, 0);
 
-        // Debug per verificare
-        System.out.println("Adjacent mines at (0,0): " + game.getMinefield().countAdjacentMines(0, 0));
-
-        // Verifica che le celle adiacenti siano state rivelate o meno come atteso
         assertFalse(game.getMinefield().getCell(1, 0).isRevealed(), "Cell (1, 0) should not be revealed");
         assertFalse(game.getMinefield().getCell(0, 1).isRevealed(), "Cell (0, 1) should not be revealed");
         assertFalse(game.getMinefield().getCell(1, 1).isRevealed(), "Cell (1, 1) should not be revealed");
