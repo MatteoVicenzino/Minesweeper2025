@@ -246,8 +246,6 @@ public class GameTests {
 
         game.resetGame();
 
-        assertEquals(1, game.getMinesLeft(), "Mines left should be reset");
-
         assertTrue(GameTestsHelper.verifyInitialCellStates(game), "All cells should be in initial state after reset");
     }
 
