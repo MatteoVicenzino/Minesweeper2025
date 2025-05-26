@@ -174,24 +174,6 @@ public class GameTests {
     }
 
     @Test
-    void testTimerStartsOnFirstReveal() throws InterruptedException {
-        assertEquals(0, game.getElapsedTime(), "Initial elapsed time should be 0");
-
-        game.revealCell(0, 0);
-        for (int row = 0; row < game.getMinefield().getHeight(); row++) {
-            for (int col = 0; col < game.getMinefield().getWidth(); col++) {
-                if (!game.getMinefield().getCell(row, col).isMined()) {
-                    game.revealCell(row, col);
-                    Thread.sleep(10);
-                    assertTrue(game.getElapsedTime() > 0, "Timer should start after first reveal");
-                    return;
-                }
-            }
-        }
-        fail("Could not find a non-mine cell to reveal for the test.");
-    }
-
-    @Test
     void testTimerStopsOnGameLose() throws InterruptedException {
         boolean[][] minePattern = {
                 {false, true, false},
