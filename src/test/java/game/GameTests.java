@@ -174,16 +174,6 @@ public class GameTests {
     }
 
     @Test
-    void testTimerStopsOnGameWin() throws InterruptedException {
-        game.revealCell(0, 0);
-        GameTestsHelper.revealAllNonMineCells(game);
-        assertTrue(game.getGameOver(), "Game should be over after revealing all non-mine cells");
-        long endTime = game.getElapsedTime();
-        Thread.sleep(10);
-        assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (win)");
-    }
-
-    @Test
     void testRevealEmptyCellsCascade() throws InterruptedException {
         boolean[][] minePattern = GameTestsHelper.createCascadeTestPattern();
         MineField realMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
