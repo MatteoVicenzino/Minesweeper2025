@@ -54,4 +54,44 @@ public class CommandParserTests {
         assertEquals(-1, command.getRow(), "Row should be -1 for QUIT command");
         assertEquals(-1, command.getCol(), "Column should be -1 for QUIT command");
     }
+
+    @Test
+    void testParseEmptyInput() {
+        CommandParser parser = new CommandParser();
+        String input = "";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Empty input should throw an exception");
+        assertTrue(thrown.getMessage().contains("Input cannot be empty"), "Error message should indicate empty input");
+    }
+
+    @Test
+    void testParseNullInput() {
+        CommandParser parser = new CommandParser();
+        String input = null;
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Null input should throw an exception");
+        assertTrue(thrown.getMessage().contains("Input cannot be empty"), "Error message for null input");
+    }
+
+    @Test
+    void testParseCommandWithoutCoordinates() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Command without coordinates should throw an exception");
+        assertTrue(thrown.getMessage().contains("Missing coordinates"), "Error message should indicate missing coordinates");
+    }
+
+    @Test
+    void testParseQuitCommandWithExtraArguments() {
+        CommandParser parser = new CommandParser();
+        String input = "quit 1,2";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Quit command with extra arguments should throw an exception");
+        assertTrue(thrown.getMessage().contains("Quit command does not take any arguments"), "Error message for quit with args");
+    }
 }
