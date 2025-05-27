@@ -183,4 +183,38 @@ public class CommandParserTests {
         assertEquals(-1, command.getRow(), "Row should match the input");
         assertEquals(-2, command.getCol(), "Column should match the input");
     }
+
+    @Test
+    void testParseValidHelpCommand() {
+        CommandParser parser = new CommandParser();
+        String input = "help";
+
+        Command command = parser.parse(input);
+
+        assertNotNull(command, "Command should not be null for HELP");
+        assertEquals(CommandType.HELP, command.getType(), "Command type should be HELP");
+        assertEquals(-1, command.getRow(), "Row should be -1 for HELP command");
+        assertEquals(-1, command.getCol(), "Column should be -1 for HELP command");
+    }
+
+    @Test
+    void testParseHelpCommandWithExtraArguments() {
+        CommandParser parser = new CommandParser();
+        String input = "help 1,2";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Help command with extra arguments should throw an exception");
+        assertTrue(thrown.getMessage().contains("Help command does not take any arguments"), "Error message for help with args");
+    }
+
+    @Test
+    void testParseCaseInsensitiveHelpCommand() {
+        CommandParser parser = new CommandParser();
+        String input = "HELP";
+
+        Command command = parser.parse(input);
+
+        assertNotNull(command);
+        assertEquals(CommandType.HELP, command.getType());
+    }
 }

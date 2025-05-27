@@ -17,6 +17,12 @@ public class CommandParser {
         return switch (commandType) {
             case "REVEAL" -> parseRevealOrFlagCommand(parts, CommandType.REVEAL);
             case "FLAG" -> parseRevealOrFlagCommand(parts, CommandType.FLAG);
+            case "HELP" -> {
+                if (parts.length > 1) {
+                    throw new IllegalArgumentException("Help command does not take any arguments");
+                }
+                yield new Command(CommandType.HELP);
+            }
             case "QUIT" -> {
                 if (parts.length > 1) {
                     throw new IllegalArgumentException("Quit command does not take any arguments");
