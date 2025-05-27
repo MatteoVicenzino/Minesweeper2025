@@ -94,4 +94,54 @@ public class CommandParserTests {
                 "Quit command with extra arguments should throw an exception");
         assertTrue(thrown.getMessage().contains("Quit command does not take any arguments"), "Error message for quit with args");
     }
+
+    @Test
+    void testParseMalformedCoordinateMissingComma() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal 3 4";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Malformed coordinate should throw an exception");
+        assertTrue(thrown.getMessage().contains("Invalid coordinate format"), "Error message should indicate invalid coordinate format");
+    }
+
+    @Test
+    void testParseMalformedCoordinateNonNumeric() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal a,b";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Non-numeric coordinate should throw an exception");
+        assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message should indicate non-numeric coordinate");
+    }
+
+    @Test
+    void testParseMalformedCoordinatePartialNumeric() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal 3,b";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Partial non-numeric coordinate should throw an exception");
+        assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message should indicate non-numeric coordinate");
+    }
+
+    @Test
+    void testParseMissingCoordinateValue() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal 3,";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Missing coordinate value should throw an exception");
+        assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message for missing coordinate value");
+    }
+
+    @Test
+    void testParseMissingCoordinateValueFirst() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal ,4";
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+                "Missing coordinate value should throw an exception");
+        assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message for missing coordinate value");
+    }
 }

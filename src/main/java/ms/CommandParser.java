@@ -32,11 +32,24 @@ public class CommandParser {
             throw new IllegalArgumentException("Missing coordinates");
         }
 
-        String coordinatesPart = parts[1];
+        String coordinatesPart = parts[1].trim();
+
+        if (!coordinatesPart.contains(",")) {
+            throw new IllegalArgumentException("Invalid coordinate format");
+        }
+
         String[] coordinates = coordinatesPart.split(",");
 
-        int row = Integer.parseInt(coordinates[0]);
-        int col = Integer.parseInt(coordinates[1]);
-        return new Command(type, row, col);
+        if (coordinates.length != 2 || coordinates[0].isEmpty() || coordinates[1].isEmpty()) {
+            throw new IllegalArgumentException("Invalid coordinate value");
+        }
+
+        try {
+            int row = Integer.parseInt(coordinates[0].trim());
+            int col = Integer.parseInt(coordinates[1].trim());
+            return new Command(type, row, col);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid coordinate value");
+        }
     }
 }
