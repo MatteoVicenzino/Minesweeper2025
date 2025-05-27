@@ -9,7 +9,7 @@ public class CommandParser {
             throw new IllegalArgumentException("Input cannot be empty");
         }
 
-        input = input.trim();
+        input = input.trim().replaceAll("\\s+", " ");
         String[] parts = input.split(" ", 2);
 
         String commandType = parts[0].toUpperCase(Locale.ROOT);
@@ -38,7 +38,7 @@ public class CommandParser {
             throw new IllegalArgumentException("Invalid coordinate format");
         }
 
-        String[] coordinates = coordinatesPart.split(",");
+        String[] coordinates = coordinatesPart.split("\\s*,\\s*");
 
         if (coordinates.length != 2 || coordinates[0].isEmpty() || coordinates[1].isEmpty()) {
             throw new IllegalArgumentException("Invalid coordinate value");

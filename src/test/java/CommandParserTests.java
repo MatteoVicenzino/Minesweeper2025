@@ -144,4 +144,43 @@ public class CommandParserTests {
                 "Missing coordinate value should throw an exception");
         assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message for missing coordinate value");
     }
+
+    @Test
+    void testParseWithExtraSpacesAroundCommandAndCoords() {
+        CommandParser parser = new CommandParser();
+        String input = "  reveal   3 , 4  ";
+
+        Command command = parser.parse(input);
+
+        assertNotNull(command);
+        assertEquals(CommandType.REVEAL, command.getType());
+        assertEquals(3, command.getRow(), "Row should match the input");
+        assertEquals(4, command.getCol(), "Column should match the input");
+    }
+
+    @Test
+    void testParseCaseInsensitiveCommandType() {
+        CommandParser parser = new CommandParser();
+        String input = "ReVeAl 1,1";
+
+        Command command = parser.parse(input);
+
+        assertNotNull(command);
+        assertEquals(CommandType.REVEAL, command.getType());
+        assertEquals(1, command.getRow(), "Row should match the input");
+        assertEquals(1, command.getCol(), "Column should match the input");
+    }
+
+    @Test
+    void testParseNegativeCoordinates() {
+        CommandParser parser = new CommandParser();
+        String input = "reveal -1,-2";
+
+        Command command = parser.parse(input);
+
+        assertNotNull(command);
+        assertEquals(CommandType.REVEAL, command.getType());
+        assertEquals(-1, command.getRow(), "Row should match the input");
+        assertEquals(-2, command.getCol(), "Column should match the input");
+    }
 }
