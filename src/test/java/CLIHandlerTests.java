@@ -145,4 +145,25 @@ public class CLIHandlerTests {
         assertTrue(output.contains("========================"),
                 "Should show help footer");
     }
+
+    @Test
+    void testWelcomeMessage() {
+        CommandParser parser = new CommandParser();
+        Game game = new Game(10,10,10);
+        CLIHandler cliHandler = new CLIHandler(parser, game);
+
+        String input = "quit\n";
+        provideInput(input);
+        cliHandler.setScanner(new Scanner(System.in));
+
+        cliHandler.start();
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Welcome to the Minesweeper CLI!"),
+                "Should show welcome message");
+        assertTrue(output.contains("Type 'help' for available commands"),
+                "Should show initial help hint");
+        assertTrue(output.contains("Exiting the game. Goodbye!"),
+                "Should show exit message");
+    }
 }

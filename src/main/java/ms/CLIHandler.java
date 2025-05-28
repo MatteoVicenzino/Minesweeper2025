@@ -54,6 +54,12 @@ public class CLIHandler {
     }
 
     public void start() {
+        System.out.println("""
+            Welcome to the Minesweeper CLI! Enter your commands:
+            Type 'help' for available commands and game rules.""");
+
+        displayGameStatus(); // Mostra lo stato iniziale
+
         while (true) {
             System.out.print("> ");
             String inputLine = scanner.nextLine();
@@ -76,5 +82,11 @@ public class CLIHandler {
                 System.out.println("Error: " + e.getMessage());
             }
         }
+    }
+
+    private void displayGameStatus() {
+        System.out.println("\n--- Current Minefield ---");
+        System.out.println("Game status display - basic implementation");
+        System.out.println("-------------------------");
     }
 }
