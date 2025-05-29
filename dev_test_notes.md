@@ -59,6 +59,9 @@ Note file to keep track of refactoring and improvements that need to be done at 
 ### Cli and Graphics
 
 ### Tests
-- Refactor the tests to improve readability and structure
+- Refactor the tests to improve readability and structure:
+  - split tests in more specific classes
+  - create helper methods for common assertions in order to reduce code duplication
+  - use more descriptive test names
 
 
