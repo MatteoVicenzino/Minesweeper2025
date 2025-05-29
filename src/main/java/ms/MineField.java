@@ -82,7 +82,6 @@ public class MineField {
         return mineCount;
     }
 
-    @Deprecated
     public boolean revealCell(int row, int col) {
         if (this.isValid(row, col)) {
             return this.getCell(row, col).reveal();

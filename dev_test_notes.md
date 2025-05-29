@@ -25,8 +25,8 @@ For now these are the tests that we are implementing, more to come...
 - ~~Calling game.revealCell(x, y) should mark the specified cell as revealed and update the internal state~~
 - ~~Calling game.flagCell(x, y) should toggle the flagged state of the specified cell~~
 - ~~game.getMinesLeft() should return the correct result, and should reflect changes when flags are added or removed.~~
-- When a cell is revealed all adjacent cells should be revealed correctly:
-  - multiple tests tbd...
+- ~~When a cell is revealed all adjacent cells should be revealed correctly:~~
+  - ~~multiple tests tbd...~~
 - ~~If a revealed cell contains a mine, the game should immediately end and set gameOver = true.~~
 - ~~If all non-mine cells are revealed, game.getGameOver() should return true, aka gameOver should be set appropriately.~~
 - ~~When the first cell is revealed, the timer should start; when the game ends (win or lose), the timer should stop.~~
@@ -39,6 +39,9 @@ to be implemented yet
 
 Note file to keep track of refactoring and improvements that need to be done at some point of the development.
 
+- refactor to check open-closed principles
+
+
 ### Cell
 
 ### Minefield
@@ -50,6 +53,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)
 - ~~In the flagCell method, check for any redundancies in the if conditions that check the validity of the input~~
 - Further refactor flagCell to remove nested if statements
+- refactor revealCell improve readability and structure
 - Initialization of minefield when resetting the game
 
 ### Cli and Graphics
