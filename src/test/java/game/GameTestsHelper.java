@@ -3,6 +3,7 @@ package game;
 import ms.Game;
 import ms.MineField;
 import ms.MineFieldFactory;
+import ms.Position;
 
 public class GameTestsHelper {
 
@@ -20,7 +21,7 @@ public class GameTestsHelper {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 if (minePattern[row][col]) {
-                    mineField.getCell(row, col).setMined(true);
+                    mineField.getCell(new Position(row, col)).setMined(true);
                 }
             }
         }
@@ -61,8 +62,8 @@ public class GameTestsHelper {
     public static void revealAllNonMineCells(Game game) {
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
-                if (!game.getMinefield().getCell(row, col).isMined()) {
-                    game.revealCell(row, col);
+                if (!game.getMinefield().getCell(new Position(row, col)).isMined()) {
+                    game.revealCell(new Position(row, col));
                 }
             }
         }
@@ -71,8 +72,8 @@ public class GameTestsHelper {
     public static boolean verifyInitialCellStates(Game game) {
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
-                if (game.getMinefield().getCell(row, col).isRevealed() ||
-                        game.getMinefield().getCell(row, col).isFlagged()) {
+                if (game.getMinefield().getCell(new Position(row, col)).isRevealed() ||
+                        game.getMinefield().getCell(new Position(row, col)).isFlagged()) {
                     return false;
                 }
             }

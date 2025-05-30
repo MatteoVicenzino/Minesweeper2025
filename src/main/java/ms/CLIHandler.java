@@ -10,16 +10,21 @@ public class CLIHandler {
     public CLIHandler(CommandParser parser, Game game) {
         this.parser = parser;
         this.game = game;
-        this.scanner = new Scanner(System.in);
     }
 
     public Command handleInput(String input) {
         return parser.parse(input);
     }
 
-
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;
+    }
+
+    private Scanner getScanner() {
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
+        return scanner;
     }
 
     private void displayHelp() {
@@ -58,11 +63,13 @@ public class CLIHandler {
             Welcome to the Minesweeper CLI! Enter your commands:
             Type 'help' for available commands and game rules.""");
 
-        displayGameStatus(); // Mostra lo stato iniziale
+        displayGameStatus();
 
-        while (true) {
+        Scanner currentScanner = getScanner();
+
+        while (currentScanner.hasNextLine()) {
             System.out.print("> ");
-            String inputLine = scanner.nextLine();
+            String inputLine = currentScanner.nextLine();
 
             try {
                 Command command = handleInput(inputLine);
@@ -73,7 +80,6 @@ public class CLIHandler {
                         continue;
                     case QUIT:
                         System.out.println("Exiting the game. Goodbye!");
-                        scanner.close();
                         return;
                     default:
                         break;

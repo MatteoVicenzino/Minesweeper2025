@@ -1,5 +1,6 @@
 package game;
 
+import ms.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,11 +29,11 @@ public class TimerTests {
     void testTimerStartsOnFirstReveal() throws InterruptedException {
         assertEquals(0, game.getElapsedTime(), "Initial elapsed time should be 0");
 
-        game.revealCell(0, 0);
+        game.revealCell(new Position(0, 0));
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
-                if (!game.getMinefield().getCell(row, col).isMined()) {
-                    game.revealCell(row, col);
+                if (!game.getMinefield().getCell(new Position(row, col)).isMined()) {
+                    game.revealCell(new Position(row, col));
                     Thread.sleep(10);
                     assertTrue(game.getElapsedTime() > 0, "Timer should start after first reveal");
                     return;
@@ -53,7 +54,7 @@ public class TimerTests {
         game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
-        game.revealCell(0, 1);
+        game.revealCell(new Position(0, 1));
 
         assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
         long endTime = game.getElapsedTime();
@@ -63,7 +64,7 @@ public class TimerTests {
 
     @Test
     void testTimerStopsOnGameWin() throws InterruptedException {
-        game.revealCell(0, 0);
+        game.revealCell(new Position(0, 0));
         GameTestsHelper.revealAllNonMineCells(game);
         assertTrue(game.getGameOver(), "Game should be over after revealing all non-mine cells");
         long endTime = game.getElapsedTime();

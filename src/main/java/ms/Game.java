@@ -34,9 +34,9 @@ public class Game {
         this(height, width, totalMines, new DefaultMineFieldFactory());
     }
 
-    public void placeMines(int firstRow, int firstCol) {
+    public void placeMines(Position position) {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
-        this.minefield.initializeGrid(firstRow, firstCol);
+        this.minefield.initializeGrid(position);
     }
 
     public MineField getMinefield() {
@@ -75,27 +75,27 @@ public class Game {
         return totalMines;
     }
 
-    public void revealCell(int row, int col) {
+    public void revealCell(Position position) {
         if (firstReveal) {
-            this.placeMines(row, col);
+            this.placeMines(position);
             startTime = Instant.now();
             firstReveal = false;
         }
 
-        if (gameOver || minefield.getCell(row, col).isRevealed()) {
+        if (gameOver || minefield.getCell(position).isRevealed()) {
             return;
         }
 
 
-        if (minefield.getCell(row, col).isMined()) {
-            minefield.revealCell(row, col);
+        if (minefield.getCell(position).isMined()) {
+            minefield.revealCell(position);
             this.revealedCells++;
             gameOver = true;
             endTime = Instant.now();
             return;
         }
 
-        revealCellCascade(row, col);
+        revealCellCascade(position);
 
         if (this.getUnrevealedCount() == totalMines) {
             gameOver = true;
@@ -103,35 +103,35 @@ public class Game {
         }
     }
 
-    private void revealCellCascade(int row, int col) {
-        if (gameOver || !minefield.isValid(row, col) || minefield.getCell(row, col).isRevealed()) {
+    private void revealCellCascade(Position position) {
+        if (gameOver || !minefield.isValid(position) || minefield.getCell(position).isRevealed()) {
             return;
         }
 
-        if (minefield.getCell(row, col).isMined()) {
+        if (minefield.getCell(position).isMined()) {
             return;
         }
 
-        minefield.revealCell(row, col);
+        minefield.revealCell(position);
         this.revealedCells++;
 
-        if (minefield.countAdjacentMines(row, col) == 0) {
-            for (int r = row - 1; r <= row + 1; r++) {
-                for (int c = col - 1; c <= col + 1; c++) {
-                    if (r == row && c == col) continue; // Skip the current cell
-                    revealCellCascade(r, c);
+        if (minefield.countAdjacentMines(position) == 0) {
+            for (int r = position.row() - 1; r <= position.row() + 1; r++) {
+                for (int c = position.col() - 1; c <= position.col() + 1; c++) {
+                    if (r == position.row() && c == position.col()) continue; // Skip the current cell
+                    revealCellCascade(new Position(r, c));
                 }
             }
         }
     }
 
-    public void flagCell(int row, int col) {
-        if (!minefield.getCell(row, col).isRevealed()) {
-            if (minefield.getCell(row, col).isFlagged()) {
-                minefield.flagCell(row, col);
+    public void flagCell(Position position) {
+        if (!minefield.getCell(position).isRevealed()) {
+            if (minefield.getCell(position).isFlagged()) {
+                minefield.flagCell(position);
                 flagsPlaced--;
             } else {
-                minefield.flagCell(row, col);
+                minefield.flagCell(position);
                 flagsPlaced++;
             }
         }

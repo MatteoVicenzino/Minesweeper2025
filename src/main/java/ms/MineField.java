@@ -35,19 +35,21 @@ public class MineField {
     }
 
 
-    public Cell getCell(int row, int col) {
-        if (isValid(row, col)) {
-            return field[row][col];
+    public Cell getCell(Position position) {
+        if (isValid(position)) {
+            return field[position.row()][position.col()];
         } else {
             throw new IndexOutOfBoundsException("Invalid cell coordinates");
         }
     }
 
-    public boolean isValid(int row, int col) {
-        return row >= 0 && row < height && col >= 0 && col < width;
+    public boolean isValid(Position position) {
+        return position.row() >= 0 && position.row() < height && position.col() >= 0 && position.col() < width;
     }
 
-    public void initializeGrid(int firstRow, int firstCol) {
+    public void initializeGrid(Position position) {
+        int firstRow = position.row();
+        int firstCol = position.col();
         Random random = new Random();
         int placedMines = 0;
 
@@ -64,16 +66,16 @@ public class MineField {
         }
     }
 
-    public int countAdjacentMines(int row, int col) {
-        if (!isValid(row, col)) {
+    public int countAdjacentMines(Position position) {
+        if (!isValid(position)) {
             throw new IndexOutOfBoundsException("Invalid cell coordinates");
         }
         int mineCount = 0;
 
-        for (int r = row - 1; r <= row + 1; r++) {
-            for (int c = col - 1; c <= col + 1; c++) {
-                if (r == row && c == col) continue;
-                if (isValid(r, c) && field[r][c].isMined()) {
+        for (int r = position.row() - 1; r <= position.row() + 1; r++) {
+            for (int c = position.col() - 1; c <= position.col() + 1; c++) {
+                if (r == position.row() && c == position.col()) continue;
+                if (isValid(new Position(r, c)) && field[r][c].isMined()) {
                     mineCount++;
                 }
             }
@@ -82,17 +84,17 @@ public class MineField {
         return mineCount;
     }
 
-    public boolean revealCell(int row, int col) {
-        if (this.isValid(row, col)) {
-            return this.getCell(row, col).reveal();
+    public boolean revealCell(Position position) {
+        if (this.isValid(position)) {
+            return this.getCell(position).reveal();
         } else {
             return false;
         }
     }
 
-    public void flagCell(int row, int col) {
-        if (this.isValid(row, col)) {
-            this.getCell(row, col).toggleFlag();
+    public void flagCell(Position position) {
+        if (this.isValid(position)) {
+            this.getCell(position).toggleFlag();
         } // eventually complete with else statement to catch error
     }
 
