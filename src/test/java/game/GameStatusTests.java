@@ -1,15 +1,12 @@
 package game;
 
+import ms.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
-import ms.Game;
-import ms.GameStatus;
-import ms.MineField;
-import ms.MineFieldFactory;
 
 public class GameStatusTests {
 
@@ -33,7 +30,7 @@ public class GameStatusTests {
 
     @Test
     void testGameStatusRemainsInProgressDuringNormalPlay() {
-        game.revealCell(0, 0);
+        game.revealCell(new Position(0, 0));
         assertEquals(GameStatus.IN_PROGRESS, game.getGameStatus());
         assertFalse(game.getGameOver(), "Game should remain in progress during normal play");
     }
@@ -45,7 +42,7 @@ public class GameStatusTests {
         game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
-        game.revealCell(1, 1); // This should reveal the mine
+        game.revealCell(new Position(1, 1)); // This should reveal the mine
 
         assertEquals(GameStatus.LOST, game.getGameStatus());
         assertTrue(game.getGameOver(), "Game should be over when mine is revealed");
@@ -53,7 +50,7 @@ public class GameStatusTests {
 
     @Test
     void testGameStatusBecomesWonWhenAllNonMineCellsRevealed() {
-        game.revealCell(0, 0); // Initialize the minefield
+        game.revealCell(new Position(0, 0)); // Initialize the minefield
         GameTestsHelper.revealAllNonMineCells(game);
 
         assertEquals(GameStatus.WON, game.getGameStatus());
@@ -68,7 +65,7 @@ public class GameStatusTests {
         when(mockMineFieldFactory.createMineField(3, 3, 0)).thenReturn(new MineField(3, 3, 0));
         when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(GameTestsHelper.createMineFieldWithPattern(minePattern));
 
-        game.revealCell(1, 1);
+        game.revealCell(new Position(1, 1));
         assertEquals(GameStatus.LOST, game.getGameStatus());
 
         // Reset and check status
@@ -84,11 +81,11 @@ public class GameStatusTests {
         game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
-        game.revealCell(1, 1); // Lose the game
+        game.revealCell(new Position(1, 1)); // Lose the game
         assertEquals(GameStatus.LOST, game.getGameStatus());
 
         int revealedCountBeforeAttempt = game.getRevealed();
-        game.revealCell(0, 0); // Try to reveal another cell
+        game.revealCell(new Position(0, 0)); // Try to reveal another cell
 
         assertEquals(revealedCountBeforeAttempt, game.getRevealed(),
                 "No additional cells should be revealed when game is lost");
@@ -96,12 +93,12 @@ public class GameStatusTests {
 
     @Test
     void testCannotRevealCellsWhenGameIsWon() {
-        game.revealCell(0, 0); // Initialize the minefield
+        game.revealCell(new Position(0, 0)); // Initialize the minefield
         GameTestsHelper.revealAllNonMineCells(game);
         assertEquals(GameStatus.WON, game.getGameStatus());
 
         int revealedCountBeforeAttempt = game.getRevealed();
-        game.revealCell(0, 0); // Try to reveal a cell again
+        game.revealCell(new Position(0, 0)); // Try to reveal a cell again
 
         assertEquals(revealedCountBeforeAttempt, game.getRevealed(),
                 "No additional cells should be revealed when game is won");

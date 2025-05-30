@@ -34,9 +34,9 @@ public class Game {
         this(height, width, totalMines, new DefaultMineFieldFactory());
     }
 
-    public void placeMines(int firstRow, int firstCol) {
+    public void placeMines(Position firstRevealPosition) {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
-        this.minefield.initializeGrid(firstRow, firstCol);
+        this.minefield.initializeGrid(firstRevealPosition);
     }
 
     public MineField getMinefield() {
@@ -110,7 +110,7 @@ public class Game {
     }
 
     private void revealCellCascade(Position position) {
-        if (getGameOver() || !minefield.isValid(position) || minefield.getCell(row, col).isRevealed()) {
+        if (getGameOver() || !minefield.isValid(position) || minefield.getCell(position).isRevealed()) {
             return;
         }
 
