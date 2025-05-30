@@ -7,7 +7,7 @@ public class Game {
     private MineField minefield;
     private int revealedCells;
     private int flagsPlaced;
-    private boolean gameOver;
+    private GameStatus gameStatus;
     private Instant startTime;
     private Instant endTime;
     private boolean firstReveal;
@@ -24,7 +24,7 @@ public class Game {
         this.minefield = mineFieldFactory.createMineField(height, width, 0);
         this.revealedCells = 0;
         this.flagsPlaced = 0;
-        this.gameOver = false;
+        this.gameStatus = GameStatus.NOT_STARTED;
         this.startTime = null;
         this.endTime = null;
         this.firstReveal = true;
@@ -34,9 +34,9 @@ public class Game {
         this(height, width, totalMines, new DefaultMineFieldFactory());
     }
 
-    public void placeMines(Position position) {
+    public void placeMines(int firstRow, int firstCol) {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
-        this.minefield.initializeGrid(position);
+        this.minefield.initializeGrid(firstRow, firstCol);
     }
 
     public MineField getMinefield() {
@@ -55,9 +55,14 @@ public class Game {
         return totalMines - flagsPlaced;
     }
 
-    public boolean getGameOver() {
-        return gameOver;
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
+
+    public boolean getGameOver() {
+        return gameStatus == GameStatus.WON || gameStatus == GameStatus.LOST;
+    }
+
 
     public int getUnrevealedCount() {
         return (height * width) - this.revealedCells;
@@ -77,12 +82,13 @@ public class Game {
 
     public void revealCell(Position position) {
         if (firstReveal) {
+            gameStatus = GameStatus.IN_PROGRESS;
             this.placeMines(position);
             startTime = Instant.now();
             firstReveal = false;
         }
 
-        if (gameOver || minefield.getCell(position).isRevealed()) {
+        if (getGameOver() || minefield.getCell(position).isRevealed()) {
             return;
         }
 
@@ -90,7 +96,7 @@ public class Game {
         if (minefield.getCell(position).isMined()) {
             minefield.revealCell(position);
             this.revealedCells++;
-            gameOver = true;
+            gameStatus = GameStatus.LOST;
             endTime = Instant.now();
             return;
         }
@@ -98,13 +104,13 @@ public class Game {
         revealCellCascade(position);
 
         if (this.getUnrevealedCount() == totalMines) {
-            gameOver = true;
+            gameStatus = GameStatus.WON;
             endTime = Instant.now();
         }
     }
 
     private void revealCellCascade(Position position) {
-        if (gameOver || !minefield.isValid(position) || minefield.getCell(position).isRevealed()) {
+        if (getGameOver() || !minefield.isValid(position) || minefield.getCell(row, col).isRevealed()) {
             return;
         }
 
@@ -148,7 +154,7 @@ public class Game {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
         this.revealedCells = 0;
         this.flagsPlaced = 0;
-        this.gameOver = false;
+        this.gameStatus = GameStatus.IN_PROGRESS;
         this.startTime = null;
         this.endTime = null;
         this.firstReveal = true;
