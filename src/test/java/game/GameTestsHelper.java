@@ -5,6 +5,8 @@ import ms.MineField;
 import ms.MineFieldFactory;
 import ms.Position;
 
+import static org.mockito.Mockito.when;
+
 public class GameTestsHelper {
 
     public static Game createGameWithMockFactory(int height, int width, int mines, MineFieldFactory mockFactory) {
@@ -79,5 +81,41 @@ public class GameTestsHelper {
             }
         }
         return true;
+    }
+
+    public static void setupMockFactoryForReset(MineFieldFactory mockFactory,
+                                                int height, int width, int mineCount) {
+        when(mockFactory.createMineField(height, width, 0))
+                .thenAnswer(invocation -> new MineField(height, width, 0));
+
+        when(mockFactory.createMineField(height, width, mineCount))
+                .thenAnswer(invocation -> createMineFieldWithPattern(createSimpleCenterMinePattern()));
+    }
+
+    public static Game createAndSetupGameForReset(int height, int width, int mineCount,
+                                                  MineFieldFactory mockFactory,
+                                                  Position safePosition,
+                                                  Position minePosition,
+                                                  Position flagPosition) throws InterruptedException {
+        Game game = createGameWithMockFactory(height, width, mineCount, mockFactory);
+
+        game.revealCell(safePosition);
+
+        for (int row = 0; row < game.getMinefield().getHeight(); row++) {
+            for (int col = 0; col < game.getMinefield().getWidth(); col++) {
+                game.getMinefield().getCell(new Position(row, col)).setMined(false);
+            }
+        }
+
+        game.getMinefield().getCell(minePosition).setMined(true);
+
+        game.revealCell(safePosition);
+        game.flagCell(flagPosition);
+
+        Thread.sleep(50);
+
+        game.revealCell(minePosition);
+
+        return game;
     }
 }
