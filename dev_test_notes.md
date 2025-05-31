@@ -43,11 +43,13 @@ Note file to keep track of refactoring and improvements that need to be done at 
 
 
 ### Cell
+- Refator to make the cell an interface and create custom methods
 
 ### Minefield
 - ~~rows and cols --> height and width~~
 - possible refactor of field matrix into a separate class
 - possible refactor of testCountAdjacentMinesOutOfBounds() into a more generic test in MinefieldTests.java
+- Refactor CountAdjacentMines to evaluate the number when a mine is placed to improve efficiency
 
 ### Game
 - Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)
