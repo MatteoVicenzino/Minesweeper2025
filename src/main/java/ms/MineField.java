@@ -84,18 +84,16 @@ public class MineField {
         return mineCount;
     }
 
-    public boolean revealCell(Position position) {
+    public void revealCell(Position position) {
         if (this.isValid(position)) {
-            return this.getCell(position).reveal();
-        } else {
-            return false;
+            this.getCell(position).reveal();
         }
     }
 
     public void flagCell(Position position) {
         if (this.isValid(position)) {
             this.getCell(position).toggleFlag();
-        } // eventually complete with else statement to catch error
+        }
     }
 
     @Override

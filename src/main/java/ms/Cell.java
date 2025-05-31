@@ -1,6 +1,15 @@
 package ms;
 
-public class Cell {
+interface CellInterface {
+    boolean isMined();
+    boolean isRevealed();
+    boolean isFlagged();
+    boolean reveal();
+    void toggleFlag();
+    void setMined(boolean value);
+}
+
+public class Cell implements CellInterface {
     private boolean isRevealed;
     private boolean isFlagged;
     private boolean isMined;
