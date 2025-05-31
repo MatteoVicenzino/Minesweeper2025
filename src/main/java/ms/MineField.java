@@ -15,6 +15,10 @@ public class MineField {
         this.mines = mines;
         this.field = new Cell[height][width];
 
+        initializeCells();
+    }
+
+    private void initializeCells() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 field[i][j] = new Cell();
@@ -34,44 +38,23 @@ public class MineField {
         return mines;
     }
 
-
-    public Cell getCell(Position position) {
-        if (isValid(position)) {
-            return field[position.row()][position.col()];
-        } else {
-            throw new IndexOutOfBoundsException("Invalid cell coordinates");
-        }
-    }
-
     public boolean isValid(Position position) {
         return position.row() >= 0 && position.row() < height && position.col() >= 0 && position.col() < width;
     }
 
-    public void initializeGrid(Position position) {
-        int firstRow = position.row();
-        int firstCol = position.col();
-        Random random = new Random();
-        int placedMines = 0;
+    public Cell getCell(Position position) {
+        validatePosition(position);
+        return field[position.row()][position.col()];
+    }
 
-        while (placedMines < mines) {
-            int row = random.nextInt(height);
-            int col = random.nextInt(width);
-
-            if ((row == firstRow && col == firstCol) || field[row][col].isMined()) {
-                continue;
-            }
-
-            field[row][col].setMined(true);
-            placedMines++;
-        }
+    public void initializeGrid(Position firstClickPosition) {
+        placeMinesRandomly(firstClickPosition);
     }
 
     public int countAdjacentMines(Position position) {
-        if (!isValid(position)) {
-            throw new IndexOutOfBoundsException("Invalid cell coordinates");
-        }
-        int mineCount = 0;
+        validatePosition(position);
 
+        int mineCount = 0;
         for (int r = position.row() - 1; r <= position.row() + 1; r++) {
             for (int c = position.col() - 1; c <= position.col() + 1; c++) {
                 if (r == position.row() && c == position.col()) continue;
@@ -80,20 +63,19 @@ public class MineField {
                 }
             }
         }
-
         return mineCount;
     }
 
-    public void revealCell(Position position) {
+    public void uncoverCell(Position position) {
         if (this.isValid(position)) {
-            this.getCell(position).reveal();
+            this.getCell(position).markAsRevealed();
         }
     }
 
     public void flagCell(Position position) {
-        if (this.isValid(position)) {
-            this.getCell(position).toggleFlag();
-        }
+        if (isValid(position)) {
+            getCell(position).toggleFlag();
+        } // eventually complete with else statement to catch error
     }
 
     @Override
@@ -137,4 +119,33 @@ public class MineField {
     }
 
 
+    private void validatePosition(Position position) {
+        if (!isValid(position)) {
+            throw new IndexOutOfBoundsException(
+                    String.format("Invalid cell coordinates: (%d, %d)",
+                            position.row(), position.col()));
+        }
+    }
+
+    private void placeMinesRandomly(Position excludePosition) {
+        Random random = new Random();
+        int placedMines = 0;
+
+        while (placedMines < mines) {
+            int row = random.nextInt(height);
+            int col = random.nextInt(width);
+
+            // Non piazzare mine sulla prima cella cliccata o dove già c'è una mina
+            if (isCellExcluded(row, col, excludePosition) || field[row][col].isMined()) {
+                continue;
+            }
+
+            field[row][col].setMined(true);
+            placedMines++;
+        }
+    }
+
+    private boolean isCellExcluded(int row, int col, Position excludePosition) {
+        return row == excludePosition.row() && col == excludePosition.col();
+    }
 }

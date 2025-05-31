@@ -40,6 +40,7 @@ to be implemented yet
 Note file to keep track of refactoring and improvements that need to be done at some point of the development.
 
 - refactor to check open-closed principles
+- ~~rename reveal cell methods in different classes for readability~~
 
 
 ### Cell

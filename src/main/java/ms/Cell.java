@@ -4,7 +4,7 @@ interface CellInterface {
     boolean isMined();
     boolean isRevealed();
     boolean isFlagged();
-    boolean reveal();
+    boolean markAsRevealed();
     void toggleFlag();
     void setMined(boolean value);
 }
@@ -36,7 +36,7 @@ public class Cell implements CellInterface {
         this.isMined = value;
     }
 
-    public boolean reveal() {
+    public boolean markAsRevealed() {
         if (!isRevealed){
             this.isRevealed = true;
             return true;

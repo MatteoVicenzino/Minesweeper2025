@@ -31,11 +31,11 @@ public class CellTests {
     }
 
     @Test
-    void testRevealCell() {
-        assertTrue(cell.reveal());
+    void testMarkAsRevealedCell() {
+        assertTrue(cell.markAsRevealed());
         assertTrue(cell.isRevealed());
 
-        assertFalse(cell.reveal());
+        assertFalse(cell.markAsRevealed());
         assertTrue(cell.isRevealed());
     }
 
@@ -50,7 +50,7 @@ public class CellTests {
 
     @Test
     void testToggleFlagOnRevealedCell() {
-        cell.reveal();
+        cell.markAsRevealed();
         assertTrue(cell.isRevealed());
         assertFalse(cell.isFlagged());
         cell.toggleFlag();
