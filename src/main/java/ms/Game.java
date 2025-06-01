@@ -88,7 +88,7 @@ public class Game {
             firstReveal = false;
         }
 
-        if (getGameOver() || minefield.getCell(position).isRevealed()) {
+        if (getGameOver() || minefield.getCell(position).isRevealed() || minefield.getCell(position).isFlagged()) {
             return;
         }
 
