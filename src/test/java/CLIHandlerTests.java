@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ms.CommandParser;
@@ -37,7 +36,7 @@ public class CLIHandlerTests {
     private void provideInput(String data) {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
     }
-    @Disabled
+
     @Test
     void testHandleValidInput() {
         CommandParser parser = new CommandParser();
@@ -52,7 +51,7 @@ public class CLIHandlerTests {
         assertEquals(3, command.getRow(), "Row should match the input");
         assertEquals(4, command.getCol(), "Column should match the input");
     }
-    @Disabled
+
     @Test
     void testHandleInvalidInput() {
         CommandParser parser = new CommandParser();
@@ -63,7 +62,7 @@ public class CLIHandlerTests {
         assertThrows(IllegalArgumentException.class, () -> cliHandler.handleInput(input),
                 "Invalid input should throw an exception");
     }
-    @Disabled
+
     @Test
     void testHandleFlagCommand() {
         CommandParser parser = new CommandParser();
@@ -78,7 +77,7 @@ public class CLIHandlerTests {
         assertEquals(5, command.getRow());
         assertEquals(6, command.getCol());
     }
-    @Disabled
+
     @Test
     void testHandleQuitCommand() {
         CommandParser parser = new CommandParser();
@@ -93,7 +92,7 @@ public class CLIHandlerTests {
         assertEquals(-1, command.getRow(), "Row should be -1 for QUIT command");
         assertEquals(-1, command.getCol(), "Column should be -1 for QUIT command");
     }
-    @Disabled
+
     @Test
     void testHandleMalformedCoordinate() {
         CommandParser parser = new CommandParser();
@@ -104,7 +103,7 @@ public class CLIHandlerTests {
         assertThrows(IllegalArgumentException.class, () -> cliHandler.handleInput(input),
                 "Malformed coordinate should cause an exception");
     }
-    @Disabled
+
     @Test
     void testHandleHelpCommand() {
         CommandParser parser = new CommandParser();
@@ -119,7 +118,7 @@ public class CLIHandlerTests {
         assertEquals(-1, command.getRow(), "Row should be -1 for HELP command");
         assertEquals(-1, command.getCol(), "Column should be -1 for HELP command");
     }
-    @Disabled
+
     @Test
     void testHelpDisplayContent() {
         CommandParser parser = new CommandParser();
@@ -146,7 +145,7 @@ public class CLIHandlerTests {
         assertTrue(output.contains("========================"),
                 "Should show help footer");
     }
-    @Disabled
+
     @Test
     void testWelcomeMessage() {
         CommandParser parser = new CommandParser();
@@ -166,5 +165,28 @@ public class CLIHandlerTests {
                 "Should show initial help hint");
         assertTrue(output.contains("Exiting the game. Goodbye!"),
                 "Should show exit message");
+    }
+
+    @Test
+    void testDisplayUninitializedField() {
+        CommandParser parser = new CommandParser();
+        Game game = new Game(10,10,10);
+        CLIHandler cliHandler = new CLIHandler(parser, game);
+
+        String input = "quit\n";
+        provideInput(input);
+        cliHandler.setScanner(new Scanner(System.in));
+
+        cliHandler.start();
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Minefield not yet initialized"),
+                "Should show uninitialized message");
+        assertTrue(output.contains("Grid Size: 10x10"),
+                "Should show grid size");
+        assertTrue(output.contains("Mines: 10"),
+                "Should show mine count");
+        assertTrue(output.contains("Type 'help'"),
+                "Should show help hint");
     }
 }

@@ -94,7 +94,7 @@ public class Game {
 
 
         if (minefield.getCell(position).isMined()) {
-            minefield.revealCell(position);
+            minefield.uncoverCell(position);
             this.revealedCells++;
             gameStatus = GameStatus.LOST;
             endTime = Instant.now();
@@ -118,7 +118,7 @@ public class Game {
             return;
         }
 
-        minefield.revealCell(position);
+        minefield.uncoverCell(position);
         this.revealedCells++;
 
         if (minefield.countAdjacentMines(position) == 0) {
