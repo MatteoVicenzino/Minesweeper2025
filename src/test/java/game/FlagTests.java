@@ -11,7 +11,7 @@ import ms.Game;
 import ms.MineField;
 import ms.MineFieldFactory;
 
-public class GameTests {
+public class FlagTests {
 
     private Game game;
     private final int mines = 10;
@@ -82,24 +82,5 @@ public class GameTests {
         assertEquals(1, game.getMinesLeft());
     }
 
-    @Test
-    void testRevealMineEndsGame() {
-        boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
 
-        game.revealCell(new Position(1, 1));
-        assertTrue(game.getGameOver(), "Game should end when a mine is revealed");
-    }
-
-    @Test
-    void testGameOverWhenAllCellsRevealed() {
-        game.revealCell(new Position(0, 0));
-        GameTestsHelper.revealAllNonMineCells(game);
-        assertTrue(game.getGameOver(), "Game should end when all non-mine cells are revealed");
-    }
 }
-
-
-
