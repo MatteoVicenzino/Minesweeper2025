@@ -58,38 +58,6 @@ public class CLIHandler {
                 ========================""");
     }
 
-    public void start() {
-        System.out.println("""
-                Welcome to the Minesweeper CLI! Enter your commands:
-                Type 'help' for available commands and game rules.""");
-
-        displayGameStatus();
-
-        Scanner currentScanner = getScanner();
-
-        while (currentScanner.hasNextLine()) {
-            System.out.print("> ");
-            String inputLine = currentScanner.nextLine();
-
-            try {
-                Command command = handleInput(inputLine);
-
-                switch (command.getType()) {
-                    case HELP:
-                        displayHelp();
-                        continue;
-                    case QUIT:
-                        System.out.println("Exiting the game. Goodbye!");
-                        return;
-                    default:
-                        break;
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
-    }
-
     private void displayGameStatus() {
         MineField mf = game.getMinefield();
 
@@ -138,12 +106,80 @@ public class CLIHandler {
                 }
             }
             System.out.println();
+        }
 
-            System.out.println("-------------------------");
-            System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - 10);
-            System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), 10);
-            System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
-            System.out.println("-------------------------");
+        System.out.println("-------------------------");
+        System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - game.getTotalMines());
+        System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
+        System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
+        System.out.println("-------------------------");
+    }
+
+    public void start() {
+        System.out.println("""
+                Welcome to the Minesweeper CLI! Enter your commands:
+                Type 'help' for available commands and game rules.""");
+
+        displayGameStatus();
+
+        Scanner currentScanner = getScanner();
+
+        while (currentScanner.hasNextLine()) {
+            System.out.print("> ");
+            String inputLine = currentScanner.nextLine();
+
+            try {
+                Command command = handleInput(inputLine);
+
+                switch (command.getType()) {
+                    case REVEAL:
+                        Position revealPos = new Position(command.getRow(), command.getCol());
+                        game.revealCell(revealPos);
+                        break;
+                    case FLAG:
+                        Position flagPos = new Position(command.getRow(), command.getCol());
+                        game.flagCell(flagPos);
+                        break;
+                    case HELP:
+                        displayHelp();
+                        continue;
+                    case QUIT:
+                        System.out.println("Exiting the game. Goodbye!");
+                        return;
+                }
+
+                displayGameStatus();
+
+                if (game.getGameOver()) {
+                    System.out.println("\n--- GAME OVER ---");
+                    if (game.getGameStatus() == GameStatus.WON) {
+                        System.out.println("Congratulations! You revealed all non-mine cells! You Win!");
+                    } else if (game.getGameStatus() == GameStatus.LOST) {
+                        System.out.println("Boooom! You hit a mine! You Lose!");
+                    }
+                    System.out.printf("Time taken: %d seconds.%n", game.getElapsedTime() / 1000);
+
+                    System.out.print("Play again? (yes/no): ");
+                    String playAgainInput = currentScanner.nextLine().trim().toLowerCase();
+                    if (playAgainInput.equals("yes")) {
+                        game.resetGame();
+                        System.out.println("\n--- Starting a new game ---");
+                        displayGameStatus();
+                    } else {
+                        System.out.println("Thank you for playing!");
+                        return;
+                    }
+                }
+
+            } catch (IllegalArgumentException e) {
+                System.out.printf("""
+                        Error: %s
+                        Type 'help' for available commands.%n""", e.getMessage());
+            } catch (IndexOutOfBoundsException e) {
+                System.out.printf("""
+                        Error: Coordinates are out of bounds. %s
+                        Valid coordinates are 0-9 for both rows and columns.%n""", e.getMessage());
+            }
         }
     }
 }

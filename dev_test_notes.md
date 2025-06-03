@@ -33,7 +33,11 @@ For now these are the tests that we are implementing, more to come...
 - ~~Calling game.reset() should reinitialize the minefield, clear all revealed/flagged cells, reset timers, and return the game to its initial state.~~
 
 ### Cli and Graphics
-to be implemented yet
+- ~~Command parsing with validation (reveal, flag, quit, help)~~
+- ~~CLI Handler with input/output flow and scanner management~~
+- ~~Display system with help, welcome, minefield formatting, and statistics~~
+- ~~Game loop integration with command execution and game over handling~~
+- ~~Mock-based behavioral testing with deterministic verification~~
 
 # Refactoring
 
