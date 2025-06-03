@@ -48,7 +48,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 
 
 ### Cell
-- Refator to make the cell an interface and create custom methods
+- Refactor to make the cell an interface and create custom methods
 
 ### Minefield
 - ~~rows and cols --> height and width~~

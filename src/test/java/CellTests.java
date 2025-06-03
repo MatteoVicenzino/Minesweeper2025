@@ -49,6 +49,19 @@ public class CellTests {
     }
 
     @Test
+    void testMarkAsRevealedOnFlaggedCell() {
+
+        cell.toggleFlag();
+        assertTrue(cell.isFlagged());
+        assertFalse(cell.isRevealed());
+
+        assertFalse(cell.markAsRevealed());
+        assertTrue(cell.isFlagged());
+        assertFalse(cell.isRevealed());
+    }
+
+
+    @Test
     void testToggleFlagOnRevealedCell() {
         cell.markAsRevealed();
         assertTrue(cell.isRevealed());
