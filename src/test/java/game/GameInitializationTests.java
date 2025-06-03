@@ -19,20 +19,20 @@ public class GameInitializationTests {
     @Test
     void testGameInitialization() {
 
-        game = new Game(10, 10, 10);
-        MineField voidMinefield = new MineField(10, 10, 0);
+        game = new Game(Difficulty.EASY);
+        MineField voidMinefield = new MineField(9, 9, 0);
 
         assertEquals(voidMinefield, game.getMinefield());
         assertEquals(10, game.getMinesLeft());
         assertFalse(game.getGameOver());
         assertEquals(0, game.getRevealed());
-        assertEquals(100, game.getUnrevealedCount());
+        assertEquals(81, game.getUnrevealedCount());
     }
 
     @Test
     void testGameInitializationWithEasyParameters() {
 
-        game = new Game(9, 9, 10);
+        game = new Game(Difficulty.EASY);
         game.revealCell(new Position(0,0));
 
         assertEquals(9, game.getMinefield().getHeight());
@@ -43,7 +43,7 @@ public class GameInitializationTests {
     @Test
     void testGameInitializationWithMediumParameters() {
 
-        game = new Game(16, 16, 40);
+        game = new Game(Difficulty.MEDIUM);
         game.revealCell(new Position(0,0));
 
         assertEquals(16, game.getMinefield().getHeight());
@@ -54,7 +54,7 @@ public class GameInitializationTests {
     @Test
     void testGameInitializationWithHardParameters() {
 
-        game = new Game(16, 30, 99);
+        game = new Game(Difficulty.HARD);
         game.revealCell(new Position(0, 0));
 
         assertEquals(16, game.getMinefield().getHeight());
@@ -65,11 +65,11 @@ public class GameInitializationTests {
     @Test
     void testMinefieldInitializationOnFirstClick() {
 
-        game = new Game(10, 10, 10);
+        game = new Game(Difficulty.EASY);
         game.revealCell(new Position(0, 0));
 
-        assertEquals(10, game.getMinefield().getHeight());
-        assertEquals(10, game.getMinefield().getWidth());
+        assertEquals(9, game.getMinefield().getHeight());
+        assertEquals(9, game.getMinefield().getWidth());
         assertEquals(10, game.getMinefield().getMines());
     }
 }

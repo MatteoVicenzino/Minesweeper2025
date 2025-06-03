@@ -1,9 +1,6 @@
 package game;
 
-import ms.Game;
-import ms.MineField;
-import ms.MineFieldFactory;
-import ms.Position;
+import ms.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -24,7 +21,7 @@ public class RevealTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        game = new Game(10, 10, mines);
+        game = new Game(Difficulty.EASY);
     }
 
     @Test

@@ -1,15 +1,12 @@
 package game;
 
-import ms.Position;
+import ms.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
-import ms.Game;
-import ms.MineField;
-import ms.MineFieldFactory;
 
 public class GameEndConditionTests {
 
@@ -22,7 +19,7 @@ public class GameEndConditionTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        game = new Game(10, 10, mines);
+        game = new Game(Difficulty.EASY);
     }
 
     @Test
@@ -43,6 +40,3 @@ public class GameEndConditionTests {
         assertTrue(game.getGameOver(), "Game should end when all non-mine cells are revealed");
     }
 }
-
-
-

@@ -38,6 +38,7 @@ For now these are the tests that we are implementing, more to come...
 - ~~Display system with help, welcome, minefield formatting, and statistics~~
 - ~~Game loop integration with command execution and game over handling~~
 - ~~Mock-based behavioral testing with deterministic verification~~
+- Ask the user for the difficulty level at the start of the game
 
 # Refactoring
 
@@ -62,6 +63,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - Further refactor flagCell to remove nested if statements
 - refactor revealCell improve readability and structure
 - Initialization of minefield when resetting the game
+- ~~Remove primitive obsession adding Difficulties enumeration~~
 
 ### Cli and Graphics
 

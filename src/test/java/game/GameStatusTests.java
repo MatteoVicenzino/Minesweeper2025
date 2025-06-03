@@ -19,7 +19,7 @@ public class GameStatusTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        game = new Game(10, 10, mines);
+        game = new Game(Difficulty.EASY);
     }
 
     @Test

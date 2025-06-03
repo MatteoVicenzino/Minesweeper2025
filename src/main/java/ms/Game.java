@@ -30,8 +30,8 @@ public class Game {
         this.firstReveal = true;
     }
 
-    public Game(int height, int width, int totalMines) {
-        this(height, width, totalMines, new DefaultMineFieldFactory());
+    public Game(Difficulty difficulty) {
+        this(difficulty.getHeight(), difficulty.getWidth(), difficulty.getMines(), new DefaultMineFieldFactory());
     }
 
     public void placeMines(Position firstRevealPosition) {

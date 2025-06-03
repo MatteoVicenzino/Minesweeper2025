@@ -1,13 +1,9 @@
+import ms.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import ms.CommandParser;
-import ms.CLIHandler;
-import ms.Command;
-import ms.CommandType;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import ms.Game;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -48,7 +44,7 @@ public class CLIHandlerTests {
     @Test
     void testHandleValidInput() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "reveal 3,4";
@@ -63,7 +59,7 @@ public class CLIHandlerTests {
     @Test
     void testHandleInvalidInput() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "invalid command";
@@ -74,7 +70,7 @@ public class CLIHandlerTests {
     @Test
     void testHandleFlagCommand() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "flag 5,6";
@@ -89,7 +85,7 @@ public class CLIHandlerTests {
     @Test
     void testHandleQuitCommand() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "quit";
@@ -104,7 +100,7 @@ public class CLIHandlerTests {
     @Test
     void testHandleMalformedCoordinate() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "reveal 3-4";
@@ -115,7 +111,7 @@ public class CLIHandlerTests {
     @Test
     void testHandleHelpCommand() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "help";
@@ -130,7 +126,7 @@ public class CLIHandlerTests {
     @Test
     void testHelpDisplayContent() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10, 10, 10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "help\nquit\n";
@@ -157,7 +153,7 @@ public class CLIHandlerTests {
     @Test
     void testWelcomeMessage() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10,10,10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "quit\n";
@@ -178,7 +174,7 @@ public class CLIHandlerTests {
     @Test
     void testDisplayUninitializedField() {
         CommandParser parser = new CommandParser();
-        Game game = new Game(10,10,10);
+        Game game = new Game(Difficulty.EASY);
         CLIHandler cliHandler = new CLIHandler(parser, game);
 
         String input = "quit\n";
