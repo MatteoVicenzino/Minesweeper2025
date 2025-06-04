@@ -172,12 +172,41 @@ public class CLIHandlerTests {
     }
 
     @Test
-    void testDisplayUninitializedField() {
-        CommandParser parser = new CommandParser();
-        Game game = new Game(Difficulty.EASY);
-        CLIHandler cliHandler = new CLIHandler(parser, game);
+    void testDifficultyMinefieldCreation() {
+        Game easyGame = new Game(Difficulty.EASY);
+        assertEquals(9, easyGame.getHeight(), "EASY height should be 9");
+        assertEquals(9, easyGame.getWidth(), "EASY width should be 9");
+        assertEquals(10, easyGame.getTotalMines(), "EASY should have 10 mines");
+        assertEquals(81, easyGame.getUnrevealedCount(), "EASY should have 81 total cells");
+        assertEquals(0, easyGame.getRevealed(), "Initially no cells should be revealed");
 
-        String input = "quit\n";
+        Game mediumGame = new Game(Difficulty.MEDIUM);
+        assertEquals(16, mediumGame.getHeight(), "MEDIUM height should be 16");
+        assertEquals(16, mediumGame.getWidth(), "MEDIUM width should be 16");
+        assertEquals(40, mediumGame.getTotalMines(), "MEDIUM should have 40 mines");
+        assertEquals(256, mediumGame.getUnrevealedCount(), "MEDIUM should have 256 total cells");
+        assertEquals(0, mediumGame.getRevealed(), "Initially no cells should be revealed");
+
+        Game hardGame = new Game(Difficulty.HARD);
+        assertEquals(16, hardGame.getHeight(), "HARD height should be 16");
+        assertEquals(30, hardGame.getWidth(), "HARD width should be 30");
+        assertEquals(99, hardGame.getTotalMines(), "HARD should have 99 mines");
+        assertEquals(480, hardGame.getUnrevealedCount(), "HARD should have 480 total cells");
+        assertEquals(0, hardGame.getRevealed(), "Initially no cells should be revealed");
+
+        assertEquals(easyGame.getHeight(), easyGame.getMinefield().getHeight(), "EASY minefield height should match game height");
+        assertEquals(easyGame.getWidth(), easyGame.getMinefield().getWidth(), "EASY minefield width should match game width");
+
+        assertEquals(mediumGame.getHeight(), mediumGame.getMinefield().getHeight(), "MEDIUM minefield height should match game height");
+        assertEquals(mediumGame.getWidth(), mediumGame.getMinefield().getWidth(), "MEDIUM minefield width should match game width");
+
+        assertEquals(hardGame.getHeight(), hardGame.getMinefield().getHeight(), "HARD minefield height should match game height");
+        assertEquals(hardGame.getWidth(), hardGame.getMinefield().getWidth(), "HARD minefield width should match game width");
+
+        CommandParser parser = new CommandParser();
+        CLIHandler cliHandler = new CLIHandler(parser);
+
+        String input = "1\nquit\n";
         provideInput(input);
         cliHandler.setScanner(new Scanner(System.in));
 
@@ -186,10 +215,10 @@ public class CLIHandlerTests {
 
         assertTrue(output.contains("Minefield not yet initialized"),
                 "Should show uninitialized message");
-        assertTrue(output.contains("Grid Size: 10x10"),
-                "Should show grid size");
+        assertTrue(output.contains("Grid Size: 9x9"),
+                "Should show EASY grid size");
         assertTrue(output.contains("Mines: 10"),
-                "Should show mine count");
+                "Should show EASY mine count");
         assertTrue(output.contains("Type 'help'"),
                 "Should show help hint");
     }

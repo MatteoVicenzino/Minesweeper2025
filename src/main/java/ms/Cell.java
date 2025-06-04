@@ -37,7 +37,7 @@ public class Cell implements CellInterface {
     }
 
     public boolean markAsRevealed() {
-        if (!isRevealed & !isFlagged){
+        if (!isRevealed && !isFlagged){
             this.isRevealed = true;
             return true;
         }

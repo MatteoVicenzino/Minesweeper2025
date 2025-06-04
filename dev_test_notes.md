@@ -38,7 +38,7 @@ For now these are the tests that we are implementing, more to come...
 - ~~Display system with help, welcome, minefield formatting, and statistics~~
 - ~~Game loop integration with command execution and game over handling~~
 - ~~Mock-based behavioral testing with deterministic verification~~
-- Ask the user for the difficulty level at the start of the game
+- ~~Ask the user for the difficulty level at the start of the game~~
 
 # Refactoring
 

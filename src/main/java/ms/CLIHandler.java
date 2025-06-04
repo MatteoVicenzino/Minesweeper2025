@@ -4,13 +4,19 @@ import java.util.Scanner;
 
 public class CLIHandler {
     private final CommandParser parser;
-    private final Game game;
+    private Game game;
     private Scanner scanner;
 
     public CLIHandler(CommandParser parser, Game game) {
         this.parser = parser;
         this.game = game;
     }
+
+    public CLIHandler(CommandParser parser) {
+        this.parser = parser;
+        this.game = null;
+    }
+
 
     public Command handleInput(String input) {
         return parser.parse(input);
@@ -25,6 +31,41 @@ public class CLIHandler {
             scanner = new Scanner(System.in);
         }
         return scanner;
+    }
+
+    private Difficulty selectDifficulty() {
+        System.out.println("""
+                
+                === DIFFICULTY SELECTION ===
+                Choose your difficulty level:
+                
+                1. EASY   (9x9 grid, 10 mines)
+                2. MEDIUM (16x16 grid, 40 mines)  
+                3. HARD   (16x30 grid, 99 mines)
+                
+                Enter your choice (1-3): """);
+
+        Scanner currentScanner = getScanner();
+
+        while (true) {
+            System.out.print("> ");
+            String input = currentScanner.nextLine().trim();
+
+            switch (input) {
+                case "1":
+                    System.out.println("Selected: EASY difficulty");
+                    return Difficulty.EASY;
+                case "2":
+                    System.out.println("Selected: MEDIUM difficulty");
+                    return Difficulty.MEDIUM;
+                case "3":
+                    System.out.println("Selected: HARD difficulty");
+                    return Difficulty.HARD;
+                default:
+                    System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                    break;
+            }
+        }
     }
 
     private void displayHelp() {
@@ -64,12 +105,14 @@ public class CLIHandler {
         System.out.println("\n--- Current Minefield ---");
 
         if (game.getRevealed() == 0) {
-            System.out.println("""
-                    Minefield not yet initialized. Make your first 'reveal' command to start the game.
-                    Grid Size: 10x10
-                    Mines: 10
-                    Type 'help' for commands and rules.
-                    -------------------------""");
+            System.out.printf("""
+                Minefield not yet initialized. Make your first 'reveal' command to start the game.
+                Grid Size: %dx%d
+                Mines: %d
+                Type 'help' for commands and rules.
+                -------------------------
+                """,
+                    mf.getHeight(), mf.getWidth(), game.getTotalMines()); // ← Usa i valori reali invece di hardcoded
             return;
         }
 
@@ -120,6 +163,11 @@ public class CLIHandler {
                 Welcome to the Minesweeper CLI! Enter your commands:
                 Type 'help' for available commands and game rules.""");
 
+        if (game == null) {
+            Difficulty selectedDifficulty = selectDifficulty();
+            this.game = new Game(selectedDifficulty);
+        }
+
         displayGameStatus();
 
         Scanner currentScanner = getScanner();
@@ -159,16 +207,22 @@ public class CLIHandler {
                     }
                     System.out.printf("Time taken: %d seconds.%n", game.getElapsedTime() / 1000);
 
-                    System.out.print("Play again? (yes/no): ");
+                    System.out.print("Play again? (yes/no/change): ");
                     String playAgainInput = currentScanner.nextLine().trim().toLowerCase();
                     if (playAgainInput.equals("yes")) {
                         game.resetGame();
                         System.out.println("\n--- Starting a new game ---");
                         displayGameStatus();
+                    } else if (playAgainInput.equals("change")) {
+                        Difficulty newDifficulty = selectDifficulty();
+                        this.game = new Game(newDifficulty);
+                        System.out.println("\n--- Starting a new game with new difficulty ---");
+                        displayGameStatus();
                     } else {
                         System.out.println("Thank you for playing!");
                         return;
                     }
+
                 }
 
             } catch (IllegalArgumentException e) {
