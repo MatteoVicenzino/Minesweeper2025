@@ -40,7 +40,7 @@ public class CLIHandler {
                 Choose your difficulty level:
                 
                 1. EASY   (9x9 grid, 10 mines)
-                2. MEDIUM (16x16 grid, 40 mines)  
+                2. MEDIUM (16x16 grid, 40 mines)
                 3. HARD   (16x30 grid, 99 mines)
                 
                 Enter your choice (1-3): """);
@@ -105,57 +105,74 @@ public class CLIHandler {
         System.out.println("\n--- Current Minefield ---");
 
         if (game.getRevealed() == 0) {
-            System.out.printf("""
-                Minefield not yet initialized. Make your first 'reveal' command to start the game.
-                Grid Size: %dx%d
-                Mines: %d
-                Type 'help' for commands and rules.
-                -------------------------
-                """,
-                    mf.getHeight(), mf.getWidth(), game.getTotalMines()); // ← Usa i valori reali invece di hardcoded
-            return;
-        }
-
-        System.out.print("   ");
-        for (int c = 0; c < mf.getWidth(); c++) {
-            System.out.print(String.format("%2d ", c));
-        }
-        System.out.println();
-        System.out.print("  +");
-        for (int c = 0; c < mf.getWidth(); c++) {
-            System.out.print("---");
-        }
-        System.out.println();
-
-        for (int r = 0; r < mf.getHeight(); r++) {
-            System.out.print(String.format("%2d|", r));
+            System.out.print("   ");
             for (int c = 0; c < mf.getWidth(); c++) {
-                Position pos = new Position(r, c);
-                Cell cell = mf.getCell(pos);
-
-                if (game.getGameOver() && cell.isMined() && !cell.isFlagged()) {
-                    System.out.print(" * ");
-                } else if (cell.isRevealed()) {
-                    if (cell.isMined()) {
-                        System.out.print(" X ");
-                    } else {
-                        int adjacentMines = mf.countAdjacentMines(pos);
-                        System.out.print(" " + (adjacentMines == 0 ? " " : adjacentMines) + " ");
-                    }
-                } else if (cell.isFlagged()) {
-                    System.out.print(" F ");
-                } else {
-                    System.out.print(" - ");
-                }
+                System.out.print(String.format("%2d ", c));
             }
             System.out.println();
-        }
+            System.out.print("  +");
+            for (int c = 0; c < mf.getWidth(); c++) {
+                System.out.print("---");
+            }
+            System.out.println();
 
-        System.out.println("-------------------------");
-        System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - game.getTotalMines());
-        System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
-        System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
-        System.out.println("-------------------------");
+            for (int r = 0; r < mf.getHeight(); r++) {
+                System.out.print(String.format("%2d|", r));
+                for (int c = 0; c < mf.getWidth(); c++) {
+                    System.out.print(" - ");
+                }
+                System.out.println();
+            }
+
+            System.out.println("-------------------------");
+            System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - game.getTotalMines());
+            System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
+            System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
+            System.out.println("-------------------------");
+
+        }else{
+
+            System.out.print("   ");
+            for (int c = 0; c < mf.getWidth(); c++) {
+                System.out.print(String.format("%2d ", c));
+            }
+            System.out.println();
+            System.out.print("  +");
+            for (int c = 0; c < mf.getWidth(); c++) {
+                System.out.print("---");
+            }
+            System.out.println();
+
+            for (int r = 0; r < mf.getHeight(); r++) {
+                System.out.print(String.format("%2d|", r));
+                for (int c = 0; c < mf.getWidth(); c++) {
+                    Position pos = new Position(r, c);
+                    Cell cell = mf.getCell(pos);
+
+                    if (game.getGameOver() && cell.isMined() && !cell.isFlagged()) {
+                        System.out.print(" * ");
+                    } else if (cell.isRevealed()) {
+                        if (cell.isMined()) {
+                            System.out.print(" X ");
+                        } else {
+                            int adjacentMines = mf.countAdjacentMines(pos);
+                            System.out.print(" " + (adjacentMines == 0 ? " " : adjacentMines) + " ");
+                        }
+                    } else if (cell.isFlagged()) {
+                        System.out.print(" F ");
+                    } else {
+                        System.out.print(" - ");
+                    }
+                }
+                System.out.println();
+            }
+
+            System.out.println("-------------------------");
+            System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - game.getTotalMines());
+            System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
+            System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
+            System.out.println("-------------------------");
+        }
     }
 
     public void start() {

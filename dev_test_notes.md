@@ -58,7 +58,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - Refactor CountAdjacentMines to evaluate the number when a mine is placed to improve efficiency
 
 ### Game
-- Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)
+- ~~Refactor the gameOver into gameStatus, to be able to manage different game states (e.g. paused, running, win, lose, etc...)~~
 - ~~In the flagCell method, check for any redundancies in the if conditions that check the validity of the input~~
 - Further refactor flagCell to remove nested if statements
 - refactor revealCell improve readability and structure
@@ -66,6 +66,8 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - ~~Remove primitive obsession adding Difficulties enumeration~~
 
 ### Cli and Graphics
+- ~~Show fully covered minefield when the game starts, instead of "Minefield not yet initialized" message~~
+- Remove nested if and for statements in the CLIHandler's displayGameStatus method to improve readability and structure
 
 ### Tests
 - Refactor the tests to improve readability and structure:

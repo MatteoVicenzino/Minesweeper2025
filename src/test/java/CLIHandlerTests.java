@@ -213,14 +213,18 @@ public class CLIHandlerTests {
         cliHandler.start();
         String output = outContent.toString();
 
-        assertTrue(output.contains("Minefield not yet initialized"),
+        assertTrue(output.contains("Current Minefield"),
                 "Should show uninitialized message");
-        assertTrue(output.contains("Grid Size: 9x9"),
-                "Should show EASY grid size");
-        assertTrue(output.contains("Mines: 10"),
-                "Should show EASY mine count");
-        assertTrue(output.contains("Type 'help'"),
-                "Should show help hint");
+        assertTrue(output.contains(" - "),
+                "Should show covered cells with '-' symbol");
+        assertTrue(output.contains("Revealed: 0"),
+                "Should show correct revealed count");
+        assertTrue(output.contains("Flags: 0"),
+                "Should show correct flag count");
+        assertTrue(output.contains("Time: 0"),
+                "Should show correct elapsed time");
+        assertTrue(output.contains("-------------------------"),
+                "Should show footer separator");
     }
 
 
