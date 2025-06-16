@@ -14,7 +14,6 @@ public class Game {
     private final int width;
     private final int totalMines;
     private final MineFieldFactory mineFieldFactory;
-    private final List<GameObserver> observers = new ArrayList<>();
     private final GameTimer timer;
 
     public Game(int height, int width, int totalMines, MineFieldFactory mineFieldFactory) {
