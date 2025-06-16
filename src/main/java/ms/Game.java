@@ -6,8 +6,6 @@ import java.util.List;
 public class Game {
 
     private MineField minefield;
-    private int revealedCells;
-    private int flagsPlaced;
     private GameStatus gameStatus;
     private boolean firstReveal;
     private final int height;
@@ -15,6 +13,7 @@ public class Game {
     private final int totalMines;
     private final MineFieldFactory mineFieldFactory;
     private final GameTimer timer;
+    private final GameStatistics stats;
 
     public Game(int height, int width, int totalMines, MineFieldFactory mineFieldFactory) {
         this.height = height;
@@ -22,11 +21,10 @@ public class Game {
         this.totalMines = totalMines;
         this.mineFieldFactory = mineFieldFactory;
         this.minefield = mineFieldFactory.createMineField(height, width, 0);
-        this.revealedCells = 0;
-        this.flagsPlaced = 0;
         this.gameStatus = GameStatus.NOT_STARTED;
         this.firstReveal = true;
         this.timer = new GameTimer();
+        this.stats = new GameStatistics(height, width, totalMines);
     }
 
     public Game(Difficulty difficulty) {
@@ -43,15 +41,15 @@ public class Game {
     }
 
     public int getRevealed() {
-        return revealedCells;
+        return stats.getRevealedCount();  // Era: return revealedCells;
     }
 
     public int getFlagsPlaced() {
-        return flagsPlaced;
+        return stats.getFlagsPlaced();    // Era: return flagsPlaced;
     }
 
     public int getMinesLeft() {
-        return totalMines - flagsPlaced;
+        return stats.getMinesLeft();      // Era: return totalMines - flagsPlaced;
     }
 
     public GameStatus getGameStatus() {
@@ -64,7 +62,7 @@ public class Game {
 
 
     public int getUnrevealedCount() {
-        return (height * width) - this.revealedCells;
+        return stats.getUnrevealedCount();
     }
 
     public int getHeight() {
@@ -94,7 +92,7 @@ public class Game {
 
         if (minefield.getCell(position).isMined()) {
             minefield.uncoverCell(position);
-            this.revealedCells++;
+            stats.incrementRevealed();
             gameStatus = GameStatus.LOST;
             timer.stop();
             return;
@@ -102,7 +100,7 @@ public class Game {
 
         revealCellCascade(position);
 
-        if (this.getUnrevealedCount() == totalMines) {
+        if (stats.isGameWon()) {
             gameStatus = GameStatus.WON;
             timer.stop();
         }
@@ -118,7 +116,7 @@ public class Game {
         }
 
         minefield.uncoverCell(position);
-        this.revealedCells++;
+        stats.incrementRevealed();
 
         if (minefield.countAdjacentMines(position) == 0) {
             for (int r = position.row() - 1; r <= position.row() + 1; r++) {
@@ -134,10 +132,10 @@ public class Game {
         if (!minefield.getCell(position).isRevealed()) {
             if (minefield.getCell(position).isFlagged()) {
                 minefield.flagCell(position);
-                flagsPlaced--;
+                stats.decrementFlags();
             } else {
                 minefield.flagCell(position);
-                flagsPlaced++;
+                stats.incrementFlags();
             }
         }
     }
@@ -148,8 +146,7 @@ public class Game {
 
     public void resetGame() {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
-        this.revealedCells = 0;
-        this.flagsPlaced = 0;
+        stats.reset();
         this.gameStatus = GameStatus.IN_PROGRESS;
         timer.reset();
         this.firstReveal = true;
