@@ -1,6 +1,7 @@
 package ms;
 
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
@@ -8,13 +9,13 @@ public class Game {
     private int revealedCells;
     private int flagsPlaced;
     private GameStatus gameStatus;
-    private Instant startTime;
-    private Instant endTime;
     private boolean firstReveal;
     private final int height;
     private final int width;
     private final int totalMines;
     private final MineFieldFactory mineFieldFactory;
+    private final List<GameObserver> observers = new ArrayList<>();
+    private final GameTimer timer;
 
     public Game(int height, int width, int totalMines, MineFieldFactory mineFieldFactory) {
         this.height = height;
@@ -25,9 +26,8 @@ public class Game {
         this.revealedCells = 0;
         this.flagsPlaced = 0;
         this.gameStatus = GameStatus.NOT_STARTED;
-        this.startTime = null;
-        this.endTime = null;
         this.firstReveal = true;
+        this.timer = new GameTimer();
     }
 
     public Game(Difficulty difficulty) {
@@ -84,7 +84,7 @@ public class Game {
         if (firstReveal) {
             gameStatus = GameStatus.IN_PROGRESS;
             this.placeMines(position);
-            startTime = Instant.now();
+            timer.start();
             firstReveal = false;
         }
 
@@ -97,7 +97,7 @@ public class Game {
             minefield.uncoverCell(position);
             this.revealedCells++;
             gameStatus = GameStatus.LOST;
-            endTime = Instant.now();
+            timer.stop();
             return;
         }
 
@@ -105,7 +105,7 @@ public class Game {
 
         if (this.getUnrevealedCount() == totalMines) {
             gameStatus = GameStatus.WON;
-            endTime = Instant.now();
+            timer.stop();
         }
     }
 
@@ -144,10 +144,7 @@ public class Game {
     }
 
     public long getElapsedTime() {
-        if (startTime != null) {
-            return (endTime == null ? Instant.now() : endTime).toEpochMilli() - startTime.toEpochMilli();
-        }
-        return 0;
+        return timer.getElapsedTime();
     }
 
     public void resetGame() {
@@ -155,8 +152,7 @@ public class Game {
         this.revealedCells = 0;
         this.flagsPlaced = 0;
         this.gameStatus = GameStatus.IN_PROGRESS;
-        this.startTime = null;
-        this.endTime = null;
+        timer.reset();
         this.firstReveal = true;
     }
 }
