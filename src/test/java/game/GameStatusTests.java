@@ -58,7 +58,7 @@ public class GameStatusTests {
     }
 
     @Test
-    void testGameStatusResetToInProgressAfterReset() {
+    void testGameStatusOnReset() {
         // First lose the game
         boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
         game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
@@ -70,7 +70,7 @@ public class GameStatusTests {
 
         // Reset and check status
         game.resetGame();
-        assertEquals(GameStatus.IN_PROGRESS, game.getGameStatus());
+        assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
         assertFalse(game.getGameOver(), "Game should not be over after reset");
     }
 

@@ -6,11 +6,11 @@ import java.util.List;
 public class Game {
 
     private MineField minefield;
-    private GameStatus gameStatus;
     private boolean firstReveal;
     private final int height;
     private final int width;
     private final int totalMines;
+    private final GameStatusManager statusManager;
     private final MineFieldFactory mineFieldFactory;
     private final GameTimer timer;
     private final GameStatistics stats;
@@ -21,10 +21,10 @@ public class Game {
         this.totalMines = totalMines;
         this.mineFieldFactory = mineFieldFactory;
         this.minefield = mineFieldFactory.createMineField(height, width, 0);
-        this.gameStatus = GameStatus.NOT_STARTED;
         this.firstReveal = true;
         this.timer = new GameTimer();
         this.stats = new GameStatistics(height, width, totalMines);
+        this.statusManager = new GameStatusManager();
     }
 
     public Game(Difficulty difficulty) {
@@ -53,13 +53,12 @@ public class Game {
     }
 
     public GameStatus getGameStatus() {
-        return gameStatus;
+        return statusManager.getCurrentStatus();
     }
 
     public boolean getGameOver() {
-        return gameStatus == GameStatus.WON || gameStatus == GameStatus.LOST;
+        return statusManager.isGameOver();
     }
-
 
     public int getUnrevealedCount() {
         return stats.getUnrevealedCount();
@@ -79,7 +78,7 @@ public class Game {
 
     public void revealCell(Position position) {
         if (firstReveal) {
-            gameStatus = GameStatus.IN_PROGRESS;
+            statusManager.startGame();
             this.placeMines(position);
             timer.start();
             firstReveal = false;
@@ -93,7 +92,7 @@ public class Game {
         if (minefield.getCell(position).isMined()) {
             minefield.uncoverCell(position);
             stats.incrementRevealed();
-            gameStatus = GameStatus.LOST;
+            statusManager.endGameWithLoss();
             timer.stop();
             return;
         }
@@ -101,7 +100,7 @@ public class Game {
         revealCellCascade(position);
 
         if (stats.isGameWon()) {
-            gameStatus = GameStatus.WON;
+            statusManager.endGameWithWin();
             timer.stop();
         }
     }
@@ -147,7 +146,7 @@ public class Game {
     public void resetGame() {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
         stats.reset();
-        this.gameStatus = GameStatus.IN_PROGRESS;
+        statusManager.resetGame();
         timer.reset();
         this.firstReveal = true;
     }
