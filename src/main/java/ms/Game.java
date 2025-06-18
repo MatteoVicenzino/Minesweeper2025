@@ -1,8 +1,5 @@
 package ms;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game {
 
     private MineField minefield;
@@ -14,6 +11,7 @@ public class Game {
     private final MineFieldFactory mineFieldFactory;
     private final GameTimer timer;
     private final GameStatistics stats;
+    private CellRevealHandler revealHandler;
 
     public Game(int height, int width, int totalMines, MineFieldFactory mineFieldFactory) {
         this.height = height;
@@ -34,6 +32,7 @@ public class Game {
     public void placeMines(Position firstRevealPosition) {
         this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
         this.minefield.initializeGrid(firstRevealPosition);
+        this.revealHandler = new CellRevealHandler(this.minefield);
     }
 
     public MineField getMinefield() {
@@ -97,33 +96,12 @@ public class Game {
             return;
         }
 
-        revealCellCascade(position);
+        int revealedCount = revealHandler.revealCascade(position);
+        stats.incrementRevealed(revealedCount);
 
         if (stats.isGameWon()) {
             statusManager.endGameWithWin();
             timer.stop();
-        }
-    }
-
-    private void revealCellCascade(Position position) {
-        if (getGameOver() || !minefield.isValid(position) || minefield.getCell(position).isRevealed()) {
-            return;
-        }
-
-        if (minefield.getCell(position).isMined()) {
-            return;
-        }
-
-        minefield.uncoverCell(position);
-        stats.incrementRevealed();
-
-        if (minefield.countAdjacentMines(position) == 0) {
-            for (int r = position.row() - 1; r <= position.row() + 1; r++) {
-                for (int c = position.col() - 1; c <= position.col() + 1; c++) {
-                    if (r == position.row() && c == position.col()) continue; // Skip the current cell
-                    revealCellCascade(new Position(r, c));
-                }
-            }
         }
     }
 
@@ -149,5 +127,6 @@ public class Game {
         statusManager.resetGame();
         timer.reset();
         this.firstReveal = true;
+        this.revealHandler = new CellRevealHandler(this.minefield);
     }
 }
