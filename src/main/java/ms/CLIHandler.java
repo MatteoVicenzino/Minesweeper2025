@@ -198,6 +198,10 @@ public class CLIHandler {
 
                 switch (command.getType()) {
                     case REVEAL:
+                        if (command.getRow() < 0 || command.getCol() < 0 || command.getRow() >= game.getMinefield().getHeight() || command.getCol() >= game.getMinefield().getWidth()) {
+                            System.out.println("Invalid Coordinates: row " + command.getRow() + ", column " + command.getCol());
+                            break;
+                        }
                         Position revealPos = new Position(command.getRow(), command.getCol());
                         game.revealCell(revealPos);
                         break;
