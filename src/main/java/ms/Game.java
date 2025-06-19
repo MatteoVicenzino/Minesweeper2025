@@ -77,7 +77,14 @@ public class Game {
 
     public void revealCell(Position position) {
 
-        if ((firstReveal) && minefield.isValid(position)){
+        if (position.row() < 0 || position.row() >= height ||
+                position.col() < 0 || position.col() >= width) {
+            throw new IndexOutOfBoundsException(
+                    String.format("Invalid cell coordinates: (%d, %d). Valid range: (0,0) to (%d,%d)",
+                            position.row(), position.col(), height-1, width-1));
+        }
+
+        if (firstReveal){
             statusManager.startGame();
             this.placeMines(position);
             timer.start();
