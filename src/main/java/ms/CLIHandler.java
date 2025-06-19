@@ -6,6 +6,7 @@ public class CLIHandler {
     private final CommandParser parser;
     private Game game;
     private Scanner scanner;
+    private boolean shouldContinue = true;
 
     public CLIHandler(CommandParser parser, Game game) {
         this.parser = parser;
@@ -16,7 +17,6 @@ public class CLIHandler {
         this.parser = parser;
         this.game = null;
     }
-
 
     public Command handleInput(String input) {
         return parser.parse(input);
@@ -100,79 +100,129 @@ public class CLIHandler {
     }
 
     private void displayGameStatus() {
-        MineField mf = game.getMinefield();
-
         System.out.println("\n--- Current Minefield ---");
 
-        if (game.getRevealed() == 0) {
-            System.out.print("   ");
-            for (int c = 0; c < mf.getWidth(); c++) {
-                System.out.print(String.format("%2d ", c));
-            }
-            System.out.println();
-            System.out.print("  +");
-            for (int c = 0; c < mf.getWidth(); c++) {
-                System.out.print("---");
-            }
-            System.out.println();
-
-            for (int r = 0; r < mf.getHeight(); r++) {
-                System.out.print(String.format("%2d|", r));
-                for (int c = 0; c < mf.getWidth(); c++) {
-                    System.out.print(" - ");
-                }
-                System.out.println();
-            }
-
-            System.out.println("-------------------------");
-            System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - game.getTotalMines());
-            System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
-            System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
-            System.out.println("-------------------------");
-
-        }else{
-
-            System.out.print("   ");
-            for (int c = 0; c < mf.getWidth(); c++) {
-                System.out.print(String.format("%2d ", c));
-            }
-            System.out.println();
-            System.out.print("  +");
-            for (int c = 0; c < mf.getWidth(); c++) {
-                System.out.print("---");
-            }
-            System.out.println();
-
-            for (int r = 0; r < mf.getHeight(); r++) {
-                System.out.print(String.format("%2d|", r));
-                for (int c = 0; c < mf.getWidth(); c++) {
-                    Position pos = new Position(r, c);
-                    Cell cell = mf.getCell(pos);
-
-                    if (game.getGameOver() && cell.isMined() && !cell.isFlagged()) {
-                        System.out.print(" * ");
-                    } else if (cell.isRevealed()) {
-                        if (cell.isMined()) {
-                            System.out.print(" X ");
-                        } else {
-                            int adjacentMines = mf.countAdjacentMines(pos);
-                            System.out.print(" " + (adjacentMines == 0 ? " " : adjacentMines) + " ");
-                        }
-                    } else if (cell.isFlagged()) {
-                        System.out.print(" F ");
-                    } else {
-                        System.out.print(" - ");
-                    }
-                }
-                System.out.println();
-            }
-
-            System.out.println("-------------------------");
-            System.out.printf("Revealed: %d / %d%n", game.getRevealed(), mf.getHeight() * mf.getWidth() - game.getTotalMines());
-            System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
-            System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
-            System.out.println("-------------------------");
+        if (isGameNotStarted()) {
+            displayInitialGameView();
+        } else {
+            displayActiveGameView();
         }
+
+        displayGameStatistics();
+    }
+
+    private void displayInitialGameView() {
+        displayColumnHeader();
+        displayGridSeparator();
+        displayEmptyGrid();
+    }
+
+    private void displayActiveGameView() {
+        displayColumnHeader();
+        displayGridSeparator();
+        displayGameGrid();
+    }
+
+    private boolean isGameNotStarted() {
+        return game.getRevealed() == 0;
+    }
+
+    private void displayColumnHeader() {
+        MineField mf = game.getMinefield();
+        System.out.print("   ");
+        for (int c = 0; c < mf.getWidth(); c++) {
+            System.out.print(String.format("%2d ", c));
+        }
+        System.out.println();
+    }
+
+    private void displayGridSeparator() {
+        MineField mf = game.getMinefield();
+        System.out.print("  +");
+        for (int c = 0; c < mf.getWidth(); c++) {
+            System.out.print("---");
+        }
+        System.out.println();
+    }
+
+    private void displayEmptyGrid() {
+        MineField mf = game.getMinefield();
+        for (int r = 0; r < mf.getHeight(); r++) {
+            System.out.print(String.format("%2d|", r));
+            for (int c = 0; c < mf.getWidth(); c++) {
+                System.out.print(" - ");
+            }
+            System.out.println();
+        }
+    }
+
+    private void displayGameGrid() {
+        MineField mf = game.getMinefield();
+        for (int r = 0; r < mf.getHeight(); r++) {
+            System.out.print(String.format("%2d|", r));
+            displayGridRow(mf, r);
+            System.out.println();
+        }
+    }
+
+    private void displayGridRow(MineField mf, int row) {
+        for (int c = 0; c < mf.getWidth(); c++) {
+            Position pos = new Position(row, c);
+            String cellDisplay = getCellDisplayString(mf, pos);
+            System.out.print(cellDisplay);
+        }
+    }
+
+    private String getCellDisplayString(MineField mf, Position pos) {
+        Cell cell = mf.getCell(pos);
+
+        if (shouldShowMine(cell)) {
+            return " * ";
+        }
+
+        if (cell.isRevealed()) {
+            return getRevealedCellDisplay(mf, pos, cell);
+        }
+
+        if (cell.isFlagged()) {
+            return " F ";
+        }
+
+        return " - ";
+    }
+
+    private boolean shouldShowMine(Cell cell) {
+        return game.getGameOver() && cell.isMined() && !cell.isFlagged();
+    }
+
+    private String getRevealedCellDisplay(MineField mf, Position pos, Cell cell) {
+        if (cell.isMined()) {
+            return " X ";
+        }
+
+        int adjacentMines = mf.countAdjacentMines(pos);
+        return " " + (adjacentMines == 0 ? " " : adjacentMines) + " ";
+    }
+
+    private void displayGameStatistics() {
+        System.out.println("-------------------------");
+        displayRevealedCount();
+        displayFlagCount();
+        displayElapsedTime();
+        System.out.println("-------------------------");
+    }
+
+    private void displayRevealedCount() {
+        int totalNonMineCells = game.getMinefield().getHeight() * game.getMinefield().getWidth() - game.getTotalMines();
+        System.out.printf("Revealed: %d / %d%n", game.getRevealed(), totalNonMineCells);
+    }
+
+    private void displayFlagCount() {
+        System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
+    }
+
+    private void displayElapsedTime() {
+        System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
     }
 
     public void start() {
@@ -189,7 +239,7 @@ public class CLIHandler {
 
         Scanner currentScanner = getScanner();
 
-        while (currentScanner.hasNextLine()) {
+        while (currentScanner.hasNextLine() && shouldContinue) {
             System.out.print("> ");
             String inputLine = currentScanner.nextLine();
 
@@ -198,10 +248,6 @@ public class CLIHandler {
 
                 switch (command.getType()) {
                     case REVEAL:
-                        if (command.getRow() < 0 || command.getCol() < 0 || command.getRow() >= game.getMinefield().getHeight() || command.getCol() >= game.getMinefield().getWidth()) {
-                            System.out.println("Invalid Coordinates: row " + command.getRow() + ", column " + command.getCol());
-                            break;
-                        }
                         Position revealPos = new Position(command.getRow(), command.getCol());
                         game.revealCell(revealPos);
                         break;
@@ -220,30 +266,7 @@ public class CLIHandler {
                 displayGameStatus();
 
                 if (game.getGameOver()) {
-                    System.out.println("\n--- GAME OVER ---");
-                    if (game.getGameStatus() == GameStatus.WON) {
-                        System.out.println("Congratulations! You revealed all non-mine cells! You Win!");
-                    } else if (game.getGameStatus() == GameStatus.LOST) {
-                        System.out.println("Boooom! You hit a mine! You Lose!");
-                    }
-                    System.out.printf("Time taken: %d seconds.%n", game.getElapsedTime() / 1000);
-
-                    System.out.print("Play again? (yes/no/change): ");
-                    String playAgainInput = currentScanner.nextLine().trim().toLowerCase();
-                    if (playAgainInput.equals("yes")) {
-                        game.resetGame();
-                        System.out.println("\n--- Starting a new game ---");
-                        displayGameStatus();
-                    } else if (playAgainInput.equals("change")) {
-                        Difficulty newDifficulty = selectDifficulty();
-                        this.game = new Game(newDifficulty);
-                        System.out.println("\n--- Starting a new game with new difficulty ---");
-                        displayGameStatus();
-                    } else {
-                        System.out.println("Thank you for playing!");
-                        return;
-                    }
-
+                    handleGameOver(currentScanner);
                 }
 
             } catch (IllegalArgumentException e) {
@@ -255,6 +278,41 @@ public class CLIHandler {
                         Error: Coordinates are out of bounds. %s
                         Valid coordinates are 0-9 for both rows and columns.%n""", e.getMessage());
             }
+        }
+    }
+
+    private void handleGameOver(Scanner currentScanner) {
+        System.out.println("\n--- GAME OVER ---");
+        displayGameResult();
+        System.out.printf("Time taken: %d seconds.%n", game.getElapsedTime() / 1000);
+
+        handlePlayAgainChoice(currentScanner);
+    }
+
+    private void displayGameResult() {
+        if (game.getGameStatus() == GameStatus.WON) {
+            System.out.println("Congratulations! You revealed all non-mine cells! You Win!");
+        } else if (game.getGameStatus() == GameStatus.LOST) {
+            System.out.println("Boooom! You hit a mine! You Lose!");
+        }
+    }
+
+    private void handlePlayAgainChoice(Scanner currentScanner) {
+        System.out.print("Play again? (yes/no/change): ");
+        String playAgainInput = currentScanner.nextLine().trim().toLowerCase();
+
+        if (playAgainInput.equals("yes")) {
+            game.resetGame();
+            System.out.println("\n--- Starting a new game ---");
+            displayGameStatus();
+        } else if (playAgainInput.equals("change")) {
+            Difficulty newDifficulty = selectDifficulty();
+            this.game = new Game(newDifficulty);
+            System.out.println("\n--- Starting a new game with new difficulty ---");
+            displayGameStatus();
+        } else {
+            System.out.println("Thank you for playing!");
+            shouldContinue = false;
         }
     }
 }
