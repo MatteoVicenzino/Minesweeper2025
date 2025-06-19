@@ -72,4 +72,21 @@ public class GameInitializationTests {
         assertEquals(9, game.getMinefield().getWidth());
         assertEquals(10, game.getMinefield().getMines());
     }
+
+    @Test
+    void testInvalidFirstRevealDoesNotInitializeMinefield() {
+
+        game = new Game(Difficulty.EASY);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            game.revealCell(new Position(10, 10));
+        });
+
+        assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
+        assertEquals(0, game.getRevealed());
+        assertEquals(0, game.getElapsedTime());
+
+        MineField voidMinefield = new MineField(9, 9, 0);
+        assertEquals(voidMinefield, game.getMinefield());
+    }
 }

@@ -76,7 +76,8 @@ public class Game {
     }
 
     public void revealCell(Position position) {
-        if (firstReveal) {
+
+        if ((firstReveal) && minefield.isValid(position)){
             statusManager.startGame();
             this.placeMines(position);
             timer.start();
@@ -106,6 +107,7 @@ public class Game {
     }
 
     public void flagCell(Position position) {
+
         if (!minefield.getCell(position).isRevealed()) {
             if (minefield.getCell(position).isFlagged()) {
                 minefield.flagCell(position);
