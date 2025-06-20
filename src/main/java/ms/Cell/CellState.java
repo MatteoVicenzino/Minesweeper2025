@@ -1,4 +1,4 @@
-package ms;
+package ms.Cell;
 
 public enum CellState {
     HIDDEN {

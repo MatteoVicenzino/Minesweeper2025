@@ -12,13 +12,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-
 import static org.mockito.Mockito.*;
-import org.mockito.Mockito;
 import ms.GameStatus;
 import ms.Position;
 import ms.MineField;
-import ms.Cell;
+import ms.Cell.Cell;
 import static org.mockito.ArgumentMatchers.any;
 
 public class CLIHandlerTests {
