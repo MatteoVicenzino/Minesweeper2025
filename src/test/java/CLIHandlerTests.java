@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 import ms.GameStatus;
 import ms.Position;
 import ms.MineField;
-import ms.Cell.Cell;
+import ms.cell.Cell;
 import static org.mockito.ArgumentMatchers.any;
 
 public class CLIHandlerTests {

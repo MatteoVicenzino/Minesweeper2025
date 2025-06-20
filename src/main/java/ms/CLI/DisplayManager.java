@@ -1,6 +1,6 @@
 package ms.CLI;
 import ms.*;
-import ms.Cell.Cell;
+import ms.cell.Cell;
 
 public class DisplayManager {
 

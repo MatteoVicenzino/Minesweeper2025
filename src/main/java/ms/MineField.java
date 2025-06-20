@@ -1,5 +1,5 @@
 package ms;
-import ms.Cell.Cell;
+import ms.cell.Cell;
 import java.util.Random;
 
 public class MineField {

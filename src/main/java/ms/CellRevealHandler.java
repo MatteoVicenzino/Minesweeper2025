@@ -1,5 +1,5 @@
 package ms;
-import ms.Cell.Cell;
+import ms.cell.Cell;
 
 public class CellRevealHandler {
     private final MineField mineField;
