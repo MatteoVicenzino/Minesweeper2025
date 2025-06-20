@@ -42,15 +42,15 @@ public class Game {
     }
 
     public int getRevealed() {
-        return stats.getRevealedCount();  // Era: return revealedCells;
+        return stats.getRevealedCount();
     }
 
     public int getFlagsPlaced() {
-        return stats.getFlagsPlaced();    // Era: return flagsPlaced;
+        return stats.getFlagsPlaced();
     }
 
     public int getMinesLeft() {
-        return stats.getMinesLeft();      // Era: return totalMines - flagsPlaced;
+        return stats.getMinesLeft();
     }
 
     public GameStatus getGameStatus() {
@@ -63,14 +63,6 @@ public class Game {
 
     public int getUnrevealedCount() {
         return stats.getUnrevealedCount();
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
     }
 
     public int getTotalMines() {
@@ -93,7 +85,7 @@ public class Game {
             firstReveal = false;
         }
 
-        if (getGameOver() || minefield.getCell(position).isRevealed() || minefield.getCell(position).isFlagged()) {
+        if (getGameOver()) {
             return;
         }
 
