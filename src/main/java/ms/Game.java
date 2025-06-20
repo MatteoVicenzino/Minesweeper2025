@@ -1,6 +1,6 @@
 package ms;
 
-import ms.Cell.CellRevealHandler;
+import ms.CellRevealHandler;
 
 public class Game {
 
