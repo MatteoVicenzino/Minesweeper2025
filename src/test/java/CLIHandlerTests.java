@@ -222,4 +222,17 @@ public class CLIHandlerTests {
             assertTrue(output.contains(content), "Should contain: " + content);
         }
     }
+
+    @Test
+    void testResetCommand() {
+        provideInput("reset\nquit\n");
+        cliHandler.setScanner(new Scanner(System.in));
+        cliHandler.start();
+
+        verify(mockGame).resetGame();
+
+        String output = getOutput();
+        assertTrue(output.contains("--- Game Reset ---"),
+                "Should display reset message");
+    }
 }

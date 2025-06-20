@@ -29,6 +29,12 @@ public class CommandParser {
                 }
                 yield new Command(CommandType.QUIT);
             }
+            case "RESET" -> {
+                if (parts.length > 1) {
+                    throw new IllegalArgumentException("Reset command does not take any arguments");
+                }
+                yield new Command(CommandType.RESET);
+            }
             default -> throw new IllegalArgumentException("Unknown command type: " + commandType);
         };
     }

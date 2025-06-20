@@ -55,6 +55,10 @@ public class CLIHandler {
                     case HELP:
                         displayManager.displayHelp();
                         continue;
+                    case RESET:
+                        game.resetGame();
+                        displayManager.displayGameReset();
+                        break;
                     case QUIT:
                         displayManager.displayGoodbye();
                         return;

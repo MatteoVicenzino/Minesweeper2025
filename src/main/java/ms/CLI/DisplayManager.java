@@ -11,6 +11,7 @@ public class DisplayManager {
                   reveal <row>,<col>  - Reveal a cell at the specified coordinates
                   flag <row>,<col>    - Toggle flag on a cell at the specified coordinates
                   help                - Show this help message
+                  reset               - Reset the current game
                   quit                - Exit the game
                 
                 Examples:
@@ -199,7 +200,10 @@ public class DisplayManager {
     public void displayNewGameWithDifficulty() {
         System.out.println("\n--- Starting a new game with new difficulty ---");
     }
-
+    public void displayGameReset() {
+        System.out.println("\n--- Game Reset ---");
+        System.out.println("The game has been reset. Starting fresh!");
+    }
     public void displayThankYou() {
         System.out.println("Thank you for playing!");
     }

@@ -4,5 +4,6 @@ public enum CommandType {
     REVEAL,
     FLAG,
     HELP,
-    QUIT
+    QUIT,
+    RESET
 }
