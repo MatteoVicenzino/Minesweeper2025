@@ -39,6 +39,7 @@ For now these are the tests that we are implementing, more to come...
 - ~~Game loop integration with command execution and game over handling~~
 - ~~Mock-based behavioral testing with deterministic verification~~
 - ~~Ask the user for the difficulty level at the start of the game~~
+- Implement reset command
 
 # Refactoring
 
@@ -46,6 +47,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 
 - refactor to check open-closed principles
 - ~~rename reveal cell methods in different classes for readability~~
+- create project structure with packages
 
 
 ### Cell
@@ -67,7 +69,8 @@ Note file to keep track of refactoring and improvements that need to be done at 
 
 ### Cli and Graphics
 - ~~Show fully covered minefield when the game starts, instead of "Minefield not yet initialized" message~~
-- Remove nested if and for statements in the CLIHandler's displayGameStatus method to improve readability and structure
+- ~~Remove nested if and for statements in the CLIHandler's displayGameStatus method to improve readability and structure~~
+- Split CLIHandler (and create package) into smaller classes to improve readability and structure
 
 ### Tests
 - Refactor the tests to improve readability and structure:
@@ -75,4 +78,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
   - create helper methods for common assertions in order to reduce code duplication
   - use more descriptive test names
 
-
+# More things to do
+- JAVADoc for all contents
+- Readme file with instructions on how to run the game
+- Exectuable jar file with the game
