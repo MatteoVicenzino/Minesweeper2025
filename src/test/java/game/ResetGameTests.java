@@ -1,5 +1,6 @@
 package game;
 
+import ms.GridDimension;
 import ms.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,7 @@ import ms.MineFieldFactory;
 
 public class ResetGameTests {
 
-    private static final int GAME_HEIGHT = 3;
-    private static final int GAME_WIDTH = 3;
+    private static final GridDimension DIMENSIONS = new GridDimension(3, 3);
     private static final int MINE_COUNT = 1;
     private static final Position SAFE_POSITION = new Position(0, 0);
     private static final Position MINE_POSITION = new Position(0, 1);
@@ -26,14 +26,14 @@ public class ResetGameTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        GameTestsHelper.setupMockFactoryForReset(mockMineFieldFactory, GAME_HEIGHT, GAME_WIDTH, MINE_COUNT);
+        GameTestsHelper.setupMockFactoryForReset(mockMineFieldFactory, DIMENSIONS, MINE_COUNT);
     }
 
     @Test
     void testResetGameClearsGameOverStatus() throws InterruptedException {
 
         game = GameTestsHelper.createAndSetupGameForReset(
-                GAME_HEIGHT, GAME_WIDTH, MINE_COUNT, mockMineFieldFactory,
+                DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
         assertTrue(game.getGameOver(), "Game should be over before reset");
@@ -47,7 +47,7 @@ public class ResetGameTests {
     void testResetGameClearsTimer() throws InterruptedException {
 
         game = GameTestsHelper.createAndSetupGameForReset(
-                GAME_HEIGHT, GAME_WIDTH, MINE_COUNT, mockMineFieldFactory,
+                DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
         assertTrue(game.getElapsedTime() > 0, "Timer should have started");
@@ -61,7 +61,7 @@ public class ResetGameTests {
     void testResetGameClearsFlagsPlaced() throws InterruptedException {
 
         game = GameTestsHelper.createAndSetupGameForReset(
-                GAME_HEIGHT, GAME_WIDTH, MINE_COUNT, mockMineFieldFactory,
+                DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
         assertEquals(1, game.getFlagsPlaced(), "Flags should have been placed");
@@ -75,7 +75,7 @@ public class ResetGameTests {
     void testResetGameRestoresMinesLeft() throws InterruptedException {
 
         game = GameTestsHelper.createAndSetupGameForReset(
-                GAME_HEIGHT, GAME_WIDTH, MINE_COUNT, mockMineFieldFactory,
+                DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
         game.resetGame();
@@ -87,7 +87,7 @@ public class ResetGameTests {
     void testResetGameRestoresInitialCellStates() throws InterruptedException {
 
         game = GameTestsHelper.createAndSetupGameForReset(
-                GAME_HEIGHT, GAME_WIDTH, MINE_COUNT, mockMineFieldFactory,
+                DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
         assertTrue(game.getMinefield().getCell(new Position(0, 0)).isRevealed(), "A cell should be revealed");

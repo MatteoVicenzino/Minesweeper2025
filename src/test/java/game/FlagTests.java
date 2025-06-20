@@ -11,7 +11,6 @@ import static org.mockito.Mockito.*;
 public class FlagTests {
 
     private Game game;
-    private final int mines = 10;
 
     @Mock
     private MineFieldFactory mockMineFieldFactory;
@@ -19,11 +18,15 @@ public class FlagTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        game = new Game(Difficulty.EASY);
+        Difficulty difficulty = Difficulty.EASY;
+        game = new Game(difficulty);
     }
 
     @Test
     void testFlagCell() {
+
+        GridDimension dimensions = new GridDimension(5, 5);
+
         boolean[][] minePattern = {
                 {false, true, false, false, false},
                 {true, false, false, false, false},
@@ -32,8 +35,8 @@ public class FlagTests {
                 {false, false, false, false, false}
         };
         MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(5, 5, 4, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(5, 5, 4)).thenReturn(testMineField);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 4, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(dimensions, 4)).thenReturn(testMineField);
 
         game.revealCell(new Position(4, 4));
 
@@ -55,6 +58,9 @@ public class FlagTests {
 
     @Test
     void testGetMinesLeft() {
+
+        GridDimension dimensions = new GridDimension(4, 4);
+
         boolean[][] minePattern = {
                 {false, false, false, false},
                 {false, true, false, false},
@@ -62,8 +68,8 @@ public class FlagTests {
                 {false, false, false, false}
         };
         MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(4, 4, 2, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(4, 4, 2)).thenReturn(testMineField);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 2, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(dimensions, 2)).thenReturn(testMineField);
 
         game.revealCell(new Position(0, 0));
 

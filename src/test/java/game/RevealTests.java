@@ -13,7 +13,6 @@ import static org.mockito.Mockito.*;
 public class RevealTests {
 
     private Game game;
-    private final int mines = 10;
 
     @Mock
     private MineFieldFactory mockMineFieldFactory;
@@ -26,6 +25,9 @@ public class RevealTests {
 
     @Test
     void testRevealCell() {
+
+        GridDimension dimensions = new GridDimension(4, 4);
+
         boolean[][] minePattern = {
                 {false, false, false, false},
                 {false, false, false, false},
@@ -33,8 +35,8 @@ public class RevealTests {
                 {false, false, false, false}
         };
         MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(4, 4, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(4, 4, 1)).thenReturn(testMineField);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(3, 3));
 
@@ -55,16 +57,19 @@ public class RevealTests {
 
     @Test
     void testRevealEmptyCellsCascade() throws InterruptedException {
+
+        GridDimension dimensions = new GridDimension(5, 5);
+
         boolean[][] minePattern = GameTestsHelper.createCascadeTestPattern();
         MineField realMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
         MineField spyMineField = spy(realMineField);
 
         doNothing().when(spyMineField).initializeGrid(any(Position.class));
 
-        when(mockMineFieldFactory.createMineField(5, 5, 0)).thenReturn(new MineField(5, 5, 0));
-        when(mockMineFieldFactory.createMineField(5, 5, 8)).thenReturn(spyMineField);
+        when(mockMineFieldFactory.createMineField(dimensions, 0)).thenReturn(new MineField(dimensions, 0));
+        when(mockMineFieldFactory.createMineField(dimensions, 8)).thenReturn(spyMineField);
 
-        game = GameTestsHelper.createGameWithMockFactory(5, 5, 8, mockMineFieldFactory);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 8, mockMineFieldFactory);
 
         game.revealCell(new Position(0, 0));
 
@@ -101,14 +106,17 @@ public class RevealTests {
 
     @Test
     void testRevealFlaggedCell() {
+
+        GridDimension dimensions = new GridDimension(3, 3);
+
         boolean[][] minePattern = {
                 {false, false, false},
                 {false, true, false},
                 {false, false, false}
         };
         MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(0, 0));
         game.flagCell(new Position(0, 1));

@@ -19,8 +19,9 @@ public class GameInitializationTests {
     @Test
     void testGameInitialization() {
 
-        game = new Game(Difficulty.EASY);
-        MineField voidMinefield = new MineField(9, 9, 0);
+        Difficulty difficulty = Difficulty.EASY;
+        game = new Game(difficulty);
+        MineField voidMinefield = new MineField(GridDimension.fromDifficulty(difficulty), 0);
 
         assertEquals(voidMinefield, game.getMinefield());
         assertEquals(10, game.getMinesLeft());
@@ -76,7 +77,9 @@ public class GameInitializationTests {
     @Test
     void testInvalidFirstRevealDoesNotInitializeMinefield() {
 
-        game = new Game(Difficulty.EASY);
+        Difficulty difficulty = Difficulty.EASY;
+        GridDimension dimensions = GridDimension.fromDifficulty(difficulty);
+        game = new Game(difficulty);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             game.revealCell(new Position(10, 10));
@@ -86,7 +89,7 @@ public class GameInitializationTests {
         assertEquals(0, game.getRevealed());
         assertEquals(0, game.getElapsedTime());
 
-        MineField voidMinefield = new MineField(9, 9, 0);
+        MineField voidMinefield = new MineField(dimensions, 0);
         assertEquals(voidMinefield, game.getMinefield());
     }
 }

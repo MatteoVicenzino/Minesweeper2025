@@ -1,27 +1,24 @@
 package game;
 
-import ms.Game;
-import ms.MineField;
-import ms.MineFieldFactory;
-import ms.Position;
+import ms.*;
 
 import static org.mockito.Mockito.when;
 
 public class GameTestsHelper {
 
-    public static Game createGameWithMockFactory(int height, int width, int mines, MineFieldFactory mockFactory) {
-        return new Game(height, width, mines, mockFactory);
+    public static Game createGameWithMockFactory(GridDimension dimensions, int mines, MineFieldFactory mockFactory) {
+        return new Game(dimensions, mines, mockFactory);
     }
 
     public static MineField createMineFieldWithPattern(boolean[][] minePattern) {
-        int height = minePattern.length;
-        int width = minePattern[0].length;
+
+        GridDimension dimensions = new GridDimension(minePattern[0].length, minePattern.length);
         int mineCount = countMinesInPattern(minePattern);
 
-        MineField mineField = new MineField(height, width, mineCount);
+        MineField mineField = new MineField(dimensions, mineCount);
 
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int row = 0; row < dimensions.height(); row++) {
+            for (int col = 0; col < dimensions.width(); col++) {
                 if (minePattern[row][col]) {
                     mineField.getCell(new Position(row, col)).setMined(true);
                 }
@@ -84,20 +81,20 @@ public class GameTestsHelper {
     }
 
     public static void setupMockFactoryForReset(MineFieldFactory mockFactory,
-                                                int height, int width, int mineCount) {
-        when(mockFactory.createMineField(height, width, 0))
-                .thenAnswer(invocation -> new MineField(height, width, 0));
+                                               GridDimension dimensions, int mineCount) {
+        when(mockFactory.createMineField(dimensions, 0))
+                .thenAnswer(invocation -> new MineField(dimensions, 0));
 
-        when(mockFactory.createMineField(height, width, mineCount))
+        when(mockFactory.createMineField(dimensions, mineCount))
                 .thenAnswer(invocation -> createMineFieldWithPattern(createSimpleCenterMinePattern()));
     }
 
-    public static Game createAndSetupGameForReset(int height, int width, int mineCount,
+    public static Game createAndSetupGameForReset(GridDimension dimensions, int mineCount,
                                                   MineFieldFactory mockFactory,
                                                   Position safePosition,
                                                   Position minePosition,
                                                   Position flagPosition) throws InterruptedException {
-        Game game = createGameWithMockFactory(height, width, mineCount, mockFactory);
+        Game game = createGameWithMockFactory(dimensions, mineCount, mockFactory);
 
         game.revealCell(safePosition);
 

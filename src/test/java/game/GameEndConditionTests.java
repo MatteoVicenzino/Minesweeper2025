@@ -11,7 +11,6 @@ import static org.mockito.Mockito.*;
 public class GameEndConditionTests {
 
     private Game game;
-    private final int mines = 10;
 
     @Mock
     private MineFieldFactory mockMineFieldFactory;
@@ -24,10 +23,13 @@ public class GameEndConditionTests {
 
     @Test
     void testRevealMineEndsGame() {
+
+        GridDimension dimensions = new GridDimension(3, 3);
+
         boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
         MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(1, 1));
         assertTrue(game.getGameOver(), "Game should end when a mine is revealed");

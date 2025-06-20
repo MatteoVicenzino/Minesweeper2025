@@ -11,7 +11,6 @@ import static org.mockito.Mockito.*;
 public class TimerTests {
 
     private Game game;
-    private final int mines = 10;
 
     @Mock
     private MineFieldFactory mockMineFieldFactory;
@@ -42,14 +41,17 @@ public class TimerTests {
 
     @Test
     void testTimerStopsOnGameLose() throws InterruptedException {
+
+        GridDimension dimensions = new GridDimension(3, 3);
+
         boolean[][] minePattern = {
                 {false, true, false},
                 {false, false, false},
                 {false, false, false}
         };
         MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(3, 3, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(3, 3, 1)).thenReturn(testMineField);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(0, 1));
 

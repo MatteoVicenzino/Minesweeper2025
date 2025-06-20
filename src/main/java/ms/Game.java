@@ -1,13 +1,10 @@
 package ms;
 
-import ms.CellRevealHandler;
-
 public class Game {
 
     private MineField minefield;
     private boolean firstReveal;
-    private final int height;
-    private final int width;
+    private final GridDimension dimensions;
     private final int totalMines;
     private final GameStatusManager statusManager;
     private final MineFieldFactory mineFieldFactory;
@@ -15,24 +12,23 @@ public class Game {
     private final GameStatistics stats;
     private CellRevealHandler revealHandler;
 
-    public Game(int height, int width, int totalMines, MineFieldFactory mineFieldFactory) {
-        this.height = height;
-        this.width = width;
+    public Game(GridDimension dimensions, int totalMines, MineFieldFactory mineFieldFactory) {
+        this.dimensions = dimensions;
         this.totalMines = totalMines;
         this.mineFieldFactory = mineFieldFactory;
-        this.minefield = mineFieldFactory.createMineField(height, width, 0);
+        this.minefield = mineFieldFactory.createMineField(dimensions, 0);
         this.firstReveal = true;
         this.timer = new GameTimer();
-        this.stats = new GameStatistics(height, width, totalMines);
+        this.stats = new GameStatistics(dimensions.height(), dimensions.width(), totalMines);
         this.statusManager = new GameStatusManager();
     }
 
     public Game(Difficulty difficulty) {
-        this(difficulty.getHeight(), difficulty.getWidth(), difficulty.getMines(), new DefaultMineFieldFactory());
+        this(GridDimension.fromDifficulty(difficulty), difficulty.getMines(), new DefaultMineFieldFactory());
     }
 
     public void placeMines(Position firstRevealPosition) {
-        this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
+        this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
         this.minefield.initializeGrid(firstRevealPosition);
         this.revealHandler = new CellRevealHandler(this.minefield);
     }
@@ -69,16 +65,15 @@ public class Game {
         return totalMines;
     }
 
+    public GridDimension getDimensions() {
+        return dimensions;
+    }
+
     public void revealCell(Position position) {
 
-        if (position.row() < 0 || position.row() >= height ||
-                position.col() < 0 || position.col() >= width) {
-            throw new IndexOutOfBoundsException(
-                    String.format("Invalid cell coordinates: (%d, %d). Valid range: (0,0) to (%d,%d)",
-                            position.row(), position.col(), height-1, width-1));
-        }
+        dimensions.validatePosition(position);
 
-        if (firstReveal){
+        if (firstReveal) {
             statusManager.startGame();
             this.placeMines(position);
             timer.start();
@@ -88,7 +83,6 @@ public class Game {
         if (getGameOver()) {
             return;
         }
-
 
         if (minefield.getCell(position).isMined()) {
             minefield.revealCell(position);
@@ -109,6 +103,8 @@ public class Game {
 
     public void flagCell(Position position) {
 
+        dimensions.validatePosition(position);
+
         if (!minefield.getCell(position).isRevealed()) {
             if (minefield.getCell(position).isFlagged()) {
                 minefield.flagCell(position);
@@ -125,7 +121,7 @@ public class Game {
     }
 
     public void resetGame() {
-        this.minefield = mineFieldFactory.createMineField(height, width, totalMines);
+        this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
         stats.reset();
         statusManager.resetGame();
         timer.reset();

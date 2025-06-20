@@ -7,8 +7,12 @@ public class GameStatistics {
     private int flagsPlaced;
 
     public GameStatistics(int height, int width, int totalMines) {
+        this(new GridDimension(height, width), totalMines);
+    }
+
+    public GameStatistics(GridDimension dimensions, int totalMines) {
         this.totalMines = totalMines;
-        this.totalCells = height * width;
+        this.totalCells = dimensions.totalCells();
         this.revealedCells = 0;
         this.flagsPlaced = 0;
     }
