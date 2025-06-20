@@ -13,9 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-
 import static org.mockito.Mockito.*;
-
 import ms.GameStatus;
 import ms.Position;
 import ms.MineField;
