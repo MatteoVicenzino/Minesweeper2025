@@ -39,7 +39,7 @@ For now these are the tests that we are implementing, more to come...
 - ~~Game loop integration with command execution and game over handling~~
 - ~~Mock-based behavioral testing with deterministic verification~~
 - ~~Ask the user for the difficulty level at the start of the game~~
-- Implement reset command
+- ~~Implement reset command~~
 
 # Refactoring
 
