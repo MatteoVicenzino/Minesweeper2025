@@ -1,5 +1,7 @@
 package ms;
 
+import ms.Cell.CellRevealHandler;
+
 public class Game {
 
     private MineField minefield;
