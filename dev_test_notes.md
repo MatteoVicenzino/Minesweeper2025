@@ -70,7 +70,10 @@ Note file to keep track of refactoring and improvements that need to be done at 
 ### Cli and Graphics
 - ~~Show fully covered minefield when the game starts, instead of "Minefield not yet initialized" message~~
 - ~~Remove nested if and for statements in the CLIHandler's displayGameStatus method to improve readability and structure~~
-- Split CLIHandler (and create package) into smaller classes to improve readability and structure
+- ~~Split CLIHandler (and create package) into smaller classes to improve readability and structure~~
+
+### Command
+- Refactor the Command class to use a more structured approach for command parsing and execution
 
 ### Tests
 - Refactor the tests to improve readability and structure:
