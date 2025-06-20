@@ -32,10 +32,10 @@ public class CellTests {
 
     @Test
     void testMarkAsRevealedCell() {
-        assertTrue(cell.markAsRevealed());
+        cell.reveal();
         assertTrue(cell.isRevealed());
 
-        assertFalse(cell.markAsRevealed());
+        cell.reveal();
         assertTrue(cell.isRevealed());
     }
 
@@ -55,7 +55,8 @@ public class CellTests {
         assertTrue(cell.isFlagged());
         assertFalse(cell.isRevealed());
 
-        assertFalse(cell.markAsRevealed());
+        cell.reveal();
+        assertFalse(cell.isRevealed());
         assertTrue(cell.isFlagged());
         assertFalse(cell.isRevealed());
     }
@@ -63,7 +64,8 @@ public class CellTests {
 
     @Test
     void testToggleFlagOnRevealedCell() {
-        cell.markAsRevealed();
+        cell.reveal();
+        cell.isRevealed();
         assertTrue(cell.isRevealed());
         assertFalse(cell.isFlagged());
         cell.toggleFlag();

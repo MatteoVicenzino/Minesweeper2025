@@ -17,7 +17,8 @@ public class CellRevealHandler {
             return false;
         }
 
-        return cell.markAsRevealed();
+        cell.reveal();
+        return cell.isRevealed();
     }
 
     public int revealCascade(Position startPosition) {

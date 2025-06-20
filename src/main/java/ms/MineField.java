@@ -66,9 +66,9 @@ public class MineField {
         return mineCount;
     }
 
-    public void uncoverCell(Position position) {
+    public void revealCell(Position position) {
         if (this.isValid(position)) {
-            this.getCell(position).markAsRevealed();
+            this.getCell(position).reveal();
         }
     }
 

@@ -97,7 +97,7 @@ public class Game {
 
 
         if (minefield.getCell(position).isMined()) {
-            minefield.uncoverCell(position);
+            minefield.revealCell(position);
             stats.incrementRevealed();
             statusManager.endGameWithLoss();
             timer.stop();

@@ -1,23 +1,20 @@
 package ms;
 
-interface CellInterface {
-    boolean isMined();
-    boolean isRevealed();
-    boolean isFlagged();
-    boolean markAsRevealed();
-    void toggleFlag();
-    void setMined(boolean value);
-}
-
-public class Cell implements CellInterface {
-    private boolean isRevealed;
-    private boolean isFlagged;
+public class Cell {
+    private CellState status;
     private boolean isMined;
 
     public Cell() {
-        this.isRevealed = false;
-        this.isFlagged = false;
+        this.status = CellState.HIDDEN;
         this.isMined = false;
+    }
+
+    public void toggleFlag() {
+        status = status.toggleFlag();
+    }
+
+    public void reveal() {
+        status = status.reveal(isMined);
     }
 
     public boolean isMined() {
@@ -25,29 +22,14 @@ public class Cell implements CellInterface {
     }
 
     public boolean isRevealed() {
-        return isRevealed;
+        return status == CellState.REVEALED || status == CellState.EXPLODED;
     }
 
     public boolean isFlagged() {
-        return isFlagged;
+        return status == CellState.FLAGGED;
     }
 
-    public void setMined(boolean value) {
-        this.isMined = value;
-    }
-
-    public boolean markAsRevealed() {
-        if (!isRevealed && !isFlagged){
-            this.isRevealed = true;
-            return true;
-        }
-        return false;
-    }
-
-    public void toggleFlag() {
-        if (!isRevealed) {
-            this.isFlagged = !this.isFlagged;
-        }
+    public void setMined(boolean mined) {
+        this.isMined = mined;
     }
 }
-
