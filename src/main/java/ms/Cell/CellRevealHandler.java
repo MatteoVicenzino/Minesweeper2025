@@ -1,4 +1,7 @@
-package ms;
+package ms.Cell;
+
+import ms.MineField;
+import ms.Position;
 
 public class CellRevealHandler {
     private final MineField mineField;
