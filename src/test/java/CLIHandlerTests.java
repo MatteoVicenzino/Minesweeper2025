@@ -1,5 +1,6 @@
 import ms.*;
 import ms.CLI.CLIHandler;
+import ms.commands.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,8 +91,8 @@ public class CLIHandlerTests {
         assertAll("Valid Reveal Command",
                 () -> assertNotNull(command, "Command should not be null"),
                 () -> assertEquals(CommandType.REVEAL, command.getType(), "Command type should be REVEAL"),
-                () -> assertEquals(3, command.getRow(), "Row should match input"),
-                () -> assertEquals(4, command.getCol(), "Column should match input")
+                () -> assertTrue(command.hasPosition(), "Command should have position"),
+                () -> assertEquals(new Position(3, 4), command.getPosition(), "Position should match input")
         );
     }
 

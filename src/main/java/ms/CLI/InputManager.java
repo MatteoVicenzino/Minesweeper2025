@@ -1,6 +1,7 @@
 package ms.CLI;
-import ms.*;
 
+import ms.*;
+import ms.commands.*;
 import java.util.Scanner;
 
 public class InputManager {

@@ -1,4 +1,4 @@
-package ms;
+package ms.commands;
 
 public enum CommandType {
     REVEAL,

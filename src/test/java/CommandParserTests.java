@@ -1,8 +1,9 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import ms.CommandParser;
-import ms.Command;
-import ms.CommandType;
+import ms.commands.CommandParser;
+import ms.commands.Command;
+import ms.commands.CommandType;
+import ms.Position;
 
 public class CommandParserTests {
 
@@ -15,6 +16,8 @@ public class CommandParserTests {
 
         assertNotNull(command, "Command should not be null for valid input");
         assertEquals(CommandType.REVEAL, command.getType(), "Command type should be REVEAL");
+        assertTrue(command.hasPosition(), "Command should have position");
+        assertEquals(new Position(3, 4), command.getPosition(), "Position should match the input");
         assertEquals(3, command.getRow(), "Row should match the input");
         assertEquals(4, command.getCol(), "Column should match the input");
     }
@@ -38,6 +41,8 @@ public class CommandParserTests {
 
         assertNotNull(command, "Command should not be null for valid input");
         assertEquals(CommandType.FLAG, command.getType(), "Command type should be FLAG");
+        assertTrue(command.hasPosition(), "Command should have position");
+        assertEquals(new Position(5, 6), command.getPosition(), "Position should match the input");
         assertEquals(5, command.getRow(), "Row should match the input");
         assertEquals(6, command.getCol(), "Column should match the input");
     }
@@ -51,6 +56,7 @@ public class CommandParserTests {
 
         assertNotNull(command, "Command should not be null for QUIT");
         assertEquals(CommandType.QUIT, command.getType(), "Command type should be QUIT");
+        assertFalse(command.hasPosition(), "Command should not have position");
         assertEquals(-1, command.getRow(), "Row should be -1 for QUIT command");
         assertEquals(-1, command.getCol(), "Column should be -1 for QUIT command");
     }
@@ -154,6 +160,8 @@ public class CommandParserTests {
 
         assertNotNull(command);
         assertEquals(CommandType.REVEAL, command.getType());
+        assertTrue(command.hasPosition());
+        assertEquals(new Position(3, 4), command.getPosition());
         assertEquals(3, command.getRow(), "Row should match the input");
         assertEquals(4, command.getCol(), "Column should match the input");
     }
@@ -167,6 +175,8 @@ public class CommandParserTests {
 
         assertNotNull(command);
         assertEquals(CommandType.REVEAL, command.getType());
+        assertTrue(command.hasPosition());
+        assertEquals(new Position(1, 1), command.getPosition());
         assertEquals(1, command.getRow(), "Row should match the input");
         assertEquals(1, command.getCol(), "Column should match the input");
     }
@@ -180,6 +190,8 @@ public class CommandParserTests {
 
         assertNotNull(command);
         assertEquals(CommandType.REVEAL, command.getType());
+        assertTrue(command.hasPosition());
+        assertEquals(new Position(-1, -2), command.getPosition());
         assertEquals(-1, command.getRow(), "Row should match the input");
         assertEquals(-2, command.getCol(), "Column should match the input");
     }
@@ -193,6 +205,7 @@ public class CommandParserTests {
 
         assertNotNull(command, "Command should not be null for HELP");
         assertEquals(CommandType.HELP, command.getType(), "Command type should be HELP");
+        assertFalse(command.hasPosition(), "Command should not have position");
         assertEquals(-1, command.getRow(), "Row should be -1 for HELP command");
         assertEquals(-1, command.getCol(), "Column should be -1 for HELP command");
     }
@@ -216,5 +229,6 @@ public class CommandParserTests {
 
         assertNotNull(command);
         assertEquals(CommandType.HELP, command.getType());
+        assertFalse(command.hasPosition());
     }
 }

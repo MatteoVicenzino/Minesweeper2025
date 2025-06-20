@@ -1,5 +1,7 @@
 package ms.CLI;
+
 import ms.*;
+import ms.commands.*;
 
 public class CLIHandler {
     private final InputManager inputManager;
@@ -45,12 +47,14 @@ public class CLIHandler {
 
                 switch (command.getType()) {
                     case REVEAL:
-                        Position revealPos = new Position(command.getRow(), command.getCol());
-                        game.revealCell(revealPos);
+                        if (command.hasPosition()) {
+                            game.revealCell(command.getPosition());
+                        }
                         break;
                     case FLAG:
-                        Position flagPos = new Position(command.getRow(), command.getCol());
-                        game.flagCell(flagPos);
+                        if (command.hasPosition()) {
+                            game.flagCell(command.getPosition());
+                        }
                         break;
                     case HELP:
                         displayManager.displayHelp();

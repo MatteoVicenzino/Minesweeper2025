@@ -1,5 +1,6 @@
-package ms;
+package ms.commands;
 
+import ms.Position;
 import java.util.Locale;
 
 public class CommandParser {
@@ -59,7 +60,8 @@ public class CommandParser {
         try {
             int row = Integer.parseInt(coordinates[0].trim());
             int col = Integer.parseInt(coordinates[1].trim());
-            return new Command(type, row, col);
+            Position position = new Position(row, col);
+            return new Command(type, position);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid coordinate value");
         }

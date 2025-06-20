@@ -84,4 +84,4 @@ Note file to keep track of refactoring and improvements that need to be done at 
 # More things to do
 - JAVADoc for all contents
 - Readme file with instructions on how to run the game
-- Exectuable jar file with the game
+- Executable jar file with the game
