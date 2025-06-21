@@ -84,11 +84,16 @@ public class Game {
             return;
         }
 
+        if (minefield.getCell(position).isFlagged()) {
+            return;
+        }
+
         if (minefield.getCell(position).isMined()) {
-            minefield.revealCell(position);
-            stats.incrementRevealed();
-            statusManager.endGameWithLoss();
-            timer.stop();
+            if (revealHandler.revealSingleCell(position)) {
+                stats.incrementRevealed();
+                statusManager.endGameWithLoss();
+                timer.stop();
+            }
             return;
         }
 
