@@ -106,6 +106,10 @@ public class Game {
 
         dimensions.validatePosition(position);
 
+        if (firstReveal) {
+            throw new IllegalStateException("Flagging is not a valid first move!");
+        }
+
         if (!minefield.getCell(position).isRevealed()) {
             if (minefield.getCell(position).isFlagged()) {
                 minefield.flagCell(position);
