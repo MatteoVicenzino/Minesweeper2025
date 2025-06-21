@@ -11,9 +11,6 @@ public class CellRevealHandler {
     }
 
     public boolean revealSingleCell(Position position) {
-        if (!dimensions.isValidPosition(position)) {
-            return false;
-        }
 
         Cell cell = mineField.getCell(position);
         if (cell.isRevealed() || cell.isFlagged()) {
@@ -25,7 +22,7 @@ public class CellRevealHandler {
     }
 
     public int revealCascade(Position startPosition) {
-        if (!canRevealAt(startPosition)) {
+        if (!CanCascadeRevealAt(startPosition)) {
             return 0;
         }
 
@@ -40,7 +37,7 @@ public class CellRevealHandler {
         }
 
         for (Position adjacent : getAdjacentPositions(startPosition)) {
-            if (canRevealAt(adjacent) && !mineField.getCell(adjacent).isRevealed()) {
+            if (CanCascadeRevealAt(adjacent) && !mineField.getCell(adjacent).isRevealed()) {
                 revealedCount += revealCascade(adjacent);
             }
         }
@@ -48,7 +45,7 @@ public class CellRevealHandler {
         return revealedCount;
     }
 
-    private boolean canRevealAt(Position position) {
+    private boolean CanCascadeRevealAt(Position position) {
         if (!dimensions.isValidPosition(position)) {
             return false;
         }

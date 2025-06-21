@@ -61,12 +61,10 @@ public class MineField {
     }
 
     public Cell getCell(Position position) {
-        dimensions.validatePosition(position);
         return field[position.row()][position.col()];
     }
 
     public void initializeGrid(Position firstClickPosition) {
-        dimensions.validatePosition(firstClickPosition);
         placeMinesRandomly(firstClickPosition);
     }
 
@@ -87,16 +85,8 @@ public class MineField {
         return mineCount;
     }
 
-    public void revealCell(Position position) {
-        if (dimensions.isValidPosition(position)) {
-            this.getCell(position).reveal();
-        }
-    }
-
     public void flagCell(Position position) {
-        if (dimensions.isValidPosition(position)) {
             getCell(position).toggleFlag();
-        }
     }
 
     @Override

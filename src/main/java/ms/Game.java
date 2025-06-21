@@ -65,10 +65,6 @@ public class Game {
         return totalMines;
     }
 
-    public GridDimension getDimensions() {
-        return dimensions;
-    }
-
     public void revealCell(Position position) {
 
         dimensions.validatePosition(position);
