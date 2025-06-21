@@ -113,16 +113,16 @@ public class DisplayManager {
     private String getCellDisplayString(Game game, MineField mf, Position pos) {
         Cell cell = mf.getCell(pos);
 
-        if (shouldShowMine(game, cell)) {
-            return " * ";
-        }
-
         if (cell.isRevealed()) {
             return getRevealedCellDisplay(mf, pos, cell);
         }
 
         if (cell.isFlagged()) {
             return " F ";
+        }
+
+        if (shouldShowMine(game, cell)) {
+            return " * ";
         }
 
         return " - ";
