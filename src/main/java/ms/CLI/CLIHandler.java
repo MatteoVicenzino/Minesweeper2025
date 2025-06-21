@@ -74,10 +74,12 @@ public class CLIHandler {
                     handleGameOver();
                 }
 
-            } catch (IllegalArgumentException e) {
+            } catch (CommandParser.CommandParsingException e) {
                 displayManager.displayParsingError(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
                 displayManager.displayCoordinateError(e.getMessage());
+            } catch (IllegalStateException e) {
+                displayManager.displayParsingError(e.getMessage());
             }
         }
     }

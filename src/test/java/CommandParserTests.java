@@ -27,7 +27,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "invalid command";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Invalid input should throw an exception");
         assertTrue(thrown.getMessage().contains("Unknown command type"), "Error message should indicate unknown command type");
     }
@@ -66,7 +66,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Empty input should throw an exception");
         assertTrue(thrown.getMessage().contains("Input cannot be empty"), "Error message should indicate empty input");
     }
@@ -76,7 +76,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = null;
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Null input should throw an exception");
         assertTrue(thrown.getMessage().contains("Input cannot be empty"), "Error message for null input");
     }
@@ -86,7 +86,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "reveal";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Command without coordinates should throw an exception");
         assertTrue(thrown.getMessage().contains("Missing coordinates"), "Error message should indicate missing coordinates");
     }
@@ -96,7 +96,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "quit 1,2";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Quit command with extra arguments should throw an exception");
         assertTrue(thrown.getMessage().contains("Quit command does not take any arguments"), "Error message for quit with args");
     }
@@ -106,7 +106,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "reveal 3 4";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Malformed coordinate should throw an exception");
         assertTrue(thrown.getMessage().contains("Invalid coordinate format"), "Error message should indicate invalid coordinate format");
     }
@@ -116,7 +116,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "reveal a,b";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Non-numeric coordinate should throw an exception");
         assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message should indicate non-numeric coordinate");
     }
@@ -126,7 +126,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "reveal 3,b";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Partial non-numeric coordinate should throw an exception");
         assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message should indicate non-numeric coordinate");
     }
@@ -136,7 +136,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "reveal 3,";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Missing coordinate value should throw an exception");
         assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message for missing coordinate value");
     }
@@ -146,7 +146,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "reveal ,4";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Missing coordinate value should throw an exception");
         assertTrue(thrown.getMessage().contains("Invalid coordinate value"), "Error message for missing coordinate value");
     }
@@ -215,7 +215,7 @@ public class CommandParserTests {
         CommandParser parser = new CommandParser();
         String input = "help 1,2";
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
                 "Help command with extra arguments should throw an exception");
         assertTrue(thrown.getMessage().contains("Help command does not take any arguments"), "Error message for help with args");
     }

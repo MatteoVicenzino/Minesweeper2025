@@ -7,7 +7,7 @@ public class CommandParser {
 
     public Command parse(String input) {
         if (input == null || input.trim().isEmpty()) {
-            throw new IllegalArgumentException("Input cannot be empty");
+            throw new CommandParsingException("Input cannot be empty");
         }
 
         input = input.trim().replaceAll("\\s+", " ");
@@ -20,41 +20,41 @@ public class CommandParser {
             case "FLAG" -> parseRevealOrFlagCommand(parts, CommandType.FLAG);
             case "HELP" -> {
                 if (parts.length > 1) {
-                    throw new IllegalArgumentException("Help command does not take any arguments");
+                    throw new CommandParsingException("Help command does not take any arguments");
                 }
                 yield new Command(CommandType.HELP);
             }
             case "QUIT" -> {
                 if (parts.length > 1) {
-                    throw new IllegalArgumentException("Quit command does not take any arguments");
+                    throw new CommandParsingException("Quit command does not take any arguments");
                 }
                 yield new Command(CommandType.QUIT);
             }
             case "RESET" -> {
                 if (parts.length > 1) {
-                    throw new IllegalArgumentException("Reset command does not take any arguments");
+                    throw new CommandParsingException("Reset command does not take any arguments");
                 }
                 yield new Command(CommandType.RESET);
             }
-            default -> throw new IllegalArgumentException("Unknown command type: " + commandType);
+            default -> throw new CommandParsingException("Unknown command type: " + commandType);
         };
     }
 
     private Command parseRevealOrFlagCommand(String[] parts, CommandType type) {
         if (parts.length < 2) {
-            throw new IllegalArgumentException("Missing coordinates");
+            throw new CommandParsingException("Missing coordinates");
         }
 
         String coordinatesPart = parts[1].trim();
 
         if (!coordinatesPart.contains(",")) {
-            throw new IllegalArgumentException("Invalid coordinate format");
+            throw new CommandParsingException("Invalid coordinate format");
         }
 
         String[] coordinates = coordinatesPart.split("\\s*,\\s*");
 
         if (coordinates.length != 2 || coordinates[0].isEmpty() || coordinates[1].isEmpty()) {
-            throw new IllegalArgumentException("Invalid coordinate value");
+            throw new CommandParsingException("Invalid coordinate value");
         }
 
         try {
@@ -63,7 +63,13 @@ public class CommandParser {
             Position position = new Position(row, col);
             return new Command(type, position);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid coordinate value");
+            throw new CommandParsingException("Invalid coordinate value");
+        }
+    }
+
+    public static class CommandParsingException extends RuntimeException {
+        public CommandParsingException(String message) {
+            super(message);
         }
     }
 }
