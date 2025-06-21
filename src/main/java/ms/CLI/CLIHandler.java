@@ -90,18 +90,25 @@ public class CLIHandler {
     private void handlePlayAgainChoice() {
         String playAgainInput = inputManager.readPlayAgainChoice();
 
-        if (playAgainInput.equals("yes")) {
-            game.resetGame();
-            displayManager.displayNewGame();
-            displayManager.displayGameStatus(game);
-        } else if (playAgainInput.equals("change")) {
-            Difficulty newDifficulty = inputManager.selectDifficulty();
-            this.game = new Game(newDifficulty);
-            displayManager.displayNewGameWithDifficulty();
-            displayManager.displayGameStatus(game);
-        } else {
-            displayManager.displayThankYou();
-            shouldContinue = false;
+        switch (playAgainInput) {
+            case "yes":
+                game.resetGame();
+                displayManager.displayNewGame();
+                displayManager.displayGameStatus(game);
+                break;
+            case "change":
+                Difficulty newDifficulty = inputManager.selectDifficulty();
+                this.game = new Game(newDifficulty);
+                displayManager.displayNewGameWithDifficulty();
+                displayManager.displayGameStatus(game);
+                break;
+            case "no":
+            default:
+                displayManager.displayThankYou();
+                displayManager.displayGoodbye();
+                shouldContinue = false;
+                inputManager.cleanup();
+                break;
         }
     }
 }

@@ -62,6 +62,13 @@ public class InputManager {
         }
     }
 
+    public void cleanup() {
+        if (scanner != null) {
+            scanner.close();
+            scanner = null;
+        }
+    }
+
     public String readPlayAgainChoice() {
         Scanner currentScanner = getScanner();
         System.out.print("Play again? (yes/no/change): ");
