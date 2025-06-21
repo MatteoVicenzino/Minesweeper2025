@@ -3,13 +3,15 @@ import ms.cell.Cell;
 
 public class CellRevealHandler {
     private final MineField mineField;
+    private final GridDimension dimensions;
 
     public CellRevealHandler(MineField mineField) {
         this.mineField = mineField;
+        this.dimensions = mineField.getDimensions();
     }
 
     public boolean revealSingleCell(Position position) {
-        if (!mineField.isValid(position)) {
+        if (!dimensions.isValidPosition(position)) {
             return false;
         }
 
@@ -47,7 +49,7 @@ public class CellRevealHandler {
     }
 
     private boolean canRevealAt(Position position) {
-        if (!mineField.isValid(position)) {
+        if (!dimensions.isValidPosition(position)) {
             return false;
         }
 

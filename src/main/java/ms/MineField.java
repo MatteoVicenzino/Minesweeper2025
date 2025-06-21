@@ -60,10 +60,6 @@ public class MineField {
         return dimensions;
     }
 
-    public boolean isValid(Position position) {
-        return dimensions.isValidPosition(position);
-    }
-
     public Cell getCell(Position position) {
         dimensions.validatePosition(position);
         return field[position.row()][position.col()];

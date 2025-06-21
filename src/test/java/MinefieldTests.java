@@ -46,15 +46,13 @@ public class MinefieldTests {
         minefield = new MineField(DIMENSIONS, MINES);
         minefield.initializeGrid(new Position(5,5));
 
-        assertTrue(minefield.isValid(new Position(0, 0)));
-        assertTrue(minefield.isValid(new Position(ROWS-1, COLS-1)));
-        assertFalse(minefield.isValid(new Position(-1, 0)));
-        assertFalse(minefield.isValid(new Position(0, -1)));
-        assertFalse(minefield.isValid(new Position(ROWS, 0)));
-        assertFalse(minefield.isValid(new Position(0, COLS)));
+        assertTrue(DIMENSIONS.isValidPosition(new Position(0, 0)));
+        assertTrue(DIMENSIONS.isValidPosition(new Position(ROWS-1, COLS-1)));
+        assertFalse(DIMENSIONS.isValidPosition(new Position(-1, 0)));
+        assertFalse(DIMENSIONS.isValidPosition(new Position(0, -1)));
+        assertFalse(DIMENSIONS.isValidPosition(new Position(ROWS, 0)));
+        assertFalse(DIMENSIONS.isValidPosition(new Position(0, COLS)));
     }
-
-
 
     @Test
     void testCountAdjacentMines() {
