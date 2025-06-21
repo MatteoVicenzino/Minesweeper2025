@@ -68,18 +68,14 @@ public class MineField {
         placeMinesRandomly(firstClickPosition);
     }
 
-    public int countAdjacentMines(Position position) {
-        dimensions.validatePosition(position);
+    public int countAdjacentMines(Position center) {
+
+        dimensions.validatePosition(center);
 
         int mineCount = 0;
-        for (int r = position.row() - 1; r <= position.row() + 1; r++) {
-            for (int c = position.col() - 1; c <= position.col() + 1; c++) {
-                if (r == position.row() && c == position.col()) continue;
-
-                Position adjacentPos = new Position(r, c);
-                if (dimensions.isValidPosition(adjacentPos) && field[r][c].isMined()) {
-                    mineCount++;
-                }
+        for (Position adjacent : Position.getAdjacentPositions(center)){
+            if (dimensions.isValidPosition(adjacent) && getCell(adjacent).isMined()) {
+                mineCount++;
             }
         }
         return mineCount;

@@ -36,7 +36,7 @@ public class CellRevealHandler {
             return revealedCount;
         }
 
-        for (Position adjacent : getAdjacentPositions(startPosition)) {
+        for (Position adjacent : Position.getAdjacentPositions(startPosition)) {
             if (CanCascadeRevealAt(adjacent) && !mineField.getCell(adjacent).isRevealed()) {
                 revealedCount += revealCascade(adjacent);
             }
@@ -52,20 +52,5 @@ public class CellRevealHandler {
 
         Cell cell = mineField.getCell(position);
         return !cell.isRevealed() && !cell.isFlagged() && !cell.isMined();
-    }
-
-    private Position[] getAdjacentPositions(Position center) {
-        Position[] adjacent = new Position[8];
-        int index = 0;
-
-        for (int r = center.row() - 1; r <= center.row() + 1; r++) {
-            for (int c = center.col() - 1; c <= center.col() + 1; c++) {
-                if (r != center.row() || c != center.col()) {
-                    adjacent[index++] = new Position(r, c);
-                }
-            }
-        }
-
-        return adjacent;
     }
 }
