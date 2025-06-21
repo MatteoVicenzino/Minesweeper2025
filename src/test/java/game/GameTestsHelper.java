@@ -1,7 +1,10 @@
 package game;
 
 import ms.*;
+import ms.cell.Cell;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 public class GameTestsHelper {
@@ -15,17 +18,36 @@ public class GameTestsHelper {
         GridDimension dimensions = new GridDimension(minePattern[0].length, minePattern.length);
         int mineCount = countMinesInPattern(minePattern);
 
-        MineField mineField = new MineField(dimensions, mineCount);
+        MineField mineField = spy(new MineField(dimensions, mineCount));
 
-        for (int row = 0; row < dimensions.height(); row++) {
-            for (int col = 0; col < dimensions.width(); col++) {
-                if (minePattern[row][col]) {
-                    mineField.getCell(new Position(row, col)).setMined(true);
-                }
-            }
-        }
+        doAnswer(invocation -> {
+            clearAllMines(mineField);
+            applyMinePattern(mineField, minePattern);
+            return null;
+        }).when(mineField).initializeGrid(any(Position.class));
+
+        applyMinePattern(mineField, minePattern);
 
         return mineField;
+    }
+
+    private static void applyMinePattern(MineField mineField, boolean[][] minePattern) {
+        for (int row = 0; row < minePattern.length; row++) {
+            for (int col = 0; col < minePattern[row].length; col++) {
+                Position pos = new Position(row, col);
+                Cell cell = mineField.getCell(pos);
+                cell.setMined(minePattern[row][col]);
+            }
+        }
+    }
+
+    private static void clearAllMines(MineField minefield) {
+        for (int row = 0; row < minefield.getHeight(); row++) {
+            for (int col = 0; col < minefield.getWidth(); col++) {
+                Position pos = new Position(row, col);
+                minefield.getCell(pos).setMined(false);
+            }
+        }
     }
 
     public static int countMinesInPattern(boolean[][] minePattern) {
@@ -81,7 +103,7 @@ public class GameTestsHelper {
     }
 
     public static void setupMockFactoryForReset(MineFieldFactory mockFactory,
-                                               GridDimension dimensions, int mineCount) {
+                                                GridDimension dimensions, int mineCount) {
         when(mockFactory.createMineField(dimensions, 0))
                 .thenAnswer(invocation -> new MineField(dimensions, 0));
 

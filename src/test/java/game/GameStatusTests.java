@@ -62,17 +62,16 @@ public class GameStatusTests {
     @Test
     void testGameStatusOnReset() {
 
-        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(new MineField(dimensions, 1));
         boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
-        when(mockMineFieldFactory.createMineField(dimensions, 0)).thenReturn(new MineField(dimensions, 0));
-        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(GameTestsHelper.createMineFieldWithPattern(minePattern));
+        MineField mineFieldWithPattern = GameTestsHelper.createMineFieldWithPattern(minePattern);
 
+        when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(mineFieldWithPattern);
+        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         game.revealCell(new Position(1, 1));
         assertEquals(GameStatus.LOST, game.getGameStatus());
 
-        // Reset and check status
         game.resetGame();
+
         assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
         assertFalse(game.getGameOver(), "Game should not be over after reset");
     }
