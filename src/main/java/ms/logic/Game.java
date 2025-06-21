@@ -1,4 +1,6 @@
-package ms;
+package ms.logic;
+
+import ms.model.*;
 
 public class Game {
 
@@ -8,7 +10,7 @@ public class Game {
     private final int totalMines;
     private final GameStatusManager statusManager;
     private final MineFieldFactory mineFieldFactory;
-    private final GameTimer timer;
+    private final Timer timer;
     private final GameStatistics stats;
     private CellRevealHandler revealHandler;
 
@@ -18,7 +20,7 @@ public class Game {
         this.mineFieldFactory = mineFieldFactory;
         this.minefield = mineFieldFactory.createMineField(dimensions, 0);
         this.firstReveal = true;
-        this.timer = new GameTimer();
+        this.timer = new Timer();
         this.stats = new GameStatistics(dimensions.height(), dimensions.width(), totalMines);
         this.statusManager = new GameStatusManager();
     }

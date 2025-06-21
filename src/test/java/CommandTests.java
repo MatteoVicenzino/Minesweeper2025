@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ms.commands.Command;
 import ms.commands.CommandType;
-import ms.Position;
+import ms.model.Position;
 
 public class CommandTests {
 

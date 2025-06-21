@@ -1,4 +1,7 @@
-package ms;
+package ms.logic;
+
+import ms.model.GridDimension;
+import ms.model.MineField;
 
 public class DefaultMineFieldFactory implements MineFieldFactory {
 

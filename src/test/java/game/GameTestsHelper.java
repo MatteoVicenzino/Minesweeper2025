@@ -1,7 +1,11 @@
 package game;
 
-import ms.*;
-import ms.cell.Cell;
+import ms.model.Cell;
+import ms.model.GridDimension;
+import ms.model.MineField;
+import ms.model.Position;
+import ms.logic.Game;
+import ms.logic.MineFieldFactory;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -52,9 +56,9 @@ public class GameTestsHelper {
 
     public static int countMinesInPattern(boolean[][] minePattern) {
         int mineCount = 0;
-        for (int row = 0; row < minePattern.length; row++) {
-            for (int col = 0; col < minePattern[row].length; col++) {
-                if (minePattern[row][col]) {
+        for (boolean[] booleans : minePattern) {
+            for (boolean aBoolean : booleans) {
+                if (aBoolean) {
                     mineCount++;
                 }
             }

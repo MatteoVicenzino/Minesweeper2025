@@ -1,12 +1,12 @@
-package ms;
+package ms.logic;
 
 import java.time.Instant;
-public class GameTimer {
+public class Timer {
     private Instant startTime;
     private Instant endTime;
     private boolean running;
 
-    public GameTimer() {
+    public Timer() {
         this.startTime = null;
         this.endTime = null;
         this.running = false;
@@ -39,9 +39,5 @@ public class GameTimer {
         }
         Instant end = endTime != null ? endTime : Instant.now();
         return end.toEpochMilli() - startTime.toEpochMilli();
-    }
-
-    public boolean isRunning() {
-        return running;
     }
 }

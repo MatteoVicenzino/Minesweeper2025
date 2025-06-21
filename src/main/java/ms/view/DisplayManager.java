@@ -1,6 +1,9 @@
-package ms.CLI;
-import ms.*;
-import ms.cell.Cell;
+package ms.view;
+import ms.model.Cell;
+import ms.model.MineField;
+import ms.model.Position;
+import ms.logic.Game;
+import ms.logic.GameStatus;
 
 public class DisplayManager {
 

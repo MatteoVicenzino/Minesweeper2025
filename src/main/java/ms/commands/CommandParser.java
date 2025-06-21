@@ -1,6 +1,6 @@
 package ms.commands;
 
-import ms.Position;
+import ms.model.Position;
 import java.util.Locale;
 
 public class CommandParser {

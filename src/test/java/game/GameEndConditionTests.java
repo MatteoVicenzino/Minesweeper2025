@@ -1,6 +1,11 @@
 package game;
 
-import ms.*;
+import ms.model.Difficulty;
+import ms.model.GridDimension;
+import ms.model.MineField;
+import ms.model.Position;
+import ms.logic.Game;
+import ms.logic.MineFieldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

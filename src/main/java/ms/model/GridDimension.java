@@ -1,4 +1,4 @@
-package ms;
+package ms.model;
 
 public record GridDimension(int height, int width) {
 

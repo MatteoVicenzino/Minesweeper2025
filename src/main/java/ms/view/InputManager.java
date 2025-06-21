@@ -1,7 +1,8 @@
-package ms.CLI;
+package ms.view;
 
-import ms.*;
 import ms.commands.*;
+import ms.model.Difficulty;
+
 import java.util.Scanner;
 
 public class InputManager {
@@ -37,7 +38,7 @@ public class InputManager {
                 2. MEDIUM (16x16 grid, 40 mines)
                 3. HARD   (16x30 grid, 99 mines)
                 
-                Enter your choice (1-3): """);
+                Enter your choice (1-3):""");
 
         Scanner currentScanner = getScanner();
 

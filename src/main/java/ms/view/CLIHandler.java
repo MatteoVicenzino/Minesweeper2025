@@ -1,7 +1,8 @@
-package ms.CLI;
+package ms.view;
 
-import ms.*;
 import ms.commands.*;
+import ms.model.Difficulty;
+import ms.logic.Game;
 
 public class CLIHandler {
     private final InputManager inputManager;

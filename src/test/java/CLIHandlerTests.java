@@ -1,5 +1,6 @@
-import ms.*;
-import ms.CLI.CLIHandler;
+import ms.model.Difficulty;
+import ms.logic.Game;
+import ms.view.CLIHandler;
 import ms.commands.*;
 
 import org.junit.jupiter.api.Test;
@@ -14,10 +15,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 import static org.mockito.Mockito.*;
-import ms.GameStatus;
-import ms.Position;
-import ms.MineField;
-import ms.cell.Cell;
+import ms.logic.GameStatus;
+import ms.model.Position;
+import ms.model.MineField;
+import ms.model.Cell;
 import static org.mockito.ArgumentMatchers.any;
 
 public class CLIHandlerTests {

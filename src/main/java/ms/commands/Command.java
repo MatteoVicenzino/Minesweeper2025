@@ -1,6 +1,6 @@
 package ms.commands;
 
-import ms.Position;
+import ms.model.Position;
 
 public class Command {
     private final CommandType type;

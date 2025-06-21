@@ -1,4 +1,4 @@
-package ms.cell;
+package ms.model;
 
 public class Cell {
     private CellState status;

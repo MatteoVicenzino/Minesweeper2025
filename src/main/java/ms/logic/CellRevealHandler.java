@@ -1,5 +1,8 @@
-package ms;
-import ms.cell.Cell;
+package ms.logic;
+import ms.model.GridDimension;
+import ms.model.MineField;
+import ms.model.Position;
+import ms.model.Cell;
 
 public class CellRevealHandler {
     private final MineField mineField;

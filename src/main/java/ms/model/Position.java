@@ -1,4 +1,4 @@
-package ms;
+package ms.model;
 
 public record Position(int row, int col) {
 

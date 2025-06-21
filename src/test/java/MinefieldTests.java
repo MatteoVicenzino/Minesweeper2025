@@ -1,7 +1,7 @@
-import ms.GridDimension;
-import ms.Position;
+import ms.model.GridDimension;
+import ms.model.Position;
 import org.junit.jupiter.api.Test;
-import ms.MineField;
+import ms.model.MineField;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MinefieldTests {

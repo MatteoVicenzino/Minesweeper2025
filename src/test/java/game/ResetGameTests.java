@@ -1,14 +1,14 @@
 package game;
 
-import ms.GridDimension;
-import ms.Position;
+import ms.model.GridDimension;
+import ms.model.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ms.Game;
-import ms.MineFieldFactory;
+import ms.logic.Game;
+import ms.logic.MineFieldFactory;
 
 public class ResetGameTests {
 

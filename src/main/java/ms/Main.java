@@ -1,6 +1,6 @@
 package ms;
 
-import ms.CLI.CLIHandler;
+import ms.view.CLIHandler;
 import ms.commands.CommandParser;
 
 public class Main {

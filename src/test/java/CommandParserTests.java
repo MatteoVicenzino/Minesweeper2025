@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import ms.commands.CommandParser;
 import ms.commands.Command;
 import ms.commands.CommandType;
-import ms.Position;
+import ms.model.Position;
 
 public class CommandParserTests {
 
