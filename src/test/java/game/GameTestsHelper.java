@@ -91,6 +91,7 @@ public class GameTestsHelper {
                     try {
                         game.revealCell(new Position(row, col));
                     } catch (Game.InvalidGameOperationException e) {
+                        // Ignore exceptions for already revealed cells
                     }
                 }
             }

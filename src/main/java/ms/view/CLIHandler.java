@@ -30,7 +30,13 @@ public class CLIHandler {
         inputManager.setScanner(scanner);
     }
 
-    public void start() {
+    public void run() {
+        setupInitialGame();
+        runMainLoop();
+        inputManager.cleanup();
+    }
+
+    private void setupInitialGame() {
         displayManager.displayWelcome();
 
         if (game == null) {
@@ -39,7 +45,9 @@ public class CLIHandler {
         }
 
         displayManager.displayGameStatus(game);
+    }
 
+    private void runMainLoop() {
         while (inputManager.hasNextLine() && shouldContinue) {
             String inputLine = inputManager.readInputLine();
 
@@ -110,7 +118,6 @@ public class CLIHandler {
                 displayManager.displayThankYou();
                 displayManager.displayGoodbye();
                 shouldContinue = false;
-                inputManager.cleanup();
                 break;
         }
     }

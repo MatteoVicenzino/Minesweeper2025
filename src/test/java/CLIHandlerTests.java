@@ -75,7 +75,7 @@ public class CLIHandlerTests {
     private void assertOutputContains(String input, String... expectedContent) {
         provideInput(input);
         cliHandler.setScanner(new Scanner(System.in));
-        cliHandler.start();
+        cliHandler.run();
 
         String output = getOutput();
         for (String content : expectedContent) {
@@ -99,7 +99,7 @@ public class CLIHandlerTests {
     void testHandleValidFlagCommand() {
         provideInput("flag 5,6\nquit\n");
         cliHandler.setScanner(new Scanner(System.in));
-        cliHandler.start();
+        cliHandler.run();
 
         verify(mockGame).flagCell(new Position(5, 6));
     }
@@ -172,7 +172,7 @@ public class CLIHandlerTests {
 
         provideInput("reveal 3,4\nno\n");
         cliHandler.setScanner(new Scanner(System.in));
-        cliHandler.start();
+        cliHandler.run();
 
         assertAll("Game Loop Interactions",
                 () -> verify(mockGame).revealCell(new Position(3, 4)),
@@ -202,7 +202,7 @@ public class CLIHandlerTests {
 
         provideInput("quit\n");
         cliHandler.setScanner(new Scanner(System.in));
-        cliHandler.start();
+        cliHandler.run();
 
         String output = getOutput();
 
@@ -227,7 +227,7 @@ public class CLIHandlerTests {
     void testResetCommand() {
         provideInput("reset\nquit\n");
         cliHandler.setScanner(new Scanner(System.in));
-        cliHandler.start();
+        cliHandler.run();
 
         verify(mockGame).resetGame();
 
