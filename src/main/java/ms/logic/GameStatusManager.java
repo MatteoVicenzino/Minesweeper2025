@@ -14,15 +14,9 @@ public class GameStatusManager {
         }
     }
 
-    public void endGameWithWin() {
+    public void endGame(GameStatus status) {
         if (currentStatus == GameStatus.IN_PROGRESS) {
-            currentStatus = GameStatus.WON;
-        }
-    }
-
-    public void endGameWithLoss() {
-        if (currentStatus == GameStatus.IN_PROGRESS) {
-            currentStatus = GameStatus.LOST;
+            currentStatus = status;
         }
     }
 

@@ -12,7 +12,7 @@ public class Game {
     private final GameStatistics stats;
     private MineField minefield;
     private boolean firstReveal;
-    private ActionHandler revealHandler;
+    private ActionHandler actionHandler;
 
     public Game(GridDimension dimensions, int totalMines, MineFieldFactory mineFieldFactory) {
         this.dimensions = dimensions;
@@ -27,12 +27,6 @@ public class Game {
 
     public Game(Difficulty difficulty) {
         this(GridDimension.fromDifficulty(difficulty), difficulty.getMines(), new DefaultMineFieldFactory());
-    }
-
-    public void placeMines(Position firstRevealPosition) {
-        this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
-        this.minefield.initializeGrid(firstRevealPosition);
-        this.revealHandler = new ActionHandler(this.minefield);
     }
 
     public MineField getMinefield() {
@@ -67,15 +61,16 @@ public class Game {
         return totalMines;
     }
 
+    public long getElapsedTime() {
+        return timer.getElapsedTime();
+    }
+
     public void revealCell(Position position) {
 
         dimensions.validatePosition(position);
 
         if (firstReveal) {
-            statusManager.startGame();
-            this.placeMines(position);
-            timer.start();
-            firstReveal = false;
+            handleFirstReveal(position);
         }
 
         if (getGameOver()) {
@@ -87,19 +82,19 @@ public class Game {
         }
 
         if (minefield.getCell(position).isMined()) {
-            if (revealHandler.revealSingleCell(position)) {
+            if (actionHandler.revealSingleCell(position)) {
                 stats.incrementRevealed();
-                statusManager.endGameWithLoss();
+                statusManager.endGame(GameStatus.LOST);
                 timer.stop();
             }
             return;
         }
 
-        int revealedCount = revealHandler.revealCascade(position);
+        int revealedCount = actionHandler.revealCascade(position);
         stats.incrementRevealed(revealedCount);
 
         if (stats.isGameWon()) {
-            statusManager.endGameWithWin();
+            statusManager.endGame(GameStatus.WON);
             timer.stop();
         }
     }
@@ -125,8 +120,13 @@ public class Game {
         }
     }
 
-    public long getElapsedTime() {
-        return timer.getElapsedTime();
+    private void handleFirstReveal(Position position) {
+        statusManager.startGame();
+        this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
+        this.minefield.initializeGrid(position);
+        this.actionHandler = new ActionHandler(this.minefield);
+        timer.start();
+        firstReveal = false;
     }
 
     public void resetGame() {
@@ -135,7 +135,7 @@ public class Game {
         statusManager.resetGame();
         timer.reset();
         this.firstReveal = true;
-        this.revealHandler = new ActionHandler(this.minefield);
+        this.actionHandler = new ActionHandler(this.minefield);
     }
 
     public static class InvalidGameOperationException extends IllegalStateException {
