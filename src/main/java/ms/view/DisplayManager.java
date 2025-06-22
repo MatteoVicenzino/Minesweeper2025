@@ -71,7 +71,7 @@ public class DisplayManager {
         MineField mf = game.getMinefield();
         System.out.print("   ");
         for (int c = 0; c < mf.getWidth(); c++) {
-            System.out.print(String.format("%2d ", c));
+            System.out.printf("%2d ", c);
         }
         System.out.println();
     }
@@ -88,7 +88,7 @@ public class DisplayManager {
     private void displayEmptyGrid(Game game) {
         MineField mf = game.getMinefield();
         for (int r = 0; r < mf.getHeight(); r++) {
-            System.out.print(String.format("%2d|", r));
+            System.out.printf("%2d|", r);
             for (int c = 0; c < mf.getWidth(); c++) {
                 System.out.print(" - ");
             }
@@ -99,7 +99,7 @@ public class DisplayManager {
     private void displayGameGrid(Game game) {
         MineField mf = game.getMinefield();
         for (int r = 0; r < mf.getHeight(); r++) {
-            System.out.print(String.format("%2d|", r));
+            System.out.printf("%2d|", r);
             displayGridRow(game, mf, r);
             System.out.println();
         }
