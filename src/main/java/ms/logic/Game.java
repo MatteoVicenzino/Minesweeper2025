@@ -6,7 +6,9 @@ import ms.logic.status.GameStatusManager;
 import ms.logic.status.Timer;
 import ms.model.*;
 import ms.logic.operation.FlagOperation;
+import ms.logic.operation.RevealOperation;
 import ms.logic.rules.FlagRules;
+import ms.logic.rules.RevealRules;
 
 public class Game {
 
@@ -18,7 +20,6 @@ public class Game {
     private final GameStatistics stats;
     private MineField minefield;
     private boolean firstReveal;
-    private ActionHandler actionHandler;
 
     public Game(GridDimension dimensions, int totalMines, MineFieldFactory mineFieldFactory) {
         this.dimensions = dimensions;
@@ -76,37 +77,14 @@ public class Game {
     }
 
     public void revealCell(Position position) {
-
-        dimensions.validatePosition(position);
-
         if (firstReveal) {
             handleFirstReveal(position);
         }
 
-        if (getGameOver()) {
-            throw new InvalidGameOperationException("Cannot reveal cells after game is over!");
-        }
-
-        if (minefield.getCell(position).isFlagged()) {
-            throw new InvalidGameOperationException("Cannot reveal a flagged cell! Remove flag first.");
-        }
-
-        if (minefield.getCell(position).isMined()) {
-            if (actionHandler.revealSingleCell(position)) {
-                stats.incrementRevealed();
-                statusManager.endGame(GameStatus.LOST);
-                timer.stop();
-            }
-            return;
-        }
-
-        int revealedCount = actionHandler.revealCascade(position);
-        stats.incrementRevealed(revealedCount);
-
-        if (stats.isGameWon()) {
-            statusManager.endGame(GameStatus.WON);
-            timer.stop();
-        }
+        RevealRules rules = new RevealRules(dimensions, minefield, statusManager);
+        rules.validate(position);
+        RevealOperation revealOperation =  new RevealOperation(minefield, dimensions, stats, statusManager, timer);
+        revealOperation.execute(position);
     }
 
     public void flagCell(Position position) {
@@ -117,10 +95,10 @@ public class Game {
     }
 
     private void handleFirstReveal(Position position) {
+        dimensions.validatePosition(position);
         statusManager.startGame();
         this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
         this.minefield.initializeGrid(position);
-        this.actionHandler = new ActionHandler(this.minefield);
         timer.start();
         firstReveal = false;
     }
@@ -131,7 +109,6 @@ public class Game {
         statusManager.resetGame();
         timer.reset();
         this.firstReveal = true;
-        this.actionHandler = new ActionHandler(this.minefield);
     }
 
     public static class InvalidGameOperationException extends IllegalStateException {
