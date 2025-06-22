@@ -12,7 +12,7 @@ public class Game {
     private final MineFieldFactory mineFieldFactory;
     private final Timer timer;
     private final GameStatistics stats;
-    private CellRevealHandler revealHandler;
+    private ActionHandler revealHandler;
 
     public Game(GridDimension dimensions, int totalMines, MineFieldFactory mineFieldFactory) {
         this.dimensions = dimensions;
@@ -32,7 +32,7 @@ public class Game {
     public void placeMines(Position firstRevealPosition) {
         this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
         this.minefield.initializeGrid(firstRevealPosition);
-        this.revealHandler = new CellRevealHandler(this.minefield);
+        this.revealHandler = new ActionHandler(this.minefield);
     }
 
     public MineField getMinefield() {
@@ -135,7 +135,7 @@ public class Game {
         statusManager.resetGame();
         timer.reset();
         this.firstReveal = true;
-        this.revealHandler = new CellRevealHandler(this.minefield);
+        this.revealHandler = new ActionHandler(this.minefield);
     }
 
     public static class InvalidGameOperationException extends IllegalStateException {

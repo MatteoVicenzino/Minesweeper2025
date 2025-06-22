@@ -1,6 +1,4 @@
-package ms.logic;
-
-import ms.model.GridDimension;
+package ms.model;
 
 public class GameStatistics {
     private final int totalMines;

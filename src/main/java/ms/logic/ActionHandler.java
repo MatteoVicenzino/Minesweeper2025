@@ -4,11 +4,11 @@ import ms.model.MineField;
 import ms.model.Position;
 import ms.model.Cell;
 
-public class CellRevealHandler {
+public class ActionHandler {
     private final MineField mineField;
     private final GridDimension dimensions;
 
-    public CellRevealHandler(MineField mineField) {
+    public ActionHandler(MineField mineField) {
         this.mineField = mineField;
         this.dimensions = mineField.getDimensions();
     }
