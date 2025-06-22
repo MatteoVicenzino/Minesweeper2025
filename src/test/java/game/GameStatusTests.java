@@ -94,7 +94,9 @@ public class GameStatusTests {
         assertEquals(GameStatus.LOST, game.getGameStatus());
 
         int revealedCountBeforeAttempt = game.getRevealed();
-        game.revealCell(new Position(0, 0)); // Try to reveal another cell
+
+        assertThrows(Game.InvalidGameOperationException.class, () ->
+            game.revealCell(new Position(0, 0)), "Should throw exception when trying to reveal cell after game is lost");
 
         assertEquals(revealedCountBeforeAttempt, game.getRevealed(),
                 "No additional cells should be revealed when game is lost");
@@ -107,7 +109,8 @@ public class GameStatusTests {
         assertEquals(GameStatus.WON, game.getGameStatus());
 
         int revealedCountBeforeAttempt = game.getRevealed();
-        game.revealCell(new Position(0, 0)); // Try to reveal a cell again
+        assertThrows(Game.InvalidGameOperationException.class, () ->
+            game.revealCell(new Position(0, 0)), "Should throw exception when trying to reveal cell after game is won");
 
         assertEquals(revealedCountBeforeAttempt, game.getRevealed(),
                 "No additional cells should be revealed when game is won");

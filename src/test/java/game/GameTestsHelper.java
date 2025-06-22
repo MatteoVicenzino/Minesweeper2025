@@ -88,7 +88,10 @@ public class GameTestsHelper {
         for (int row = 0; row < game.getMinefield().getHeight(); row++) {
             for (int col = 0; col < game.getMinefield().getWidth(); col++) {
                 if (!game.getMinefield().getCell(new Position(row, col)).isMined()) {
-                    game.revealCell(new Position(row, col));
+                    try {
+                        game.revealCell(new Position(row, col));
+                    } catch (Game.InvalidGameOperationException e) {
+                    }
                 }
             }
         }

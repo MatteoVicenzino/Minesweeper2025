@@ -185,6 +185,12 @@ public class DisplayManager {
                 Type 'help' for available commands.%n""", message);
     }
 
+    public void displayGameError(String message) {
+        System.out.printf("""
+            Game Error: %s
+            Type 'help' for available commands.%n""", message);
+    }
+
     public void displayCoordinateError(String message) {
         System.out.printf("""
                 Error: Coordinates are out of bounds. %s

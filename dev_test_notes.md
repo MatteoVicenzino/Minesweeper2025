@@ -65,6 +65,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 - Further refactor flagCell to remove nested if statements
 - refactor revealCell improve readability and structure
 - Initialization of minefield when resetting the game
+- ~~Improve exception handling~~
 - ~~Remove primitive obsession adding Difficulties enumeration~~
 
 ### Cli and Graphics

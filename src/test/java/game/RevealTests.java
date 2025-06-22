@@ -61,7 +61,7 @@ public class RevealTests {
     }
 
     @Test
-    void testRevealEmptyCellsCascade() throws InterruptedException {
+    void testRevealEmptyCellsCascade() {
 
         GridDimension dimensions = new GridDimension(5, 5);
 
@@ -127,7 +127,13 @@ public class RevealTests {
         game.flagCell(new Position(0, 1));
 
         int revealedCountBefore = game.getRevealed();
-        game.revealCell(new Position(0, 1));
+
+        assertThrows(Game.InvalidGameOperationException.class,
+                () -> game.revealCell(new Position(0, 1)),
+                "Should throw exception when trying to reveal a flagged cell");
+
+        assertTrue(game.getMinefield().getCell(new Position(0, 1)).isFlagged(),
+                "Cell should remain flagged after exception");
 
         assertFalse(game.getMinefield().getCell(new Position(0, 1)).isRevealed(),
                 "Flagged cell should not be revealed");

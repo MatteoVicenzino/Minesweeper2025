@@ -56,7 +56,9 @@ public class FlagTests {
         assertEquals(0, game.getFlagsPlaced());
 
         game.revealCell(new Position(3, 4));
-        game.flagCell(new Position(3, 4));
+        assertThrows(Game.InvalidGameOperationException.class,
+                () -> game.flagCell(new Position(3, 4)),
+                "Should throw exception when trying to flag a revealed cell");
         assertFalse(game.getMinefield().getCell(new Position(3, 4)).isFlagged());
         assertEquals(0, game.getFlagsPlaced());
     }

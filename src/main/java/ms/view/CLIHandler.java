@@ -79,8 +79,8 @@ public class CLIHandler {
                 displayManager.displayParsingError(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
                 displayManager.displayCoordinateError(e.getMessage());
-            } catch (IllegalStateException e) {
-                displayManager.displayParsingError(e.getMessage());
+            } catch (Game.InvalidGameOperationException e) {
+                displayManager.displayGameError(e.getMessage());
             }
         }
     }

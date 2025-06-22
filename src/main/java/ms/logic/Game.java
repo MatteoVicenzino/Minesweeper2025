@@ -79,11 +79,11 @@ public class Game {
         }
 
         if (getGameOver()) {
-            return;
+            throw new InvalidGameOperationException("Cannot reveal cells after game is over!");
         }
 
         if (minefield.getCell(position).isFlagged()) {
-            return;
+            throw new InvalidGameOperationException("Cannot reveal a flagged cell! Remove flag first.");
         }
 
         if (minefield.getCell(position).isMined()) {
@@ -109,17 +109,19 @@ public class Game {
         dimensions.validatePosition(position);
 
         if (firstReveal) {
-            throw new IllegalStateException("Flagging is not a valid first move!");
+            throw new InvalidGameOperationException("Flagging is not a valid first move!");
         }
 
-        if (!minefield.getCell(position).isRevealed()) {
-            if (minefield.getCell(position).isFlagged()) {
-                minefield.flagCell(position);
-                stats.decrementFlags();
-            } else {
-                minefield.flagCell(position);
-                stats.incrementFlags();
-            }
+        if (minefield.getCell(position).isRevealed()) {
+            throw new InvalidGameOperationException("Cannot flag a revealed cell!");
+        }
+
+        if (minefield.getCell(position).isFlagged()) {
+            minefield.flagCell(position);
+            stats.decrementFlags();
+        } else {
+            minefield.flagCell(position);
+            stats.incrementFlags();
         }
     }
 
@@ -134,5 +136,11 @@ public class Game {
         timer.reset();
         this.firstReveal = true;
         this.revealHandler = new CellRevealHandler(this.minefield);
+    }
+
+    public static class InvalidGameOperationException extends IllegalStateException {
+        public InvalidGameOperationException(String message) {
+            super(message);
+        }
     }
 }
