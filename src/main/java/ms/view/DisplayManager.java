@@ -5,7 +5,6 @@ import ms.logic.GameStatus;
 import ms.model.Cell;
 import ms.model.MineField;
 import ms.model.Position;
-
 public class DisplayManager {
 
     public void displayHelp() {
@@ -154,8 +153,7 @@ public class DisplayManager {
     }
 
     private void displayRevealedCount(Game game) {
-        int totalNonMineCells = game.getMinefield().getHeight() * game.getMinefield().getWidth() - game.getTotalMines();
-        System.out.printf("Revealed: %d / %d%n", game.getRevealed(), totalNonMineCells);
+        System.out.printf("Revealed: %d / %d%n", game.getRevealed(), game.getTotalOfNonMineCells());
     }
 
     private void displayFlagCount(Game game) {

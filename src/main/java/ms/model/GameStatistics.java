@@ -50,6 +50,10 @@ public class GameStatistics {
         return totalMines - flagsPlaced;
     }
 
+    public int getTotalOfNonMineCells() {
+        return totalCells - totalMines;
+    }
+
     public int getUnrevealedCount() {
         return totalCells - revealedCells;
     }

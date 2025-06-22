@@ -187,6 +187,7 @@ public class CLIHandlerTests {
         when(mockGame.getGameOver()).thenReturn(false);
         when(mockGame.getFlagsPlaced()).thenReturn(2);
         when(mockGame.getElapsedTime()).thenReturn(45000L);
+        when(mockGame.getTotalOfNonMineCells()).thenReturn(90);
 
         MineField mockMineField = mock(MineField.class);
         when(mockMineField.getWidth()).thenReturn(10);

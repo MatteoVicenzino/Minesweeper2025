@@ -61,6 +61,10 @@ public class Game {
         return totalMines;
     }
 
+    public int getTotalOfNonMineCells() {
+        return stats.getTotalOfNonMineCells();
+    }
+
     public long getElapsedTime() {
         return timer.getElapsedTime();
     }
