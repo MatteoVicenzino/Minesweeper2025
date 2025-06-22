@@ -5,6 +5,8 @@ import ms.logic.status.GameStatus;
 import ms.logic.status.GameStatusManager;
 import ms.logic.status.Timer;
 import ms.model.*;
+import ms.logic.operation.FlagOperation;
+import ms.logic.rules.FlagRules;
 
 public class Game {
 
@@ -108,24 +110,10 @@ public class Game {
     }
 
     public void flagCell(Position position) {
-
-        dimensions.validatePosition(position);
-
-        if (firstReveal) {
-            throw new InvalidGameOperationException("Flagging is not a valid first move!");
-        }
-
-        if (minefield.getCell(position).isRevealed()) {
-            throw new InvalidGameOperationException("Cannot flag a revealed cell!");
-        }
-
-        if (minefield.getCell(position).isFlagged()) {
-            minefield.flagCell(position);
-            stats.decrementFlags();
-        } else {
-            minefield.flagCell(position);
-            stats.incrementFlags();
-        }
+        FlagRules rules = new FlagRules(dimensions, minefield, firstReveal);
+        rules.validate(position);
+        FlagOperation flagOperation =  new FlagOperation(minefield, stats);
+        flagOperation.execute(position);
     }
 
     private void handleFirstReveal(Position position) {

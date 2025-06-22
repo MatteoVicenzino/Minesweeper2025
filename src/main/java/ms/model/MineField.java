@@ -81,10 +81,6 @@ public class MineField {
         return mineCount;
     }
 
-    public void flagCell(Position position) {
-        getCell(position).toggleFlag();
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
