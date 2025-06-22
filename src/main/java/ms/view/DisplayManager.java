@@ -1,9 +1,10 @@
 package ms.view;
+
+import ms.logic.Game;
+import ms.logic.GameStatus;
 import ms.model.Cell;
 import ms.model.MineField;
 import ms.model.Position;
-import ms.logic.Game;
-import ms.logic.GameStatus;
 
 public class DisplayManager {
 
@@ -187,8 +188,8 @@ public class DisplayManager {
 
     public void displayGameError(String message) {
         System.out.printf("""
-            Game Error: %s
-            Type 'help' for available commands.%n""", message);
+                Game Error: %s
+                Type 'help' for available commands.%n""", message);
     }
 
     public void displayCoordinateError(String message) {
@@ -210,10 +211,12 @@ public class DisplayManager {
     public void displayNewGameWithDifficulty() {
         System.out.println("\n--- Starting a new game with new difficulty ---");
     }
+
     public void displayGameReset() {
         System.out.println("\n--- Game Reset ---");
         System.out.println("The game has been reset. Starting fresh!");
     }
+
     public void displayThankYou() {
         System.out.println("Thank you for playing!");
     }

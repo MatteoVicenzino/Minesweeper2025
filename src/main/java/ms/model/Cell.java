@@ -21,15 +21,15 @@ public class Cell {
         return isMined;
     }
 
+    public void setMined(boolean mined) {
+        this.isMined = mined;
+    }
+
     public boolean isRevealed() {
         return status == CellState.REVEALED || status == CellState.EXPLODED;
     }
 
     public boolean isFlagged() {
         return status == CellState.FLAGGED;
-    }
-
-    public void setMined(boolean mined) {
-        this.isMined = mined;
     }
 }

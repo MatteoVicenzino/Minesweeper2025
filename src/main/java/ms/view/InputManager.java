@@ -1,6 +1,7 @@
 package ms.view;
 
-import ms.commands.*;
+import ms.commands.Command;
+import ms.commands.CommandParser;
 import ms.model.Difficulty;
 
 import java.util.Scanner;
@@ -13,15 +14,15 @@ public class InputManager {
         this.parser = parser;
     }
 
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     private Scanner getScanner() {
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
         return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     public Command handleInput(String input) {

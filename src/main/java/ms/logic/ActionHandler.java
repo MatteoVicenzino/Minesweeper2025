@@ -1,8 +1,9 @@
 package ms.logic;
+
+import ms.model.Cell;
 import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
-import ms.model.Cell;
 
 public class ActionHandler {
     private final MineField mineField;

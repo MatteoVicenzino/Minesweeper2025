@@ -1,4 +1,5 @@
 package ms.model;
+
 import java.util.Random;
 
 public class MineField {
@@ -72,7 +73,7 @@ public class MineField {
         dimensions.validatePosition(center);
 
         int mineCount = 0;
-        for (Position adjacent : Position.getAdjacentPositions(center)){
+        for (Position adjacent : Position.getAdjacentPositions(center)) {
             if (dimensions.isValidPosition(adjacent) && getCell(adjacent).isMined()) {
                 mineCount++;
             }
@@ -81,7 +82,7 @@ public class MineField {
     }
 
     public void flagCell(Position position) {
-            getCell(position).toggleFlag();
+        getCell(position).toggleFlag();
     }
 
     @Override

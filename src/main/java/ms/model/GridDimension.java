@@ -11,12 +11,12 @@ public record GridDimension(int height, int width) {
         }
     }
 
-    public int totalCells() {
-        return height * width;
-    }
-
     public static GridDimension fromDifficulty(Difficulty difficulty) {
         return new GridDimension(difficulty.getHeight(), difficulty.getWidth());
+    }
+
+    public int totalCells() {
+        return height * width;
     }
 
     public boolean isValidPosition(Position position) {

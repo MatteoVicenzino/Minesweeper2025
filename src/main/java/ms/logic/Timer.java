@@ -1,6 +1,7 @@
 package ms.logic;
 
 import java.time.Instant;
+
 public class Timer {
     private Instant startTime;
     private Instant endTime;

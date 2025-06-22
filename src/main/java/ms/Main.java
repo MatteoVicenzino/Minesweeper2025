@@ -1,7 +1,7 @@
 package ms;
 
-import ms.view.CLIHandler;
 import ms.commands.CommandParser;
+import ms.view.CLIHandler;
 
 public class Main {
     public static void main(String[] args) {

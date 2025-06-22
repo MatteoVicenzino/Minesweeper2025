@@ -3,7 +3,9 @@ package ms.model;
 public enum CellState {
     HIDDEN {
         @Override
-        public CellState toggleFlag() { return FLAGGED; }
+        public CellState toggleFlag() {
+            return FLAGGED;
+        }
 
         @Override
         public CellState reveal(boolean isMined) {
@@ -13,10 +15,14 @@ public enum CellState {
 
     FLAGGED {
         @Override
-        public CellState toggleFlag() { return HIDDEN; }
+        public CellState toggleFlag() {
+            return HIDDEN;
+        }
 
         @Override
-        public CellState reveal(boolean isMined) { return this; }
+        public CellState reveal(boolean isMined) {
+            return this;
+        }
     },
 
     REVEALED {
@@ -33,12 +39,17 @@ public enum CellState {
 
     EXPLODED {
         @Override
-        public CellState toggleFlag() { return this; }
+        public CellState toggleFlag() {
+            return this;
+        }
 
         @Override
-        public CellState reveal(boolean isMined) { return this; }
+        public CellState reveal(boolean isMined) {
+            return this;
+        }
     };
 
     public abstract CellState toggleFlag();
+
     public abstract CellState reveal(boolean isMined);
 }

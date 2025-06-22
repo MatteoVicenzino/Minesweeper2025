@@ -4,14 +4,14 @@ import ms.model.*;
 
 public class Game {
 
-    private MineField minefield;
-    private boolean firstReveal;
     private final GridDimension dimensions;
     private final int totalMines;
     private final GameStatusManager statusManager;
     private final MineFieldFactory mineFieldFactory;
     private final Timer timer;
     private final GameStatistics stats;
+    private MineField minefield;
+    private boolean firstReveal;
     private ActionHandler revealHandler;
 
     public Game(GridDimension dimensions, int totalMines, MineFieldFactory mineFieldFactory) {
