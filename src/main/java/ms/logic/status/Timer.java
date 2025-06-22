@@ -1,4 +1,4 @@
-package ms.logic;
+package ms.logic.status;
 
 import java.time.Instant;
 

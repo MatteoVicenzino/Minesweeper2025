@@ -1,5 +1,9 @@
 package ms.logic;
 
+import ms.logic.status.GameStatistics;
+import ms.logic.status.GameStatus;
+import ms.logic.status.GameStatusManager;
+import ms.logic.status.Timer;
 import ms.model.*;
 
 public class Game {

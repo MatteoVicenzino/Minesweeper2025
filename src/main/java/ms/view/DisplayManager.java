@@ -1,7 +1,7 @@
 package ms.view;
 
 import ms.logic.Game;
-import ms.logic.GameStatus;
+import ms.logic.status.GameStatus;
 import ms.model.Cell;
 import ms.model.MineField;
 import ms.model.Position;

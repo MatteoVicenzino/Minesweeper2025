@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 import static org.mockito.Mockito.*;
-import ms.logic.GameStatus;
+import ms.logic.status.GameStatus;
 import ms.model.Position;
 import ms.model.MineField;
 import ms.model.Cell;

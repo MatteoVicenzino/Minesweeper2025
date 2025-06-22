@@ -5,7 +5,7 @@ import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
 import ms.logic.Game;
-import ms.logic.GameStatus;
+import ms.logic.status.GameStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
