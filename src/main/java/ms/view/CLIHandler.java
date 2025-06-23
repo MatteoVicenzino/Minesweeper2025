@@ -119,6 +119,7 @@ public class CLIHandler {
                 displayManager.displayThankYou();
                 displayManager.displayGoodbye();
                 shouldContinue = false;
+                inputManager.cleanup();
                 break;
         }
     }

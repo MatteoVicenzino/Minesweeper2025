@@ -34,7 +34,6 @@ public class MineField {
 
             Position candidate = new Position(row, col);
 
-            // Skip if the candidate position is the excluded position or already mined
             if (candidate.equals(excludePosition) || field[row][col].isMined()) {
                 continue;
             }

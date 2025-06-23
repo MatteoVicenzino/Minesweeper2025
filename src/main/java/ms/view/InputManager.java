@@ -30,35 +30,26 @@ public class InputManager {
     }
 
     public Difficulty selectDifficulty() {
-        System.out.println("""
-                
-                === DIFFICULTY SELECTION ===
-                Choose your difficulty level:
-                
-                1. EASY   (9x9 grid, 10 mines)
-                2. MEDIUM (16x16 grid, 40 mines)
-                3. HARD   (16x30 grid, 99 mines)
-                
-                Enter your choice (1-3):""");
+        System.out.println(Messages.DIFFICULTY_SELECTION_HEADER);
 
         Scanner currentScanner = getScanner();
 
         while (true) {
-            System.out.print("> ");
+            System.out.print(Messages.COMMAND_PROMPT);
             String input = currentScanner.nextLine().trim();
 
             switch (input) {
                 case "1":
-                    System.out.println("Selected: EASY difficulty");
+                    System.out.println(Messages.SELECTED_EASY);
                     return Difficulty.EASY;
                 case "2":
-                    System.out.println("Selected: MEDIUM difficulty");
+                    System.out.println(Messages.SELECTED_MEDIUM);
                     return Difficulty.MEDIUM;
                 case "3":
-                    System.out.println("Selected: HARD difficulty");
+                    System.out.println(Messages.SELECTED_HARD);
                     return Difficulty.HARD;
                 default:
-                    System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                    System.out.println(Messages.DIFFICULTY_INVALID_CHOICE);
                     break;
             }
         }
@@ -73,13 +64,13 @@ public class InputManager {
 
     public String readPlayAgainChoice() {
         Scanner currentScanner = getScanner();
-        System.out.print("Play again? (yes/no/change): ");
+        System.out.print(Messages.PLAY_AGAIN_PROMPT);
         return currentScanner.nextLine().trim().toLowerCase();
     }
 
     public String readInputLine() {
         Scanner currentScanner = getScanner();
-        System.out.print("> ");
+        System.out.print(Messages.COMMAND_PROMPT);
         return currentScanner.nextLine();
     }
 

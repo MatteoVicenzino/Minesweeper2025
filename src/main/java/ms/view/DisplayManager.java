@@ -9,39 +9,11 @@ import ms.model.Position;
 public class DisplayManager {
 
     public void displayHelp() {
-        System.out.println("""
-                
-                === MINESWEEPER HELP ===
-                Available commands:
-                  reveal <row>,<col>  - Reveal a cell at the specified coordinates
-                  flag <row>,<col>    - Toggle flag on a cell at the specified coordinates
-                  help                - Show this help message
-                  reset               - Reset the current game
-                  quit                - Exit the game
-                
-                Examples:
-                  reveal 3,4          - Reveals the cell at row 3, column 4
-                  flag 0,0            - Toggles flag on cell at row 0, column 0
-                
-                Game Rules:
-                  • The goal is to reveal all cells that don't contain mines
-                  • Numbers show how many mines are adjacent to that cell
-                  • Use flags to mark cells you think contain mines
-                  • If you reveal a mine, you lose!
-                  • Your first reveal is always safe
-                
-                Field Symbols:
-                  -  = Covered cell
-                  F  = Flagged cell
-                  1-8= Number of adjacent mines
-                  (space) = Empty cell (no adjacent mines)
-                  X  = Exploded mine
-                  *  = Mine (shown only when game ends)
-                ========================""");
+        System.out.println(Messages.HELP);
     }
 
     public void displayGameStatus(Game game) {
-        System.out.println("\n--- Current Minefield ---");
+        System.out.println(Messages.CURRENT_MINEFIELD_HEADER);
 
         if (isGameNotStarted(game)) {
             displayInitialGameView(game);
@@ -91,7 +63,7 @@ public class DisplayManager {
         for (int r = 0; r < mf.getHeight(); r++) {
             System.out.printf("%2d|", r);
             for (int c = 0; c < mf.getWidth(); c++) {
-                System.out.print(" - ");
+                System.out.print(Messages.CELL_HIDDEN);
             }
             System.out.println();
         }
@@ -122,14 +94,14 @@ public class DisplayManager {
         }
 
         if (cell.isFlagged()) {
-            return " F ";
+            return Messages.CELL_FLAGGED;
         }
 
         if (shouldShowMine(game, cell)) {
-            return " * ";
+            return Messages.CELL_MINE_REVEALED;
         }
 
-        return " - ";
+        return Messages.CELL_HIDDEN;
     }
 
     private boolean shouldShowMine(Game game, Cell cell) {
@@ -138,89 +110,81 @@ public class DisplayManager {
 
     private String getRevealedCellDisplay(MineField mf, Position pos, Cell cell) {
         if (cell.isMined()) {
-            return " X ";
+            return Messages.CELL_MINE_EXPLODED;
         }
 
         int adjacentMines = mf.countAdjacentMines(pos);
-        return " " + (adjacentMines == 0 ? " " : adjacentMines) + " ";
+        return adjacentMines == 0 ? Messages.CELL_EMPTY : " " + adjacentMines + " ";
     }
 
     private void displayGameStatistics(Game game) {
-        System.out.println("-------------------------");
+        System.out.println(Messages.GRID_SEPARATOR_LINE);
         displayRevealedCount(game);
         displayFlagCount(game);
         displayElapsedTime(game);
-        System.out.println("-------------------------");
+        System.out.println(Messages.GRID_SEPARATOR_LINE);
     }
 
     private void displayRevealedCount(Game game) {
-        System.out.printf("Revealed: %d / %d%n", game.getRevealed(), game.getTotalOfNonMineCells());
+        System.out.println(Messages.revealedCount(game.getRevealed(), game.getTotalOfNonMineCells()));
     }
 
     private void displayFlagCount(Game game) {
-        System.out.printf("Flags: %d / %d%n", game.getFlagsPlaced(), game.getTotalMines());
+        System.out.println(Messages.flagCount(game.getFlagsPlaced(), game.getTotalMines()));
     }
 
     private void displayElapsedTime(Game game) {
-        System.out.printf("Time: %ds%n", game.getElapsedTime() / 1000);
+        System.out.println(Messages.elapsedTime(game.getElapsedTime() / 1000));
     }
 
     public void displayGameResult(Game game) {
         if (game.getGameStatus() == GameStatus.WON) {
-            System.out.println("Congratulations! You revealed all non-mine cells! You Win!");
+            System.out.println(Messages.GAME_WON);
         } else if (game.getGameStatus() == GameStatus.LOST) {
-            System.out.println("Boooom! You hit a mine! You Lose!");
+            System.out.println(Messages.GAME_LOST);
         }
     }
 
     public void displayWelcome() {
-        System.out.println("""
-                Welcome to the Minesweeper CLI! Enter your commands:
-                Type 'help' for available commands and game rules.""");
+        System.out.println(Messages.WELCOME);
     }
 
     public void displayParsingError(String message) {
-        System.out.printf("""
-                Error: %s
-                Type 'help' for available commands.%n""", message);
+        System.out.println(Messages.parsingError(message));
     }
 
     public void displayGameError(String message) {
-        System.out.printf("""
-                Game Error: %s
-                Type 'help' for available commands.%n""", message);
+        System.out.println(Messages.gameError(message));
     }
 
     public void displayCoordinateError(String message) {
-        System.out.printf("""
-                Error: Coordinates are out of bounds. %s
-                Valid coordinates are 0-9 for both rows and columns.%n""", message);
+        System.out.println(Messages.coordinateError(message));
     }
 
     public void displayGameOver(Game game) {
-        System.out.println("\n--- GAME OVER ---");
+        System.out.println(Messages.GAME_OVER_HEADER);
         displayGameResult(game);
-        System.out.printf("Time taken: %d seconds.%n", game.getElapsedTime() / 1000);
+        System.out.println(Messages.gameOverTime(game.getElapsedTime() / 1000));
     }
 
     public void displayNewGame() {
-        System.out.println("\n--- Starting a new game ---");
+        System.out.println(Messages.NEW_GAME);
     }
 
     public void displayNewGameWithDifficulty() {
-        System.out.println("\n--- Starting a new game with new difficulty ---");
+        System.out.println(Messages.NEW_GAME_WITH_DIFFICULTY);
     }
 
     public void displayGameReset() {
-        System.out.println("\n--- Game Reset ---");
-        System.out.println("The game has been reset. Starting fresh!");
+        System.out.println(Messages.GAME_RESET_HEADER);
+        System.out.println(Messages.GAME_RESET_SUCCESS);
     }
 
     public void displayThankYou() {
-        System.out.println("Thank you for playing!");
+        System.out.println(Messages.THANK_YOU);
     }
 
     public void displayGoodbye() {
-        System.out.println("Exiting the game. Goodbye!");
+        System.out.println(Messages.GOODBYE);
     }
 }
