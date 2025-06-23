@@ -90,21 +90,11 @@ public class MinefieldTests {
         minefield = new MineField(DIMENSIONS, MINES);
         minefield.initializeGrid(new Position(5, 5));
 
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            minefield.countAdjacentMines(new Position(-1, 0));
-        });
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            minefield.countAdjacentMines(new Position(0, -1));
-        });
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            minefield.countAdjacentMines(new Position(ROWS, 0));
-        });
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            minefield.countAdjacentMines(new Position(0, COLS));
-        });
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            minefield.countAdjacentMines(new Position(ROWS, COLS));
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(-1, 0)));
+        assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(0, -1)));
+        assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(ROWS, 0)));
+        assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(0, COLS)));
+        assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(ROWS, COLS)));
     }
 
 }

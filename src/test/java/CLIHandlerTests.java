@@ -8,6 +8,7 @@ import ms.model.Difficulty;
 import ms.model.MineField;
 import ms.model.Position;
 import ms.view.CLIHandler;
+import ms.view.Messages;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,47 +108,51 @@ public class CLIHandlerTests {
 
     @Test
     void testHandleQuitCommand() {
-        assertOutputContains("quit\n", "Exiting the game. Goodbye!");
+        assertOutputContains("quit\n", Messages.GOODBYE);
     }
 
     @Test
     void testHandleInvalidCommand() {
         cliHandler = new CLIHandler(parser, new Game(Difficulty.EASY));
 
-        assertOutputContains("invalid command\nquit\n",
-                "Error: Unknown command type",
-                "Type 'help' for available commands"
-        );
+        provideInput("invalid command\nquit\n");
+        cliHandler.setScanner(new Scanner(System.in));
+        cliHandler.run();
+
+        String output = getOutput();
+        assertTrue(output.contains("Error: Unknown command type"),
+                "Should contain error message for unknown command");
+        assertTrue(output.contains("Type 'help' for available commands"),
+                "Should contain help suggestion");
     }
 
     @Test
     void testHandleMalformedCoordinate() {
         cliHandler = new CLIHandler(parser, new Game(Difficulty.EASY));
 
-        assertOutputContains("reveal 3-4\nquit\n",
-                "Error:",
-                "Type 'help' for available commands"
-        );
+        provideInput("reveal 3-4\nquit\n");
+        cliHandler.setScanner(new Scanner(System.in));
+        cliHandler.run();
+
+        String output = getOutput();
+        assertTrue(output.contains("Error:"),
+                "Should contain error message");
+        assertTrue(output.contains("Type 'help' for available commands"),
+                "Should contain help suggestion");
     }
 
     @Test
     void testHandleHelpCommand() {
         assertOutputContains("help\nquit\n",
-                "=== MINESWEEPER HELP ===",
-                "Available commands:",
-                "reveal <row>,<col>",
-                "Field Symbols:",
-                "F  = Flagged cell",
-                "========================"
+                Messages.HELP
         );
     }
 
     @Test
     void testWelcomeMessage() {
         assertOutputContains("quit\n",
-                "Welcome to the Minesweeper CLI!",
-                "Type 'help' for available commands",
-                "Exiting the game. Goodbye!"
+                Messages.WELCOME,
+                Messages.GOODBYE
         );
     }
 
@@ -156,11 +161,8 @@ public class CLIHandlerTests {
         cliHandler = new CLIHandler(parser);
 
         assertOutputContains("1\nquit\n",
-                "=== DIFFICULTY SELECTION ===",
-                "1. EASY   (9x9 grid, 10 mines)",
-                "2. MEDIUM (16x16 grid, 40 mines)",
-                "3. HARD   (16x30 grid, 99 mines)",
-                "Selected: EASY difficulty"
+                Messages.DIFFICULTY_SELECTION_HEADER,
+                Messages.SELECTED_EASY
         );
     }
 
@@ -209,15 +211,15 @@ public class CLIHandlerTests {
         String output = getOutput();
 
         String[] expectedDisplayElements = {
-                "--- Current Minefield ---",
+                Messages.CURRENT_MINEFIELD_HEADER.substring(1),
                 " 0  1  2  3  4  5  6  7  8  9",
                 "  +",
                 " 0|", " 5|", " 9|",
-                " - ",
-                "Revealed: 1 / 90",
-                "Flags: 2 / 10",
-                "Time: 45s",
-                "-------------------------"
+                Messages.CELL_HIDDEN.trim(),
+                Messages.revealedCount(1, 90),
+                Messages.flagCount(2, 10),
+                Messages.elapsedTime(45),
+                Messages.GRID_SEPARATOR_LINE
         };
 
         for (String content : expectedDisplayElements) {
@@ -234,7 +236,7 @@ public class CLIHandlerTests {
         verify(mockGame).resetGame();
 
         String output = getOutput();
-        assertTrue(output.contains("--- Game Reset ---"),
+        assertTrue(output.contains(Messages.GAME_RESET_HEADER.substring(1)),
                 "Should display reset message");
     }
 }

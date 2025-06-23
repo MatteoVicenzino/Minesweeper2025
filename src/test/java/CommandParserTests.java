@@ -75,9 +75,7 @@ public class CommandParserTests {
     @Test
     void testParseNullInput() {
         CommandParser parser = new CommandParser();
-        String input = null;
-
-        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(input),
+        CommandParser.CommandParsingException thrown = assertThrows(CommandParser.CommandParsingException.class, () -> parser.parse(null),
                 "Null input should throw an exception");
         assertTrue(thrown.getMessage().contains("Input cannot be empty"), "Error message for null input");
     }

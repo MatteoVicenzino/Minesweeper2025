@@ -87,9 +87,7 @@ public class GameInitializationTests {
         GridDimension dimensions = GridDimension.fromDifficulty(difficulty);
         game = new Game(difficulty);
 
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            game.revealCell(new Position(10, 10));
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> game.revealCell(new Position(10, 10)));
 
         assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
         assertEquals(0, game.getRevealed());

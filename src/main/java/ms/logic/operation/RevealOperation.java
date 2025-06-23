@@ -26,9 +26,10 @@ public class RevealOperation implements GameOperation {
     }
 
     @Override
-    public int execute(Position position) {
+    public void execute(Position position) {
         if (mineField.getCell(position).isMined()) {
-            return handleMineReveal(position);
+            handleMineReveal(position);
+            return;
         }
 
         int revealedCount = revealCascade(position);
@@ -39,7 +40,6 @@ public class RevealOperation implements GameOperation {
             timer.stop();
         }
 
-        return revealedCount;
     }
 
     private int handleMineReveal(Position position) {

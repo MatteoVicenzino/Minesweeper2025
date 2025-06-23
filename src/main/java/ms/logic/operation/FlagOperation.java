@@ -16,7 +16,7 @@ public class FlagOperation implements GameOperation {
     }
 
     @Override
-    public int execute(Position position) {
+    public void execute(Position position) {
         Cell cell = minefield.getCell(position);
 
         if (cell.isFlagged()) {
@@ -26,6 +26,5 @@ public class FlagOperation implements GameOperation {
             cell.toggleFlag();
             stats.incrementFlags();
         }
-        return 0;
     }
 }

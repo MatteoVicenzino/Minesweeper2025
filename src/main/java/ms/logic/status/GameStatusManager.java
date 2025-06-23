@@ -31,12 +31,4 @@ public class GameStatusManager {
     public boolean isGameOver() {
         return currentStatus == GameStatus.WON || currentStatus == GameStatus.LOST;
     }
-
-    public boolean isInProgress() {
-        return currentStatus == GameStatus.IN_PROGRESS;
-    }
-
-    public boolean canPlay() {
-        return currentStatus == GameStatus.IN_PROGRESS || currentStatus == GameStatus.NOT_STARTED;
-    }
 }

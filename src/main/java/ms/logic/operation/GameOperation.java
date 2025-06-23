@@ -4,5 +4,5 @@ import ms.model.Position;
 
 @FunctionalInterface
 public interface GameOperation {
-    int execute(Position position);
+    void execute(Position position);
 }

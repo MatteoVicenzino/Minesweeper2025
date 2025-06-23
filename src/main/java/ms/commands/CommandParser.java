@@ -42,6 +42,19 @@ public class CommandParser {
     }
 
     private Command parseRevealOrFlagCommand(String[] parts, CommandType type) {
+        String[] coordinates = getCoordinates(parts);
+
+        try {
+            int row = Integer.parseInt(coordinates[0].trim());
+            int col = Integer.parseInt(coordinates[1].trim());
+            Position position = new Position(row, col);
+            return new Command(type, position);
+        } catch (NumberFormatException e) {
+            throw new CommandParsingException("Invalid coordinate value");
+        }
+    }
+
+    private static String[] getCoordinates(String[] parts) {
         if (parts.length < 2) {
             throw new CommandParsingException("Missing coordinates");
         }
@@ -57,15 +70,7 @@ public class CommandParser {
         if (coordinates.length != 2 || coordinates[0].isEmpty() || coordinates[1].isEmpty()) {
             throw new CommandParsingException("Invalid coordinate value");
         }
-
-        try {
-            int row = Integer.parseInt(coordinates[0].trim());
-            int col = Integer.parseInt(coordinates[1].trim());
-            Position position = new Position(row, col);
-            return new Command(type, position);
-        } catch (NumberFormatException e) {
-            throw new CommandParsingException("Invalid coordinate value");
-        }
+        return coordinates;
     }
 
     public static class CommandParsingException extends RuntimeException {
