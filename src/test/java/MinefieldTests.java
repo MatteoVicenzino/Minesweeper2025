@@ -1,17 +1,17 @@
 import ms.model.GridDimension;
+import ms.model.MineField;
 import ms.model.Position;
 import org.junit.jupiter.api.Test;
-import ms.model.MineField;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MinefieldTests {
 
-    private MineField minefield;
     private final GridDimension DIMENSIONS = new GridDimension(10, 10);
     private final int ROWS = DIMENSIONS.height();
     private final int COLS = DIMENSIONS.width();
     private final int MINES = 10;
-
+    private MineField minefield;
 
     @Test
     void testInitialState() {
@@ -26,7 +26,7 @@ public class MinefieldTests {
     void testInitializeGrid() {
 
         minefield = new MineField(DIMENSIONS, MINES);
-        minefield.initializeGrid(new Position(5,5));
+        minefield.initializeGrid(new Position(5, 5));
 
         int mineCount = 0;
         for (int r = 0; r < ROWS; r++) {
@@ -44,10 +44,10 @@ public class MinefieldTests {
     @Test
     void testIsValid() {
         minefield = new MineField(DIMENSIONS, MINES);
-        minefield.initializeGrid(new Position(5,5));
+        minefield.initializeGrid(new Position(5, 5));
 
         assertTrue(DIMENSIONS.isValidPosition(new Position(0, 0)));
-        assertTrue(DIMENSIONS.isValidPosition(new Position(ROWS-1, COLS-1)));
+        assertTrue(DIMENSIONS.isValidPosition(new Position(ROWS - 1, COLS - 1)));
         assertFalse(DIMENSIONS.isValidPosition(new Position(-1, 0)));
         assertFalse(DIMENSIONS.isValidPosition(new Position(0, -1)));
         assertFalse(DIMENSIONS.isValidPosition(new Position(ROWS, 0)));
@@ -56,14 +56,14 @@ public class MinefieldTests {
 
     @Test
     void testCountAdjacentMines() {
-        boolean[][] minePattern = new boolean[][] {
+        boolean[][] minePattern = new boolean[][]{
                 {true, true, false, false},
                 {false, false, false, false},
                 {false, false, true, false},
                 {false, false, true, true}
         };
         minefield = new MineField(DIMENSIONS, 0);
-        minefield.initializeGrid(new Position(1,1));
+        minefield.initializeGrid(new Position(1, 1));
 
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
@@ -88,7 +88,7 @@ public class MinefieldTests {
     @Test
     void testCountAdjacentMinesOutOfBounds() {
         minefield = new MineField(DIMENSIONS, MINES);
-        minefield.initializeGrid(new Position(5,5));
+        minefield.initializeGrid(new Position(5, 5));
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             minefield.countAdjacentMines(new Position(-1, 0));

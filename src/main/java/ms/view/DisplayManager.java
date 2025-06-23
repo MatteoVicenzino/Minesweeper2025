@@ -5,6 +5,7 @@ import ms.logic.status.GameStatus;
 import ms.model.Cell;
 import ms.model.MineField;
 import ms.model.Position;
+
 public class DisplayManager {
 
     public void displayHelp() {

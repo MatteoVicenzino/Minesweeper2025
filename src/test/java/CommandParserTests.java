@@ -1,9 +1,10 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import ms.commands.CommandParser;
 import ms.commands.Command;
+import ms.commands.CommandParser;
 import ms.commands.CommandType;
 import ms.model.Position;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CommandParserTests {
 

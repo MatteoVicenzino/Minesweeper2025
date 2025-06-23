@@ -1,15 +1,16 @@
 package game;
 
+import ms.logic.Game;
+import ms.logic.status.GameStatus;
 import ms.model.Difficulty;
 import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
-import ms.logic.Game;
-import ms.logic.status.GameStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GameInitializationTests {
@@ -39,7 +40,7 @@ public class GameInitializationTests {
     void testGameInitializationWithEasyParameters() {
 
         game = new Game(Difficulty.EASY);
-        game.revealCell(new Position(0,0));
+        game.revealCell(new Position(0, 0));
 
         assertEquals(9, game.getMinefield().getHeight());
         assertEquals(9, game.getMinefield().getWidth());
@@ -50,7 +51,7 @@ public class GameInitializationTests {
     void testGameInitializationWithMediumParameters() {
 
         game = new Game(Difficulty.MEDIUM);
-        game.revealCell(new Position(0,0));
+        game.revealCell(new Position(0, 0));
 
         assertEquals(16, game.getMinefield().getHeight());
         assertEquals(16, game.getMinefield().getWidth());

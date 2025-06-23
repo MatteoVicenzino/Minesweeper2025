@@ -1,18 +1,19 @@
 package game;
 
+import ms.logic.Game;
+import ms.logic.MineFieldFactory;
+import ms.logic.status.GameStatus;
 import ms.model.Difficulty;
 import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
-import ms.logic.Game;
-import ms.logic.status.GameStatus;
-import ms.logic.MineFieldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 public class GameStatusTests {
 
@@ -26,7 +27,7 @@ public class GameStatusTests {
     void setup() {
         MockitoAnnotations.openMocks(this);
         game = new Game(Difficulty.EASY);
-        dimensions = new GridDimension(3,3);
+        dimensions = new GridDimension(3, 3);
     }
 
     @Test
@@ -96,7 +97,7 @@ public class GameStatusTests {
         int revealedCountBeforeAttempt = game.getRevealed();
 
         assertThrows(Game.InvalidGameOperationException.class, () ->
-            game.revealCell(new Position(0, 0)), "Should throw exception when trying to reveal cell after game is lost");
+                game.revealCell(new Position(0, 0)), "Should throw exception when trying to reveal cell after game is lost");
 
         assertEquals(revealedCountBeforeAttempt, game.getRevealed(),
                 "No additional cells should be revealed when game is lost");
@@ -110,7 +111,7 @@ public class GameStatusTests {
 
         int revealedCountBeforeAttempt = game.getRevealed();
         assertThrows(Game.InvalidGameOperationException.class, () ->
-            game.revealCell(new Position(0, 0)), "Should throw exception when trying to reveal cell after game is won");
+                game.revealCell(new Position(0, 0)), "Should throw exception when trying to reveal cell after game is won");
 
         assertEquals(revealedCountBeforeAttempt, game.getRevealed(),
                 "No additional cells should be revealed when game is won");

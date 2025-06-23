@@ -1,15 +1,14 @@
 package game;
 
+import ms.logic.Game;
+import ms.logic.MineFieldFactory;
 import ms.model.Cell;
 import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
-import ms.logic.Game;
-import ms.logic.MineFieldFactory;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 public class GameTestsHelper {
 

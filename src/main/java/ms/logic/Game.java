@@ -1,14 +1,17 @@
 package ms.logic;
 
-import ms.logic.status.GameStatistics;
-import ms.logic.status.GameStatus;
-import ms.logic.status.GameStatusManager;
-import ms.logic.status.Timer;
-import ms.model.*;
 import ms.logic.operation.FlagOperation;
 import ms.logic.operation.RevealOperation;
 import ms.logic.rules.FlagRules;
 import ms.logic.rules.RevealRules;
+import ms.logic.status.GameStatistics;
+import ms.logic.status.GameStatus;
+import ms.logic.status.GameStatusManager;
+import ms.logic.status.Timer;
+import ms.model.Difficulty;
+import ms.model.GridDimension;
+import ms.model.MineField;
+import ms.model.Position;
 
 public class Game {
 
@@ -83,14 +86,14 @@ public class Game {
 
         RevealRules rules = new RevealRules(dimensions, minefield, statusManager);
         rules.validate(position);
-        RevealOperation revealOperation =  new RevealOperation(minefield, dimensions, stats, statusManager, timer);
+        RevealOperation revealOperation = new RevealOperation(minefield, dimensions, stats, statusManager, timer);
         revealOperation.execute(position);
     }
 
     public void flagCell(Position position) {
         FlagRules rules = new FlagRules(dimensions, minefield, firstReveal);
         rules.validate(position);
-        FlagOperation flagOperation =  new FlagOperation(minefield, stats);
+        FlagOperation flagOperation = new FlagOperation(minefield, stats);
         flagOperation.execute(position);
     }
 

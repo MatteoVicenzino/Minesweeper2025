@@ -1,25 +1,26 @@
-import ms.model.Difficulty;
+import ms.commands.Command;
+import ms.commands.CommandParser;
+import ms.commands.CommandType;
 import ms.logic.Game;
+import ms.logic.status.GameStatus;
+import ms.model.Cell;
+import ms.model.Difficulty;
+import ms.model.MineField;
+import ms.model.Position;
 import ms.view.CLIHandler;
-import ms.commands.*;
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-import static org.mockito.Mockito.*;
-import ms.logic.status.GameStatus;
-import ms.model.Position;
-import ms.model.MineField;
-import ms.model.Cell;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class CLIHandlerTests {
 
