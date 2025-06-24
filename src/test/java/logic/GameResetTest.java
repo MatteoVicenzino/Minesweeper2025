@@ -31,7 +31,7 @@ public class GameResetTest {
     }
 
     @Test
-    void testResetGameClearsGameOverStatus() throws InterruptedException {
+    void testResetGameChangesStatusFromGameOverToNotStartedAndClearsTimer() throws InterruptedException {
 
         game = LogicUtils.createAndSetupGameForReset(
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,

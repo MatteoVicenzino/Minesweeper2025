@@ -60,7 +60,7 @@ public class RevealTest {
     }
 
     @Test
-    void testRevealEmptyCellsCascade() {
+    void testRevealEmptyCellRecursivelyRevealsAllConnectedEmptyCells() {
 
         GridDimension dimensions = new GridDimension(5, 5);
 

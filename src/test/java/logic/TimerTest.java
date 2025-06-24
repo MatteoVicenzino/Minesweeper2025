@@ -28,7 +28,7 @@ public class TimerTest {
     }
 
     @Test
-    void testTimerStartsOnFirstReveal() throws InterruptedException {
+    void testRevealFirstCellStartsTimer() throws InterruptedException {
         assertEquals(0, game.getElapsedTime(), "Initial elapsed time should be 0");
 
         game.revealCell(new Position(0, 0));

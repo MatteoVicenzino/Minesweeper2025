@@ -88,7 +88,7 @@ public class MinefieldTest {
     }
 
     @Test
-    void testCountAdjacentMinesOutOfBounds() {
+    void testCountAdjacentMinesWithInvalidPositionThrowsIndexOutOfBoundsException() {
         minefield = new MineField(DIMENSIONS, MINES);
         minefield.initializeGrid(new Position(5, 5));
 
