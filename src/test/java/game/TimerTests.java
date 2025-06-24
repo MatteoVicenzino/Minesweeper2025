@@ -61,7 +61,7 @@ public class TimerTests {
 
         game.revealCell(new Position(0, 1));
 
-        assertTrue(game.getGameOver(), "Game should be over after revealing a mine");
+        assertTrue(game.isGameOver(), "Game should be over after revealing a mine");
         long endTime = game.getElapsedTime();
         Thread.sleep(10);
         assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (lose)");
@@ -71,7 +71,7 @@ public class TimerTests {
     void testTimerStopsOnGameWin() throws InterruptedException {
         game.revealCell(new Position(0, 0));
         GameTestsHelper.revealAllNonMineCells(game);
-        assertTrue(game.getGameOver(), "Game should be over after revealing all non-mine cells");
+        assertTrue(game.isGameOver(), "Game should be over after revealing all non-mine cells");
         long endTime = game.getElapsedTime();
         Thread.sleep(10);
         assertEquals(endTime, game.getElapsedTime(), "Timer should stop on game over (win)");

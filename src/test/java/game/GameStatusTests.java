@@ -33,14 +33,14 @@ public class GameStatusTests {
     @Test
     void testNewGameHasNotStartedStatus() {
         assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
-        assertFalse(game.getGameOver(), "Game should not be over initially");
+        assertFalse(game.isGameOver(), "Game should not be over initially");
     }
 
     @Test
     void testGameStatusRemainsInProgressDuringNormalPlay() {
         game.revealCell(new Position(0, 0));
         assertEquals(GameStatus.IN_PROGRESS, game.getGameStatus());
-        assertFalse(game.getGameOver(), "Game should remain in progress during normal play");
+        assertFalse(game.isGameOver(), "Game should remain in progress during normal play");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class GameStatusTests {
         game.revealCell(new Position(1, 1)); // This should reveal the mine
 
         assertEquals(GameStatus.LOST, game.getGameStatus());
-        assertTrue(game.getGameOver(), "Game should be over when mine is revealed");
+        assertTrue(game.isGameOver(), "Game should be over when mine is revealed");
     }
 
     @Test
@@ -63,7 +63,7 @@ public class GameStatusTests {
         GameTestsHelper.revealAllNonMineCells(game);
 
         assertEquals(GameStatus.WON, game.getGameStatus());
-        assertTrue(game.getGameOver(), "Game should be over when all non-mine cells are revealed");
+        assertTrue(game.isGameOver(), "Game should be over when all non-mine cells are revealed");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class GameStatusTests {
         game.resetGame();
 
         assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
-        assertFalse(game.getGameOver(), "Game should not be over after reset");
+        assertFalse(game.isGameOver(), "Game should not be over after reset");
     }
 
     @Test

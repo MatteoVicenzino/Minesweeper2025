@@ -41,28 +41,28 @@ public class DisplayManager {
     }
 
     private void displayColumnHeader(Game game) {
-        MineField mf = game.getMinefield();
+        MineField minefield = game.getMinefield();
         System.out.print("   ");
-        for (int c = 0; c < mf.getWidth(); c++) {
+        for (int c = 0; c < minefield.getWidth(); c++) {
             System.out.printf("%2d ", c);
         }
         System.out.println();
     }
 
     private void displayGridSeparator(Game game) {
-        MineField mf = game.getMinefield();
+        MineField minefield = game.getMinefield();
         System.out.print("  +");
-        for (int c = 0; c < mf.getWidth(); c++) {
+        for (int c = 0; c < minefield.getWidth(); c++) {
             System.out.print("---");
         }
         System.out.println();
     }
 
     private void displayEmptyGrid(Game game) {
-        MineField mf = game.getMinefield();
-        for (int r = 0; r < mf.getHeight(); r++) {
+        MineField minefield = game.getMinefield();
+        for (int r = 0; r < minefield.getHeight(); r++) {
             System.out.printf("%2d|", r);
-            for (int c = 0; c < mf.getWidth(); c++) {
+            for (int c = 0; c < minefield.getWidth(); c++) {
                 System.out.print(Messages.CELL_HIDDEN);
             }
             System.out.println();
@@ -70,27 +70,27 @@ public class DisplayManager {
     }
 
     private void displayGameGrid(Game game) {
-        MineField mf = game.getMinefield();
-        for (int r = 0; r < mf.getHeight(); r++) {
+        MineField minefield = game.getMinefield();
+        for (int r = 0; r < minefield.getHeight(); r++) {
             System.out.printf("%2d|", r);
-            displayGridRow(game, mf, r);
+            displayGridRow(game, minefield, r);
             System.out.println();
         }
     }
 
-    private void displayGridRow(Game game, MineField mf, int row) {
-        for (int c = 0; c < mf.getWidth(); c++) {
-            Position pos = new Position(row, c);
-            String cellDisplay = getCellDisplayString(game, mf, pos);
+    private void displayGridRow(Game game, MineField mineField, int row) {
+        for (int c = 0; c < mineField.getWidth(); c++) {
+            Position position = new Position(row, c);
+            String cellDisplay = getCellDisplayString(game, mineField, position);
             System.out.print(cellDisplay);
         }
     }
 
-    private String getCellDisplayString(Game game, MineField mf, Position pos) {
-        Cell cell = mf.getCell(pos);
+    private String getCellDisplayString(Game game, MineField mineField, Position position) {
+        Cell cell = mineField.getCell(position);
 
         if (cell.isRevealed()) {
-            return getRevealedCellDisplay(mf, pos, cell);
+            return getRevealedCellDisplay(mineField, position, cell);
         }
 
         if (cell.isFlagged()) {
@@ -105,15 +105,15 @@ public class DisplayManager {
     }
 
     private boolean shouldShowMine(Game game, Cell cell) {
-        return game.getGameOver() && cell.isMined() && !cell.isFlagged();
+        return game.isGameOver() && cell.isMined() && !cell.isFlagged();
     }
 
-    private String getRevealedCellDisplay(MineField mf, Position pos, Cell cell) {
+    private String getRevealedCellDisplay(MineField mineField, Position position, Cell cell) {
         if (cell.isMined()) {
             return Messages.CELL_MINE_EXPLODED;
         }
 
-        int adjacentMines = mf.countAdjacentMines(pos);
+        int adjacentMines = mineField.countAdjacentMines(position);
         return adjacentMines == 0 ? Messages.CELL_EMPTY : " " + adjacentMines + " ";
     }
 

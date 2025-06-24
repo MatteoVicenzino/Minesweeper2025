@@ -42,14 +42,12 @@ public class RevealOperation implements GameOperation {
 
     }
 
-    private int handleMineReveal(Position position) {
+    private void handleMineReveal(Position position) {
         if (revealSingleCell(position)) {
             stats.incrementRevealed();
             statusManager.endGame(GameStatus.LOST);
             timer.stop();
-            return 1;
         }
-        return 0;
     }
 
     private boolean revealSingleCell(Position position) {

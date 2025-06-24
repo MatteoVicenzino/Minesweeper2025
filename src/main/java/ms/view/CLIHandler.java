@@ -80,7 +80,7 @@ public class CLIHandler {
 
                 displayManager.displayGameStatus(game);
 
-                if (game.getGameOver()) {
+                if (game.isGameOver()) {
                     handleGameOver();
                 }
 

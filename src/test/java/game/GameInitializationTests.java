@@ -31,7 +31,7 @@ public class GameInitializationTests {
 
         assertEquals(voidMinefield, game.getMinefield());
         assertEquals(10, game.getMinesLeft());
-        assertFalse(game.getGameOver());
+        assertFalse(game.isGameOver());
         assertEquals(0, game.getRevealed());
         assertEquals(81, game.getUnrevealedCount());
     }

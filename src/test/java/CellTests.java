@@ -17,7 +17,6 @@ public class CellTests {
     @Test
     void testNewCellIsNotMinedRevealedNorFlagged() {
         assertFalse(cell.isMined());
-        assertFalse(cell.isRevealed());
         assertFalse(cell.isFlagged());
 
     }

@@ -37,11 +37,11 @@ public class ResetGameTests {
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
-        assertTrue(game.getGameOver(), "Game should be over before reset");
+        assertTrue(game.isGameOver(), "Game should be over before reset");
 
         game.resetGame();
 
-        assertFalse(game.getGameOver(), "Game should not be over after reset");
+        assertFalse(game.isGameOver(), "Game should not be over after reset");
     }
 
     @Test

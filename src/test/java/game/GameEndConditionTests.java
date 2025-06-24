@@ -38,13 +38,13 @@ public class GameEndConditionTests {
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(1, 1));
-        assertTrue(game.getGameOver(), "Game should end when a mine is revealed");
+        assertTrue(game.isGameOver(), "Game should end when a mine is revealed");
     }
 
     @Test
     void testGameWonWhenAllNonMineCellsRevealed() {
         game.revealCell(new Position(0, 0));
         GameTestsHelper.revealAllNonMineCells(game);
-        assertTrue(game.getGameOver(), "Game should end when all non-mine cells are revealed");
+        assertTrue(game.isGameOver(), "Game should end when all non-mine cells are revealed");
     }
 }

@@ -1,8 +1,10 @@
 package ms.logic;
 
 import ms.logic.operation.FlagOperation;
+import ms.logic.operation.GameOperation;
 import ms.logic.operation.RevealOperation;
 import ms.logic.rules.FlagRules;
+import ms.logic.rules.GameRules;
 import ms.logic.rules.RevealRules;
 import ms.logic.status.GameStatistics;
 import ms.logic.status.GameStatus;
@@ -22,14 +24,14 @@ public class Game {
     private final Timer timer;
     private final GameStatistics stats;
     private MineField minefield;
-    private boolean firstReveal;
+    private boolean isFirstReveal;
 
     public Game(GridDimension dimensions, int totalMines, MineFieldFactory mineFieldFactory) {
         this.dimensions = dimensions;
         this.totalMines = totalMines;
         this.mineFieldFactory = mineFieldFactory;
         this.minefield = mineFieldFactory.createMineField(dimensions, 0);
-        this.firstReveal = true;
+        this.isFirstReveal = true;
         this.timer = new Timer();
         this.stats = new GameStatistics(dimensions.height(), dimensions.width(), totalMines);
         this.statusManager = new GameStatusManager();
@@ -59,7 +61,7 @@ public class Game {
         return statusManager.getCurrentStatus();
     }
 
-    public boolean getGameOver() {
+    public boolean isGameOver() {
         return statusManager.isGameOver();
     }
 
@@ -80,20 +82,20 @@ public class Game {
     }
 
     public void revealCell(Position position) {
-        if (firstReveal) {
+        if (isFirstReveal) {
             handleFirstReveal(position);
         }
 
-        RevealRules rules = new RevealRules(dimensions, minefield, statusManager);
+        GameRules rules = new RevealRules(dimensions, minefield, statusManager);
         rules.validate(position);
-        RevealOperation revealOperation = new RevealOperation(minefield, dimensions, stats, statusManager, timer);
+        GameOperation revealOperation = new RevealOperation(minefield, dimensions, stats, statusManager, timer);
         revealOperation.execute(position);
     }
 
     public void flagCell(Position position) {
-        FlagRules rules = new FlagRules(dimensions, minefield, firstReveal);
+        GameRules rules = new FlagRules(dimensions, minefield, isFirstReveal);
         rules.validate(position);
-        FlagOperation flagOperation = new FlagOperation(minefield, stats);
+        GameOperation flagOperation = new FlagOperation(minefield, stats);
         flagOperation.execute(position);
     }
 
@@ -103,7 +105,7 @@ public class Game {
         this.minefield = mineFieldFactory.createMineField(dimensions, totalMines);
         this.minefield.initializeGrid(position);
         timer.start();
-        firstReveal = false;
+        isFirstReveal = false;
     }
 
     public void resetGame() {
@@ -111,7 +113,7 @@ public class Game {
         stats.reset();
         statusManager.resetGame();
         timer.reset();
-        this.firstReveal = true;
+        this.isFirstReveal = true;
     }
 
     public static class InvalidGameOperationException extends IllegalStateException {

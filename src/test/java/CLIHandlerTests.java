@@ -50,7 +50,7 @@ public class CLIHandlerTests {
         when(mockMineField.getCell(any(Position.class))).thenReturn(mockCell);
         when(mockMineField.countAdjacentMines(any(Position.class))).thenReturn(0);
 
-        when(mockGame.getGameOver()).thenReturn(false, true);
+        when(mockGame.isGameOver()).thenReturn(false, true);
         when(mockGame.getGameStatus()).thenReturn(GameStatus.IN_PROGRESS);
         when(mockGame.getMinefield()).thenReturn(mockMineField);
         when(mockGame.getTotalMines()).thenReturn(10);
@@ -168,7 +168,7 @@ public class CLIHandlerTests {
     @Test
     void testGameLoopInteractions() {
         when(mockGame.getRevealed()).thenReturn(1);
-        when(mockGame.getGameOver()).thenReturn(false).thenReturn(true);
+        when(mockGame.isGameOver()).thenReturn(false).thenReturn(true);
         when(mockGame.getGameStatus()).thenReturn(GameStatus.WON);
         when(mockGame.getElapsedTime()).thenReturn(30000L);
 
@@ -178,7 +178,7 @@ public class CLIHandlerTests {
 
         assertAll("Game Loop Interactions",
                 () -> verify(mockGame).revealCell(new Position(3, 4)),
-                () -> verify(mockGame, atLeastOnce()).getGameOver(),
+                () -> verify(mockGame, atLeastOnce()).isGameOver(),
                 () -> verify(mockGame).getGameStatus()
         );
     }
@@ -186,7 +186,7 @@ public class CLIHandlerTests {
     @Test
     void testDisplayFormatting() {
         when(mockGame.getRevealed()).thenReturn(1);
-        when(mockGame.getGameOver()).thenReturn(false);
+        when(mockGame.isGameOver()).thenReturn(false);
         when(mockGame.getFlagsPlaced()).thenReturn(2);
         when(mockGame.getElapsedTime()).thenReturn(45000L);
         when(mockGame.getTotalOfNonMineCells()).thenReturn(90);
