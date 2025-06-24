@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -9,7 +9,7 @@ import ms.model.Position;
 
 import static org.mockito.Mockito.*;
 
-public class GameTestsHelper {
+public class LogicUtils {
 
     public static Game createGameWithMockFactory(GridDimension dimensions, int mines, MineFieldFactory mockFactory) {
         return new Game(dimensions, mines, mockFactory);

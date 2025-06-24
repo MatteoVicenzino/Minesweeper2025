@@ -1,3 +1,5 @@
+package commands;
+
 import ms.commands.Command;
 import ms.commands.CommandParser;
 import ms.commands.CommandType;
@@ -6,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CommandParserTests {
+public class CommandParserTest {
 
     @Test
     void testParseWithValidRevealCommandReturnsRevealCommandWithPosition() {

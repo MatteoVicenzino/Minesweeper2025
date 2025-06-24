@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class TimerTests {
+public class TimerTest {
 
     private Game game;
 
@@ -55,8 +55,8 @@ public class TimerTests {
                 {false, false, false},
                 {false, false, false}
         };
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(0, 1));
@@ -70,7 +70,7 @@ public class TimerTests {
     @Test
     void testTimerStopsOnGameWin() throws InterruptedException {
         game.revealCell(new Position(0, 0));
-        GameTestsHelper.revealAllNonMineCells(game);
+        LogicUtils.revealAllNonMineCells(game);
         assertTrue(game.isGameOver(), "Game should be over after revealing all non-mine cells");
         long endTime = game.getElapsedTime();
         Thread.sleep(10);

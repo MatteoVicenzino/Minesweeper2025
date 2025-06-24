@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.status.GameStatus;
@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class GameInitializationTests {
+public class GameInitializationTest {
 
     private Game game;
 

@@ -1,3 +1,5 @@
+package view;
+
 import ms.commands.Command;
 import ms.commands.CommandParser;
 import ms.commands.CommandType;
@@ -22,7 +24,7 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CLIHandlerTests {
+public class CLIHandlerTest {
 
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;

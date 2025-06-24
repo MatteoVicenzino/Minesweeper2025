@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class GameStatusTests {
+public class GameStatusTest {
 
     private Game game;
     private GridDimension dimensions;
@@ -46,9 +46,9 @@ public class GameStatusTests {
     @Test
     void testGameStatusBecomesLostWhenMineRevealed() {
 
-        boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        boolean[][] minePattern = LogicUtils.createSimpleCenterMinePattern();
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(1, 1)); // This should reveal the mine
@@ -60,7 +60,7 @@ public class GameStatusTests {
     @Test
     void testGameStatusBecomesWonWhenAllNonMineCellsRevealed() {
         game.revealCell(new Position(0, 0)); // Initialize the minefield
-        GameTestsHelper.revealAllNonMineCells(game);
+        LogicUtils.revealAllNonMineCells(game);
 
         assertEquals(GameStatus.WON, game.getGameStatus());
         assertTrue(game.isGameOver(), "Game should be over when all non-mine cells are revealed");
@@ -69,11 +69,11 @@ public class GameStatusTests {
     @Test
     void testResetGameResetsStatusToNotStarted() {
 
-        boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
-        MineField mineFieldWithPattern = GameTestsHelper.createMineFieldWithPattern(minePattern);
+        boolean[][] minePattern = LogicUtils.createSimpleCenterMinePattern();
+        MineField mineFieldWithPattern = LogicUtils.createMineFieldWithPattern(minePattern);
 
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(mineFieldWithPattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         game.revealCell(new Position(1, 1));
         assertEquals(GameStatus.LOST, game.getGameStatus());
 
@@ -86,9 +86,9 @@ public class GameStatusTests {
     @Test
     void testCannotRevealCellsWhenGameIsLost() {
 
-        boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        boolean[][] minePattern = LogicUtils.createSimpleCenterMinePattern();
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(1, 1)); // Lose the game
@@ -106,7 +106,7 @@ public class GameStatusTests {
     @Test
     void testCannotRevealCellsWhenGameIsWon() {
         game.revealCell(new Position(0, 0)); // Initialize the minefield
-        GameTestsHelper.revealAllNonMineCells(game);
+        LogicUtils.revealAllNonMineCells(game);
         assertEquals(GameStatus.WON, game.getGameStatus());
 
         int revealedCountBeforeAttempt = game.getRevealed();

@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class FlagTests {
+public class FlagTest {
 
     private Game game;
 
@@ -40,8 +40,8 @@ public class FlagTests {
                 {false, false, false, true, false},
                 {false, false, false, false, false}
         };
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 4, mockMineFieldFactory);
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 4, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 4)).thenReturn(testMineField);
 
         game.revealCell(new Position(4, 4));
@@ -75,8 +75,8 @@ public class FlagTests {
                 {false, false, true, false},
                 {false, false, false, false}
         };
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 2, mockMineFieldFactory);
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 2, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 2)).thenReturn(testMineField);
 
         game.revealCell(new Position(0, 0));

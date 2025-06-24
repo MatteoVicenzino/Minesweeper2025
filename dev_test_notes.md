@@ -56,7 +56,7 @@ Note file to keep track of refactoring and improvements that need to be done at 
 ### Minefield
 - ~~rows and cols --> height and width~~
 - possible refactor of field matrix into a separate class
-- possible refactor of testCountAdjacentMinesOutOfBounds() into a more generic test in MinefieldTests.java
+- possible refactor of testCountAdjacentMinesOutOfBounds() into a more generic test in MinefieldTests
 - Refactor CountAdjacentMines to evaluate the number when a mine is placed to improve efficiency
 
 ### Game

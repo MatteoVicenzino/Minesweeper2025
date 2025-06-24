@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-public class GameEndConditionTests {
+public class GameEndConditionTest {
 
     private Game game;
 
@@ -32,9 +32,9 @@ public class GameEndConditionTests {
 
         GridDimension dimensions = new GridDimension(3, 3);
 
-        boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        boolean[][] minePattern = LogicUtils.createSimpleCenterMinePattern();
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(1, 1));
@@ -44,7 +44,7 @@ public class GameEndConditionTests {
     @Test
     void testGameWonWhenAllNonMineCellsRevealed() {
         game.revealCell(new Position(0, 0));
-        GameTestsHelper.revealAllNonMineCells(game);
+        LogicUtils.revealAllNonMineCells(game);
         assertTrue(game.isGameOver(), "Game should end when all non-mine cells are revealed");
     }
 }

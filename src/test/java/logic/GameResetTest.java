@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -11,7 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ResetGameTests {
+public class GameResetTest {
 
     private static final GridDimension DIMENSIONS = new GridDimension(3, 3);
     private static final int MINE_COUNT = 1;
@@ -27,13 +27,13 @@ public class ResetGameTests {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        GameTestsHelper.setupMockFactoryForReset(mockMineFieldFactory, DIMENSIONS, MINE_COUNT);
+        LogicUtils.setupMockFactoryForReset(mockMineFieldFactory, DIMENSIONS, MINE_COUNT);
     }
 
     @Test
     void testResetGameClearsGameOverStatus() throws InterruptedException {
 
-        game = GameTestsHelper.createAndSetupGameForReset(
+        game = LogicUtils.createAndSetupGameForReset(
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
@@ -47,7 +47,7 @@ public class ResetGameTests {
     @Test
     void testResetGameClearsTimer() throws InterruptedException {
 
-        game = GameTestsHelper.createAndSetupGameForReset(
+        game = LogicUtils.createAndSetupGameForReset(
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
@@ -61,7 +61,7 @@ public class ResetGameTests {
     @Test
     void testResetGameClearsFlagsPlaced() throws InterruptedException {
 
-        game = GameTestsHelper.createAndSetupGameForReset(
+        game = LogicUtils.createAndSetupGameForReset(
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
@@ -75,7 +75,7 @@ public class ResetGameTests {
     @Test
     void testResetGameRestoresMinesLeft() throws InterruptedException {
 
-        game = GameTestsHelper.createAndSetupGameForReset(
+        game = LogicUtils.createAndSetupGameForReset(
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
@@ -87,7 +87,7 @@ public class ResetGameTests {
     @Test
     void testResetGameRestoresInitialCellStates() throws InterruptedException {
 
-        game = GameTestsHelper.createAndSetupGameForReset(
+        game = LogicUtils.createAndSetupGameForReset(
                 DIMENSIONS, MINE_COUNT, mockMineFieldFactory,
                 SAFE_POSITION, MINE_POSITION, FLAG_POSITION);
 
@@ -95,7 +95,7 @@ public class ResetGameTests {
 
         game.resetGame();
 
-        assertTrue(GameTestsHelper.verifyInitialCellStates(game), "All cells should be in initial state after reset");
+        assertTrue(LogicUtils.verifyInitialCellStates(game), "All cells should be in initial state after reset");
     }
 }
 

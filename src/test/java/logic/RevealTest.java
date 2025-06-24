@@ -1,4 +1,4 @@
-package game;
+package logic;
 
 import ms.logic.Game;
 import ms.logic.MineFieldFactory;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class RevealTests {
+public class RevealTest {
 
     private Game game;
 
@@ -38,8 +38,8 @@ public class RevealTests {
                 {false, false, true, false},
                 {false, false, false, false}
         };
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(3, 3));
@@ -64,8 +64,8 @@ public class RevealTests {
 
         GridDimension dimensions = new GridDimension(5, 5);
 
-        boolean[][] minePattern = GameTestsHelper.createCascadeTestPattern();
-        MineField realMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
+        boolean[][] minePattern = LogicUtils.createCascadeTestPattern();
+        MineField realMineField = LogicUtils.createMineFieldWithPattern(minePattern);
         MineField spyMineField = spy(realMineField);
 
         doNothing().when(spyMineField).initializeGrid(any(Position.class));
@@ -73,7 +73,7 @@ public class RevealTests {
         when(mockMineFieldFactory.createMineField(dimensions, 0)).thenReturn(new MineField(dimensions, 0));
         when(mockMineFieldFactory.createMineField(dimensions, 8)).thenReturn(spyMineField);
 
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 8, mockMineFieldFactory);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 8, mockMineFieldFactory);
 
         game.revealCell(new Position(0, 0));
 
@@ -118,8 +118,8 @@ public class RevealTests {
                 {false, true, false},
                 {false, false, false}
         };
-        MineField testMineField = GameTestsHelper.createMineFieldWithPattern(minePattern);
-        game = GameTestsHelper.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
+        MineField testMineField = LogicUtils.createMineFieldWithPattern(minePattern);
+        game = LogicUtils.createGameWithMockFactory(dimensions, 1, mockMineFieldFactory);
         when(mockMineFieldFactory.createMineField(dimensions, 1)).thenReturn(testMineField);
 
         game.revealCell(new Position(0, 0));

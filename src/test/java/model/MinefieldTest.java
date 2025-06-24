@@ -1,3 +1,5 @@
+package model;
+
 import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
@@ -5,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MinefieldTests {
+public class MinefieldTest {
 
     private final GridDimension DIMENSIONS = new GridDimension(10, 10);
     private final int ROWS = DIMENSIONS.height();
