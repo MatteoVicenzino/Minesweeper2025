@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CommandParserTests {
 
     @Test
-    void testParseValidRevealCommand() {
+    void testParseWithValidRevealCommandReturnsRevealCommandWithPosition() {
         CommandParser parser = new CommandParser();
         String input = "reveal 3,4";
 
@@ -24,7 +24,7 @@ public class CommandParserTests {
     }
 
     @Test
-    void testParseInvalidCommandType() {
+    void testParseWithUnknownCommandThrowsParsingException() {
         CommandParser parser = new CommandParser();
         String input = "invalid command";
 
@@ -34,7 +34,7 @@ public class CommandParserTests {
     }
 
     @Test
-    void testParseValidFlagCommand() {
+    void testParseWithValidFlagCommandReturnsFlagCommandWithPosition() {
         CommandParser parser = new CommandParser();
         String input = "flag 5,6";
 
@@ -81,7 +81,7 @@ public class CommandParserTests {
     }
 
     @Test
-    void testParseCommandWithoutCoordinates() {
+    void testParseWithCommandMissingCoordinatesThrowsParsingException() {
         CommandParser parser = new CommandParser();
         String input = "reveal";
 

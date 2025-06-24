@@ -42,7 +42,7 @@ public class GameEndConditionTests {
     }
 
     @Test
-    void testGameOverWhenAllCellsRevealed() {
+    void testGameWonWhenAllNonMineCellsRevealed() {
         game.revealCell(new Position(0, 0));
         GameTestsHelper.revealAllNonMineCells(game);
         assertTrue(game.getGameOver(), "Game should end when all non-mine cells are revealed");

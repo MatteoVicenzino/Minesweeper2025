@@ -23,7 +23,7 @@ public class GameInitializationTests {
     }
 
     @Test
-    void testGameInitialization() {
+    void testNewGameHasCorrectInitialState() {
 
         Difficulty difficulty = Difficulty.EASY;
         game = new Game(difficulty);

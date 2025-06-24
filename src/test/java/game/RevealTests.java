@@ -28,7 +28,7 @@ public class RevealTests {
     }
 
     @Test
-    void testRevealCell() {
+    void testRevealCellMarksAsRevealedAndIncrementsCounter() {
 
         GridDimension dimensions = new GridDimension(4, 4);
 
@@ -109,7 +109,7 @@ public class RevealTests {
     }
 
     @Test
-    void testRevealFlaggedCell() {
+    void testRevealCellOnFlaggedCellThrowsExceptionAndKeepsFlag() {
 
         GridDimension dimensions = new GridDimension(3, 3);
 

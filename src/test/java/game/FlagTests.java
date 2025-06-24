@@ -29,7 +29,7 @@ public class FlagTests {
     }
 
     @Test
-    void testFlaggingACellShouldToggleFlagState() {
+    void testFlagCellTogglesStateAndUpdatesFlagCount() {
 
         GridDimension dimensions = new GridDimension(5, 5);
 
@@ -65,7 +65,7 @@ public class FlagTests {
     }
 
     @Test
-    void testFlaggingACellShouldChangeNumberOfMinesLeft() {
+    void testFlagCellUpdatesMinesLeftCounter() {
 
         GridDimension dimensions = new GridDimension(4, 4);
 
@@ -92,6 +92,4 @@ public class FlagTests {
         game.flagCell(new Position(1, 1));
         assertEquals(1, game.getMinesLeft());
     }
-
-
 }

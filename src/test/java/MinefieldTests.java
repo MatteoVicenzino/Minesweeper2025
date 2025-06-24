@@ -14,7 +14,7 @@ public class MinefieldTests {
     private MineField minefield;
 
     @Test
-    void testInitialState() {
+    void testNewMinefieldHasCorrectDimensionsAndMineCount() {
         minefield = new MineField(DIMENSIONS, MINES);
 
         assertEquals(ROWS, minefield.getHeight());
@@ -23,7 +23,7 @@ public class MinefieldTests {
     }
 
     @Test
-    void testInitializeGrid() {
+    void testInitializeGridPlacesCorrectMineCountAndExcludesFirstClickPosition() {
 
         minefield = new MineField(DIMENSIONS, MINES);
         minefield.initializeGrid(new Position(5, 5));
@@ -42,7 +42,7 @@ public class MinefieldTests {
     }
 
     @Test
-    void testIsValid() {
+    void testIsValidPositionWithVariousCoordinatesReturnsCorrectBooleans() {
         minefield = new MineField(DIMENSIONS, MINES);
         minefield.initializeGrid(new Position(5, 5));
 
@@ -55,7 +55,7 @@ public class MinefieldTests {
     }
 
     @Test
-    void testCountAdjacentMines() {
+    void testCountAdjacentMinesWithDifferentMinePatternsReturnsCorrectCounts() {
         boolean[][] minePattern = new boolean[][]{
                 {true, true, false, false},
                 {false, false, false, false},
@@ -96,5 +96,4 @@ public class MinefieldTests {
         assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(0, COLS)));
         assertThrows(IndexOutOfBoundsException.class, () -> minefield.countAdjacentMines(new Position(ROWS, COLS)));
     }
-
 }

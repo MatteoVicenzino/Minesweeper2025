@@ -31,7 +31,7 @@ public class GameStatusTests {
     }
 
     @Test
-    void testGameInitialStatusIsInProgress() {
+    void testNewGameHasNotStartedStatus() {
         assertEquals(GameStatus.NOT_STARTED, game.getGameStatus());
         assertFalse(game.getGameOver(), "Game should not be over initially");
     }
@@ -67,7 +67,7 @@ public class GameStatusTests {
     }
 
     @Test
-    void testGameStatusOnReset() {
+    void testResetGameResetsStatusToNotStarted() {
 
         boolean[][] minePattern = GameTestsHelper.createSimpleCenterMinePattern();
         MineField mineFieldWithPattern = GameTestsHelper.createMineFieldWithPattern(minePattern);

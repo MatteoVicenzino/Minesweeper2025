@@ -15,7 +15,7 @@ public class CellTests {
     }
 
     @Test
-    void testInitialState() {
+    void testNewCellIsNotMinedRevealedNorFlagged() {
         assertFalse(cell.isMined());
         assertFalse(cell.isRevealed());
         assertFalse(cell.isFlagged());
@@ -23,7 +23,7 @@ public class CellTests {
     }
 
     @Test
-    void testSetMine() {
+    void testSetMinedWithTrueAndFalseUpdatesMinedStatus() {
         cell.setMined(true);
         assertTrue(cell.isMined());
 
@@ -32,7 +32,7 @@ public class CellTests {
     }
 
     @Test
-    void testMarkAsRevealedCell() {
+    void testRevealOnHiddenCellMarksAsRevealed() {
         cell.reveal();
         assertTrue(cell.isRevealed());
 
@@ -41,7 +41,7 @@ public class CellTests {
     }
 
     @Test
-    void testToggleFlagCell() {
+    void testToggleFlagOnHiddenCellMarksAsFlagged() {
         cell.toggleFlag();
         assertTrue(cell.isFlagged());
 
@@ -50,7 +50,7 @@ public class CellTests {
     }
 
     @Test
-    void testMarkAsRevealedOnFlaggedCell() {
+    void testMarkAsRevealedOnFlaggedCellNotReveals() {
 
         cell.toggleFlag();
         assertTrue(cell.isFlagged());
@@ -64,7 +64,7 @@ public class CellTests {
 
 
     @Test
-    void testToggleFlagOnRevealedCell() {
+    void testToggleFlagOnRevealedCellNotFlags() {
         cell.reveal();
         cell.isRevealed();
         assertTrue(cell.isRevealed());

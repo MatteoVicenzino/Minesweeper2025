@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CommandTests {
 
     @Test
-    void testCommandWithCoordinates() {
+    void testCreateCommandWithValidCoordinatesStoresPositionCorrectly() {
         Position position = new Position(3, 4);
         Command command = new Command(CommandType.REVEAL, position);
 
@@ -21,7 +21,7 @@ public class CommandTests {
     }
 
     @Test
-    void testCommandWithoutCoordinates() {
+    void testCreateCommandWithoutCoordinatesHasNoPosition() {
         Command command = new Command(CommandType.QUIT);
 
         assertEquals(CommandType.QUIT, command.getType(), "Type should match");
