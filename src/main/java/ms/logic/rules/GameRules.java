@@ -4,5 +4,5 @@ import ms.model.Position;
 
 @FunctionalInterface
 public interface GameRules {
-    void validate(Position postition);
+    void validate(Position position);
 }

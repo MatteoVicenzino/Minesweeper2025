@@ -29,7 +29,7 @@ public class FlagTests {
     }
 
     @Test
-    void testFlagCell() {
+    void testFlaggingACellShouldToggleFlagState() {
 
         GridDimension dimensions = new GridDimension(5, 5);
 
@@ -65,7 +65,7 @@ public class FlagTests {
     }
 
     @Test
-    void testGetMinesLeft() {
+    void testFlaggingACellShouldChangeNumberOfMinesLeft() {
 
         GridDimension dimensions = new GridDimension(4, 4);
 

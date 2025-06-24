@@ -55,10 +55,6 @@ public class MineField {
         return mines;
     }
 
-    public GridDimension getDimensions() {
-        return dimensions;
-    }
-
     public Cell getCell(Position position) {
         return field[position.row()][position.col()];
     }

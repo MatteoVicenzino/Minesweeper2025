@@ -7,7 +7,6 @@ import ms.model.GridDimension;
 import ms.model.MineField;
 import ms.model.Position;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class GameTestsHelper {
