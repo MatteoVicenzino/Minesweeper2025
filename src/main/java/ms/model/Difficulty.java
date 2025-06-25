@@ -6,8 +6,19 @@ package ms.model;
  */
 public enum Difficulty {
 
+    /**
+     * The easy difficulty level with a 9x9 grid and 10 mines.
+     */
     EASY(9, 9, 10),
+
+    /**
+     * The medium difficulty level with a 16x16 grid and 40 mines.
+     */
     MEDIUM(16, 16, 40),
+
+    /**
+     * The hard difficulty level with a 16x30 grid and 99 mines.
+     */
     HARD(16, 30, 99);
 
     private final int height;
