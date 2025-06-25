@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ms"},{"l":"ms.commands"},{"l":"ms.logic"},{"l":"ms.logic.operation"},{"l":"ms.logic.rules"},{"l":"ms.logic.status"},{"l":"ms.model"},{"l":"ms.view"}];updateSearchResults();
