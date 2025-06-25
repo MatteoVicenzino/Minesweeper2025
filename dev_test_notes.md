@@ -45,18 +45,12 @@ For now these are the tests that we are implementing, more to come...
 
 Note file to keep track of refactoring and improvements that need to be done at some point of the development.
 
-- refactor to check open-closed principles
+- ~~refactor to check open-closed principles~~
 - ~~rename reveal cell methods in different classes for readability~~
-- create project structure with packages
-
-
-### Cell
-- Refactor to make the cell an interface and create custom methods
+- ~~create project structure with packages~~
 
 ### Minefield
 - ~~rows and cols --> height and width~~
-- possible refactor of field matrix into a separate class
-- possible refactor of testCountAdjacentMinesOutOfBounds() into a more generic test in MinefieldTests
 - Refactor CountAdjacentMines to evaluate the number when a mine is placed to improve efficiency
 
 ### Game
