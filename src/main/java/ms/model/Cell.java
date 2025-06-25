@@ -1,5 +1,8 @@
 package ms.model;
 
+/**
+ * The {@code Cell} class represents an individual cell in the minefield, contains state and mine information.
+ */
 public class Cell {
     private CellState status;
     private boolean isMined;

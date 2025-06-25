@@ -1,5 +1,9 @@
 package ms.model;
 
+/**
+ * The {@code Difficulty} enum defines the three difficulty levels,
+ * each with predefined grid dimensions and mine counts.
+ */
 public enum Difficulty {
 
     EASY(9, 9, 10),

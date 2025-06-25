@@ -1,5 +1,9 @@
 package ms.model;
 
+/**
+ * The {@code GridDimension} record defines the dimensions a minefield grid.
+ * It provides methods for position validation.
+ */
 public record GridDimension(int height, int width) {
 
     public GridDimension {

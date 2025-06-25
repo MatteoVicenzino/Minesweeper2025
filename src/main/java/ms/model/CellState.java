@@ -1,5 +1,9 @@
 package ms.model;
 
+/**
+ * The {@code CellState} enum represents the visual state of cell,
+ * provides state transitions for flagging and revealing operations.
+ */
 public enum CellState {
     HIDDEN {
         @Override

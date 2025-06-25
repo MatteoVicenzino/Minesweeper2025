@@ -1,5 +1,9 @@
 package ms.model;
 
+/**
+ * The {@code Position} record represents a coordinate pair (row, col) on the minefield grid.
+ * It provides utility methods for calculating adjacent positions around a center point.
+ */
 public record Position(int row, int col) {
 
     public static Position[] getAdjacentPositions(Position center) {
