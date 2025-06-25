@@ -56,39 +56,36 @@ public final class Messages {
     public static final String GAME_RESET_HEADER = "\n" + GREEN_BOLD + "--- Game Reset ---" + RESET;
 
     public static final String GAME_WON =
-            "Congratulations! You revealed all non-mine cells! You Win!";
+            GREEN_BOLD + "Congratulations! You revealed all non-mine cells! You Win!" + RESET;
 
     public static final String GAME_LOST =
-            "Boooom! You hit a mine! You Lose!";
+            RED + "Boooom! You hit a mine! You Lose!" + RESET;
 
     public static final String GAME_RESET_SUCCESS =
-            "The game has been reset. Starting fresh!";
+            GREEN + "The game has been reset. Starting fresh!" + RESET;
 
-    public static final String NEW_GAME = "\n--- Starting a new game ---";
+    public static final String NEW_GAME = "\n" + GREEN_BOLD + "--- Starting a new game ---" + RESET;
 
     public static final String NEW_GAME_WITH_DIFFICULTY =
-            "\n--- Starting a new game with new difficulty ---";
+            "\n" + GREEN_BOLD + "--- Starting a new game with new difficulty ---" + RESET;
 
-    public static final String SELECTED_EASY = "Selected: EASY difficulty";
-    public static final String SELECTED_MEDIUM = "Selected: MEDIUM difficulty";
-    public static final String SELECTED_HARD = "Selected: HARD difficulty";
+    public static final String SELECTED_EASY = GREEN + "Selected: EASY difficulty" + RESET;
+    public static final String SELECTED_MEDIUM = YELLOW + "Selected: MEDIUM difficulty" + RESET;
+    public static final String SELECTED_HARD = RED + "Selected: HARD difficulty" + RESET;
 
     public static String parsingError(String message) {
-        return String.format("""
-                Error: %s
-                Type 'help' for available commands.""", message);
+        return RED_BOLD + "Error: " + message + "\n" + RESET +
+                "Type '" + BLUE + "help" + RESET + "' for available commands.";
     }
 
     public static String gameError(String message) {
-        return String.format("""
-                Game Error: %s
-                Type 'help' for available commands.""", message);
+        return RED_BOLD + "Game Error: " + message + "\n" + RESET +
+                "Type '" + BLUE + "help" + RESET + "' for available commands.";
     }
 
     public static String coordinateError(String message) {
-        return String.format("""
-                Error: Coordinates are out of bounds. %s
-                Valid coordinates are 0-9 for both rows and columns.""", message);
+        return RED_BOLD + "Error: Coordinates are out of bounds. " + message + "\n" + RESET +
+                "Valid coordinates are 0-9 for both rows and columns.";
     }
 
     public static String revealedCount(int revealed, int total) {
