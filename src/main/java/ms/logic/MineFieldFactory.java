@@ -4,8 +4,7 @@ import ms.model.GridDimension;
 import ms.model.MineField;
 
 /**
- * The {@code DefaultMineFieldFactory} class implements the {@code MineFieldFactory} interface
- * to create instances of {@code MineField} with specified dimensions and mine count.
+ * The {@code MineFieldFactory} interface defines a method for creating instances of {@code MineField}.
  */
 @FunctionalInterface
 public interface MineFieldFactory {
