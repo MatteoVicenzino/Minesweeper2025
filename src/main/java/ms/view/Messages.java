@@ -1,44 +1,42 @@
 package ms.view;
 
+import static ms.view.AnsiColors.*;
+
 public final class Messages {
 
     private Messages() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
-    public static final String WELCOME = """
-            Welcome to the Minesweeper CLI! Enter your commands:
-            Type 'help' for available commands and game rules.""";
+    public static final String WELCOME =
+            "Welcome to the " + GREEN_BOLD + "Minesweeper!" + RESET + " Enter your commands:\n" +
+                    "Type 'help' for available commands and game rules.";
 
-    public static final String HELP = """
-            
-            === MINESWEEPER HELP ===
-            Available commands:
-              reveal <row>,<col>  - Reveal a cell at the specified coordinates
-              flag <row>,<col>    - Toggle flag on a cell at the specified coordinates
-              help                - Show this help message
-              reset               - Reset the current game
-              quit                - Exit the game
-            
-            Examples:
-              reveal 3,4          - Reveals the cell at row 3, column 4
-              flag 0,0            - Toggles flag on cell at row 0, column 0
-            
-            Game Rules:
-              • The goal is to reveal all cells that don't contain mines
-              • Numbers show how many mines are adjacent to that cell
-              • Use flags to mark cells you think contain mines
-              • If you reveal a mine, you lose!
-              • Your first reveal is always safe
-            
-            Field Symbols:
-              -  = Covered cell
-              F  = Flagged cell
-              1-8= Number of adjacent mines
-              (space) = Empty cell (no adjacent mines)
-              X  = Exploded mine
-              *  = Mine (shown only when game ends)
-            ========================""";
+    public static final String HELP =
+            "\n" + CYAN_BOLD + "=== MINESWEEPER HELP ===" + RESET + "\n" +
+                    YELLOW_BRIGHT + "Available commands:\n" + RESET +
+                    "  " + CYAN + "reveal <row>,<col>" + RESET + "  - Reveal a cell at the specified coordinates\n" +
+                    "  " + CYAN + "flag <row>,<col>" + RESET + "    - Toggle flag on a cell at the specified coordinates\n" +
+                    "  " + CYAN + "help" + RESET + "                - Show this help message\n" +
+                    "  " + CYAN + "reset" + RESET + "               - Reset the current game\n" +
+                    "  " + CYAN + "quit" + RESET + "                - Exit the game\n" +
+                    "\n" + YELLOW_BRIGHT + "Examples:" + RESET + "\n" +
+                    "  " + CYAN + "reveal 3,4" + RESET + "          - Reveals the cell at row 3, column 4\n" +
+                    "  " + CYAN + "flag 0,0" + RESET + "            - Toggles flag on cell at row 0, column 0\n" +
+                    "\n" + YELLOW_BRIGHT + "Game Rules:" + RESET + "\n" +
+                    "  - The goal is to reveal all cells that don't contain mines\n" +
+                    "  - Numbers show how many mines are adjacent to that cell\n" +
+                    "  - Use flags to mark cells you think contain mines\n" +
+                    "  - If you reveal a mine, you lose!\n" +
+                    "  - Your first reveal is always safe\n" +
+                    "\n" + YELLOW_BRIGHT + "Field Symbols:" + RESET + "\n" +
+                    "  -  = Covered cell\n" +
+                    "  " + RED + "F" + RESET + "  = Flagged cell\n" +
+                    "  1-8 = Number of adjacent mines\n" +
+                    "  (space) = Empty cell (no adjacent mines)\n" +
+                    "  " + RED_BOLD + "X" + RESET + "  = Exploded mine\n" +
+                    "  " + RED + "*" + RESET + "  = Mine (shown only when game ends)\n" +
+                    CYAN_BOLD + "========================" + RESET;
 
     public static final String DIFFICULTY_SELECTION_HEADER = """
             
