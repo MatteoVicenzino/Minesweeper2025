@@ -7,6 +7,9 @@ public class Cell {
     private CellState status;
     private boolean isMined;
 
+    /**
+     * Constructs a new {@code Cell} in the default hidden state without a mine.
+     */
     public Cell() {
         this.status = CellState.HIDDEN;
         this.isMined = false;
