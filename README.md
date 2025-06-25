@@ -52,6 +52,10 @@ The objective of the game is to reveal all cells that do not contain mines. If y
 * **MEDIUM**: 16x16 grid with 40 mines.
 * **HARD**: 16x30 grid with 99 mines.
 
+## Minesweeper Demo
+
+![Minesweeper Demo](./demo.gif)
+
 ## Development
 
 This project was developed following the **Test-Driven Development (TDD)** methodology.
