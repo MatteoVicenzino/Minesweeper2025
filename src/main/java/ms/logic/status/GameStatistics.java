@@ -7,16 +7,10 @@ import ms.model.GridDimension;
  * revealed cells, flag placements, and win conditions.
  */
 public class GameStatistics {
-    /** Total number of mines in the game. */
+
     private final int totalMines;
-
-    /** Total number of cells in the game grid. */
     private final int totalCells;
-
-    /** Number of cells revealed by the player. */
     private int revealedCells;
-
-    /** Number of flags placed by the player. */
     private int flagsPlaced;
 
     /**

@@ -6,7 +6,7 @@ package ms.logic.status;
  * while maintaining the current game status.
  */
 public class GameStatusManager {
-    /** The current status of the game. */
+
     private GameStatus currentStatus;
 
     /**
