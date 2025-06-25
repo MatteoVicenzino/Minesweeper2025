@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'ms'
@@ -25,4 +26,12 @@ test {
 
 jar {
     manifest {attributes'Main-Class':'ms.Main'}
+}
+
+application {
+    mainClass = 'ms.Main'
+}
+
+run {
+    standardInput = System.in
 }
