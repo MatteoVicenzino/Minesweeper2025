@@ -23,7 +23,7 @@ The code is organized into the following packages:
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/minesweeper2025](https://github.com/minesweeper2025)
+    git clone https://github.com/MatteoVicenzino/Minesweeper2025.git
     ```
 2. Build the project using Gradle:
     ```bash
