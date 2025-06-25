@@ -4,7 +4,7 @@ import ms.model.Position;
 
 /**
  * The {@code Command} class represents a user command.
- * It can be a positional commands (reveal, flag) or non-positional command (help, quit, reset).
+ * It can be a positional command (reveal, flag) or non-positional command (help, quit, reset).
  */
 public class Command {
     private final CommandType type;
