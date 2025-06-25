@@ -6,6 +6,14 @@ package ms.model;
  */
 public record GridDimension(int height, int width) {
 
+    /**
+     * Constructs a {@code GridDimension} with the specified height and width.
+     * Both dimensions must be positive values.
+     *
+     * @param height the height of the grid
+     * @param width the width of the grid
+     * @throws IllegalArgumentException if height or width is not positive
+     */
     public GridDimension {
         if (height <= 0) {
             throw new IllegalArgumentException("Height must be positive, got: " + height);

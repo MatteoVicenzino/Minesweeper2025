@@ -12,6 +12,13 @@ public class MineField {
     private final int mines;
     private final Cell[][] field;
 
+    /**
+     * Constructs a new {@code MineField} with the specified dimensions and mine count.
+     * Initializes all cells but does not place mines until {@code initializeGrid} is called.
+     *
+     * @param dimensions the {@code GridDimension} defining the size of the minefield
+     * @param mines the number of mines to be placed in the field
+     */
     public MineField(GridDimension dimensions, int mines) {
         this.dimensions = dimensions;
         this.mines = mines;

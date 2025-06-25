@@ -14,6 +14,13 @@ public enum Difficulty {
     private final int width;
     private final int mines;
 
+    /**
+     * Constructs a {@code Difficulty} level with the specified grid dimensions and mine count.
+     *
+     * @param height the height of the grid for this difficulty
+     * @param width the width of the grid for this difficulty
+     * @param mines the number of mines for this difficulty
+     */
     Difficulty(int height, int width, int mines) {
         this.height = height;
         this.width = width;
