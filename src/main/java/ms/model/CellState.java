@@ -5,6 +5,10 @@ package ms.model;
  * provides state transitions for flagging and revealing operations.
  */
 public enum CellState {
+
+    /**
+     * The cell is hidden and not flagged.
+     */
     HIDDEN {
         @Override
         public CellState toggleFlag() {
@@ -17,6 +21,9 @@ public enum CellState {
         }
     },
 
+    /**
+     * The cell is flagged, indicating a potential mine.
+     */
     FLAGGED {
         @Override
         public CellState toggleFlag() {
@@ -29,6 +36,9 @@ public enum CellState {
         }
     },
 
+    /**
+     * The cell is revealed, indicating it does not contain a mine.
+     */
     REVEALED {
         @Override
         public CellState toggleFlag() {
@@ -41,6 +51,9 @@ public enum CellState {
         }
     },
 
+    /**
+     * The cell has exploded, indicating it contained a mine and was revealed.
+     */
     EXPLODED {
         @Override
         public CellState toggleFlag() {
