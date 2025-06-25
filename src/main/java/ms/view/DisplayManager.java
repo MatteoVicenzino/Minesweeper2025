@@ -114,7 +114,7 @@ public class DisplayManager {
         }
 
         int adjacentMines = mineField.countAdjacentMines(position);
-        return adjacentMines == 0 ? Messages.CELL_EMPTY : " " + adjacentMines + " ";
+        return adjacentMines == 0 ? Messages.CELL_EMPTY : Messages.getNumberedCell(adjacentMines);
     }
 
     private void displayGameStatistics(Game game) {

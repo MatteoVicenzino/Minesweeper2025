@@ -42,9 +42,9 @@ public final class Messages {
             "\n" + GREEN_BOLD + "=== DIFFICULTY SELECTION ===" + RESET + "\n" +
                     "Choose your difficulty level:\n" +
                     "\n" +
-                    "1. " + GREEN_BACKGROUND + BLACK + " EASY   (9x9 grid, 10 mines) " + RESET + "\n" +
-                    "2. " + YELLOW_BACKGROUND + BLACK + " MEDIUM (16x16 grid, 40 mines) " + RESET + "\n" +
-                    "3. " + RED_BACKGROUND + BLACK + " HARD   (16x30 grid, 99 mines) " + RESET + "\n" +
+                    "1. " + GREEN_BACKGROUND + " EASY   (9x9 grid, 10 mines) " + RESET + "\n" +
+                    "2. " + YELLOW_BACKGROUND + " MEDIUM (16x16 grid, 40 mines) " + RESET + "\n" +
+                    "3. " + RED_BACKGROUND + " HARD   (16x30 grid, 99 mines) " + RESET + "\n" +
                     "\n" +
                     "Enter your choice (1-3):";
 
@@ -112,9 +112,23 @@ public final class Messages {
 
     public static final String GRID_SEPARATOR_LINE = "-------------------------";
 
-    public static final String CELL_HIDDEN = " - ";
-    public static final String CELL_FLAGGED = " F ";
-    public static final String CELL_MINE_EXPLODED = " X ";
-    public static final String CELL_MINE_REVEALED = " * ";
+    public static final String CELL_HIDDEN = WHITE + " - " + RESET;
+    public static final String CELL_FLAGGED = RED_BOLD + " F " + RESET;
+    public static final String CELL_MINE_EXPLODED = RED_BOLD + " X " + RESET;
+    public static final String CELL_MINE_REVEALED = RED_BOLD + " * " + RESET;
     public static final String CELL_EMPTY = "   ";
+
+    public static String getNumberedCell(int count) {
+        return switch (count) {
+            case 1 -> BLUE_BRIGHT + " 1 " + RESET;
+            case 2 -> GREEN_BRIGHT + " 2 " + RESET;
+            case 3 -> RED_BRIGHT + " 3 " + RESET;
+            case 4 -> PURPLE_BRIGHT + " 4 " + RESET;
+            case 5 -> YELLOW_BRIGHT + " 5 " + RESET;
+            case 6 -> CYAN_BOLD + " 6 " + RESET;
+            case 7 -> BLACK_BOLD + " 7 " + RESET;
+            case 8 -> WHITE_BACKGROUND + BLACK + " 8 " + RESET;
+            default -> " " + count + " ";
+        };
+    }
 }
