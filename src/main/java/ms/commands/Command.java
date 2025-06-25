@@ -2,6 +2,10 @@ package ms.commands;
 
 import ms.model.Position;
 
+/**
+ * The {@code Command} class represents a user command.
+ * It can be a positional commands (reveal, flag) or non-positional command (help, quit, reset).
+ */
 public class Command {
     private final CommandType type;
     private final Position position;

@@ -4,6 +4,10 @@ import ms.model.Position;
 
 import java.util.Locale;
 
+/**
+ * The {@code CommandParser} class parses user input strings into {@code Command} objects.
+ * It validates command syntax and coordinates, throwing {@code CommandParsingException} for invalid input.
+ */
 public class CommandParser {
 
     public Command parse(String input) {
@@ -73,6 +77,10 @@ public class CommandParser {
         return coordinates;
     }
 
+
+    /**
+     * The {@code CommandParsingException} is the class of the exception thrown when command parsing fails.
+     */
     public static class CommandParsingException extends RuntimeException {
         public CommandParsingException(String message) {
             super(message);
