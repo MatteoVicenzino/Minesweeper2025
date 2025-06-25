@@ -38,24 +38,22 @@ public final class Messages {
                     "  " + RED + "*" + RESET + "  = Mine (shown only when game ends)\n" +
                     CYAN_BOLD + "========================" + RESET;
 
-    public static final String DIFFICULTY_SELECTION_HEADER = """
-            
-            === DIFFICULTY SELECTION ===
-            Choose your difficulty level:
-            
-            1. EASY   (9x9 grid, 10 mines)
-            2. MEDIUM (16x16 grid, 40 mines)
-            3. HARD   (16x30 grid, 99 mines)
-            
-            Enter your choice (1-3):""";
+    public static final String DIFFICULTY_SELECTION_HEADER =
+            "\n" + GREEN_BOLD + "=== DIFFICULTY SELECTION ===" + RESET + "\n" +
+                    "Choose your difficulty level:\n" +
+                    "\n" +
+                    "1. " + GREEN_BACKGROUND + BLACK + " EASY   (9x9 grid, 10 mines) " + RESET + "\n" +
+                    "2. " + YELLOW_BACKGROUND + BLACK + " MEDIUM (16x16 grid, 40 mines) " + RESET + "\n" +
+                    "3. " + RED_BACKGROUND + BLACK + " HARD   (16x30 grid, 99 mines) " + RESET + "\n" +
+                    "\n" +
+                    "Enter your choice (1-3):";
 
     public static final String DIFFICULTY_INVALID_CHOICE =
-            "Invalid choice. Please enter 1, 2, or 3.";
+            RED + "Invalid choice. Please enter 1, 2, or 3." + RESET;
 
-
-    public static final String GAME_OVER_HEADER = "\n--- GAME OVER ---";
-    public static final String CURRENT_MINEFIELD_HEADER = "\n--- Current Minefield ---";
-    public static final String GAME_RESET_HEADER = "\n--- Game Reset ---";
+    public static final String GAME_OVER_HEADER = "\n" + RED_BOLD + "--- GAME OVER ---" + RESET;
+    public static final String CURRENT_MINEFIELD_HEADER = "\n" + CYAN_BOLD + "--- Current Minefield ---" + RESET;
+    public static final String GAME_RESET_HEADER = "\n" + GREEN_BOLD + "--- Game Reset ---" + RESET;
 
     public static final String GAME_WON =
             "Congratulations! You revealed all non-mine cells! You Win!";
