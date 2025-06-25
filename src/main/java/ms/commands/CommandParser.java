@@ -10,6 +10,13 @@ import java.util.Locale;
  */
 public class CommandParser {
 
+    /**
+     * Parses the input string and returns a {@code Command} object.
+     *
+     * @param input the user input string
+     * @return a {@code Command} object representing the parsed command
+     * @throws CommandParsingException if the input is invalid or cannot be parsed
+     */
     public Command parse(String input) {
         if (input == null || input.trim().isEmpty()) {
             throw new CommandParsingException("Input cannot be empty");
@@ -45,6 +52,15 @@ public class CommandParser {
         };
     }
 
+
+    /**
+     * Parses commands for revealing or flagging a cell.
+     *
+     * @param parts the split input parts containing command and coordinates
+     * @param type the type of command (REVEAL or FLAG)
+     * @return a {@code Command} object with the specified type and position
+     * @throws CommandParsingException if the coordinates are invalid
+     */
     private Command parseRevealOrFlagCommand(String[] parts, CommandType type) {
         String[] coordinates = getCoordinates(parts);
 
@@ -58,6 +74,13 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Extracts and validates coordinates from the command.
+     *
+     * @param parts the list of string containing command and coordinates
+     * @return an array of strings representing the coordinates
+     * @throws CommandParsingException if the coordinates are missing or invalid
+     */
     private static String[] getCoordinates(String[] parts) {
         if (parts.length < 2) {
             throw new CommandParsingException("Missing coordinates");
