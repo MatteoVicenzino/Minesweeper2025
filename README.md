@@ -17,7 +17,7 @@ The code is organized into the following packages:
 
 ### Prerequisites
 
-* Java Development Kit (JDK) 17 or higher.
+* Java 21
 
 ### Running the Game
 
@@ -62,7 +62,7 @@ This project was developed following the **Test-Driven Development (TDD)** metho
 
 The following tools and technologies were used:
 
-* **Java 17**
+* **Java 21**
 * **Gradle** for dependency management and project building.
 * **JUnit 5** for unit testing.
 * **Mockito** for creating mock objects in tests.
