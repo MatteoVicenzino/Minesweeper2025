@@ -1,5 +1,9 @@
 package ms.view;
 
+/**
+ * Provides ANSI color codes for console output.
+ * Contains constants for colored text and backgrounds.
+ */
 public final class AnsiColors {
 
     public static final String RESET = "\033[0m";
