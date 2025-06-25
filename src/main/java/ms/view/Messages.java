@@ -42,9 +42,9 @@ public final class Messages {
             "\n" + GREEN_BOLD + "=== DIFFICULTY SELECTION ===" + RESET + "\n" +
                     "Choose your difficulty level:\n" +
                     "\n" +
-                    "1. " + GREEN + " EASY   (9x9 grid, 10 mines) " + RESET + "\n" +
-                    "2. " + YELLOW + " MEDIUM (16x16 grid, 40 mines) " + RESET + "\n" +
-                    "3. " + RED + " HARD   (16x30 grid, 99 mines) " + RESET + "\n" +
+                    "1. " + GREEN_BRIGHT + " EASY   (9x9 grid, 10 mines) " + RESET + "\n" +
+                    "2. " + YELLOW_BRIGHT + " MEDIUM (16x16 grid, 40 mines) " + RESET + "\n" +
+                    "3. " + RED_BRIGHT + " HARD   (16x30 grid, 99 mines) " + RESET + "\n" +
                     "\n" +
                     "Enter your choice (1-3):";
 
