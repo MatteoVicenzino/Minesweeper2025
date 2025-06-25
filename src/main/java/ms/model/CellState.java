@@ -53,7 +53,13 @@ public enum CellState {
         }
     };
 
+    /**
+     * Toggles the flag state of this cell.
+     */
     public abstract CellState toggleFlag();
 
+    /**
+     * Reveals this cell, changing its state based on whether it contains a mine.
+     */
     public abstract CellState reveal(boolean isMined);
 }

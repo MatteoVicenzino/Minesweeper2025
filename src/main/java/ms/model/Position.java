@@ -6,6 +6,12 @@ package ms.model;
  */
 public record Position(int row, int col) {
 
+    /**
+     * Returns an array of the eight positions adjacent to the given center position.
+     *
+     * @param center the center position to find adjacent positions for
+     * @return an array of eight adjacent {@code Position} objects
+     */
     public static Position[] getAdjacentPositions(Position center) {
         Position[] adjacent = new Position[8];
         int index = 0;

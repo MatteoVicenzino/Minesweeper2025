@@ -20,14 +20,29 @@ public enum Difficulty {
         this.mines = mines;
     }
 
+    /**
+     * Gets the height of the grid.
+     *
+     * @return the grid height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Gets the width of the grid.
+     *
+     * @return the grid width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets the number of mines of the grid.
+     *
+     * @return the number of mines in the grid
+     */
     public int getMines() {
         return mines;
     }
