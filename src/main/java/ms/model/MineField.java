@@ -2,6 +2,10 @@ package ms.model;
 
 import java.util.Random;
 
+/**
+ * The {@code MineField} class manages the grid of cells, mine placement, and adjacency calculations.
+ * It handles minefield initialization and provides access to individual cells.
+ */
 public class MineField {
 
     private final GridDimension dimensions;
